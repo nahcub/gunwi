@@ -9,3 +9,6 @@ __pycache__/
 
 # 생성물 — tools/build.py 가 만든다. 손으로 고치지 말 것
 public/data/
+
+# 엑셀이 파일을 열어 둘 때 만드는 잠금 파일
+~$*
