@@ -28,9 +28,9 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
 
-# ▼▼▼ 여기에 발급받은 일반 인증키를 따옴표 안에 붙여넣으세요 ▼▼▼
-API_KEY = "a94ed288b6432d7a0fa83bd6ec34968e77698e0d556d0dd1a577dd6611116706"
-# ▲▲▲ (환경변수 DATA_GO_KR_KEY가 설정돼 있으면 그쪽이 우선합니다) ▲▲▲
+# 인증키는 환경변수 DATA_GO_KR_KEY 로만 넣는다. 이 저장소는 공개라서
+# 여기에 키를 적고 커밋하면 그대로 인터넷에 노출된다.
+API_KEY = ""
 
 PATH = "apis.data.go.kr/1140100/minAnalsInfoView7/minPotholeLatLonInfo"
 # 어느 폴더에서 실행하든 프로젝트 루트(tools/의 상위)에 저장한다
@@ -276,7 +276,7 @@ def main():
 
     raw_key = (os.environ.get("DATA_GO_KR_KEY") or API_KEY).strip()
     if not raw_key:
-        sys.exit("파일 위쪽의 API_KEY = \"\" 안에 인증키를 붙여넣어 주세요.")
+        sys.exit("환경변수 DATA_GO_KR_KEY 에 인증키를 넣어 주세요 (파일 맨 위 사용법 참고).")
     key = make_key(raw_key)
     scheme = "http" if a.http else "https"
 

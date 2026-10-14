@@ -1,8 +1,12 @@
 # 군위군 생활불편 민원 기반 시설관리 우선지역 분석
 
 군위군 8개 읍·면의 생활불편 민원과 공공시설 정보를 결합해 시설관리 우선지역을
-도출하는 것이 목표다. 현재는 **민원 원자료를 확보하지 못해 인구·고령화율까지만
-지도에 표시**하며, 민원 관련 지표는 "미확보"로 비활성 표시한다.
+도출하는 것이 목표다. 현재는 **민원 원자료를 확보하지 못해 인구·고령화 지표와 공공시설
+(경로당·위험지정 세천·상수도보급률) 지표까지만 지도에 표시**하며, 민원 관련
+지표는 "미확보"로 비활성 표시한다.
+
+> **인수인계 안내** — 작업 전 `CLAUDE.md`(규칙)와 `docs/how-to.md`(작업별 절차)를
+> 먼저 읽는다. AI 도구를 쓴다면 이 두 파일을 먼저 읽게 한다.
 
 화면의 모든 숫자는 실제 공식 자료에서 나온 값이다. 샘플값이나 임의 생성값은 없다.
 
@@ -20,11 +24,13 @@ npm run dev               # 빌드 후 http://127.0.0.1:8787
 |---|---|
 | `npm run prepare-data` | 원자료 검증·정제 → `data/derived/` |
 | `npm run build` | `data/derived/` → `public/data/` |
+| `npm run export` | `data/derived/` → `outputs/` 제출용 엑셀·CSV |
 | `npm test` | 검증 로직이 살아 있는지 확인 |
-| `npm run deploy` | 빌드 후 Cloudflare 배포 |
+| `npm run deploy` | 빌드 후 Cloudflare 배포 (main push 시 GitHub Actions 가 자동 실행) |
 
 `deploy` 와 `dev` 에 빌드가 붙어 있어 **빌드를 깜빡할 수 없다.** 원자료가 바뀌면
-`prepare-data` 를 다시 돌린다.
+`prepare-data` 를 다시 돌린다. `public/data/` 는 git 에 없으므로 clone·pull 직후
+웹을 열려면 `npm run build`(또는 `python tools/build.py`)를 한 번 돌려야 한다.
 
 ## 데이터 흐름
 
@@ -49,10 +55,14 @@ Leaflet 으로 그린다.
 data/sources.json    출처 레지스트리 — 유일한 진실. public/data/sources.json 이 여기서 생성된다
 data/raw/            원자료 + _meta.json(출처 카드) + capture.html(원본 페이지 증빙)
 data/derived/        prepare.py 출력
-tools/               add_source.py / prepare.py / build.py / tests
+tools/               add_source.py / fetch_pothole.py / prepare.py / build.py / export_excel.py / tests
+outputs/             export_excel.py 출력 (제출용 엑셀·CSV)
 public/              배포되는 폴더. "여기 넣은 건 공개"
 docs/methodology.md  산식 근거. 공식 기준과 프로젝트 파생지표의 구분
 docs/data-guide.md   raw 원자료별 내용과 derived 에서 무엇이 되는지
+docs/how-to.md       작업별 절차 ("X 하려면 어디를 고치나")
+docs/data-survey.md  미확보 자료 조사 결과
+docs/requests/       군청 정보공개청구 초안 (미발송)
 ```
 
 ## 지금 지도에서 보이는 것
