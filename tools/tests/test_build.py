@@ -87,6 +87,26 @@ def test_every_indicator_declares_why_it_is_unavailable():
             f"{ind['id']}: 왜 못 쓰는지 적혀 있지 않다"
 
 
+def test_every_available_indicator_has_values():
+    """화면에서 고를 수 있는 지표는 8개 읍면 모두 숫자가 있어야 한다."""
+    out = build.build_regions()
+    available = [i["id"] for i in out["indicators"] if i["status"] == "available"]
+    for rows in out["regions"].values():
+        for r in rows:
+            for key in available:
+                assert isinstance(r.get(key), (int, float)), f"{r['name']}.{key} 값 없음"
+
+
+def test_facility_points_join_to_regions():
+    fac = build.build_facilities()
+    codes = {r["region_code"] for r in build.build_regions()["regions"]["2025-12"]}
+    assert len(fac["senior_centers"]["points"]) == 215
+    assert len(fac["drainage_risk"]["points"]) == 27
+    for group in fac.values():
+        for p in group["points"]:
+            assert p["region_code"] in codes
+
+
 def test_potholes_public_has_points_only():
     """전국 원자료 집계는 공개하지 않고 군위 지점만 내보낸다."""
     pot = build.load("potholes.json")

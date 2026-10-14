@@ -69,8 +69,10 @@ function renderBanner() {
 function renderSubtitle() {
   const ref = store.regions.meta.reference_dates[state.period];
   const ind = indicatorById(state.indicator);
+  // 시설·SGIS 지표는 인구 시점과 기준일이 다르다
+  const indRef = ind.reference ? ` (지표 기준 ${ind.reference})` : '';
   $('subtitle').textContent =
-    `기준시점 ${ref} · 표시 지표: ${ind.label} · 읍면 8개 · ` +
+    `기준시점 ${ref} · 표시 지표: ${ind.label}${indRef} · 읍면 8개 · ` +
     `생성 ${store.regions.meta.generated_at}`;
 }
 
@@ -157,12 +159,17 @@ function renderDetail() {
     `<dt>총인구</dt><dd>${r.population.toLocaleString('ko-KR')} 명</dd>` +
     `<dt>65세 이상</dt><dd>${r.elderly.toLocaleString('ko-KR')} 명</dd>` +
     `<dt>고령화율</dt><dd>${r.elderly_ratio} %</dd>` +
+    `<dt>노령화지수</dt><dd>${r.aging_index}</dd>` +
+    `<dt>경로당</dt><dd>${r.senior_center_count} 개소 (노후 ${r.senior_center_old_count})</dd>` +
+    `<dt>고령 1천명당 경로당</dt><dd>${r.senior_center_per_1k_elderly} 개소</dd>` +
+    `<dt>위험지정 세천</dt><dd>${r.drainage_risk_count} 개소</dd>` +
+    `<dt>상수도보급률</dt><dd>${r.water_supply_rate} %</dd>` +
     `<dt>도시공원</dt><dd>${nearby.length} 건</dd>` +
     `<dt>포트홀 민원</dt><dd>${potholes.length} 건</dd>` +
     `<dt>행정기관코드</dt><dd>${r.region_code}</dd>` +
     '</dl>' +
     '<p class="why" style="margin:10px 0 0;color:#9ca3af;font-size:11px">' +
-    '민원·시설 지표는 원자료 미확보로 표시하지 않습니다.</p>';
+    '민원 지표는 원자료 미확보로 표시하지 않습니다.</p>';
 }
 
 function renderLegend() {
@@ -276,8 +283,30 @@ function initMap() {
       }).bindTooltip(`포트홀 민원 · ${p.date} · ${p.region_name}`))
   ).addTo(map);
 
+  const sc = store.facilities.senior_centers;
+  const seniorLayer = L.layerGroup(
+    sc.points.map((p) =>
+      L.circleMarker([p.lat, p.lon], {
+        radius: 4, color: '#4c1d95', weight: 1,
+        // 노후(임시 기준) 경로당은 진하게
+        fillColor: p.built_year < sc.old_before_year ? '#7c3aed' : '#c4b5fd',
+        fillOpacity: 0.9,
+      }).bindTooltip(`경로당 · ${p.name} · ${p.built_year}년 건립`))
+  );
+
+  const dr = store.facilities.drainage_risk;
+  const drainageLayer = L.layerGroup(
+    dr.points.map((p) =>
+      L.circleMarker([p.lat, p.lon], {
+        radius: 6, color: '#0c4a6e', fillColor: '#0ea5e9',
+        fillOpacity: 0.9, weight: 1.5,
+      }).bindTooltip(`위험지정 세천 · ${p.name} · ${p.designated_on} 지정`))
+  );
+
   L.control.layers(null, {
     '읍면 이름': labels,
+    [`경로당 ${sc.points.length}곳 (진한 색: ${sc.old_before_year}년 이전 건립)`]: seniorLayer,
+    [`위험지정 세천 ${dr.points.length}곳 (${dr.reference_date})`]: drainageLayer,
     '도시공원 3건': parkLayer,
     [`포트홀 민원 ${store.potholes.points.length}건 (${from}~${to})`]: potholeLayer,
     '가로등·보안등 (미확보)': L.layerGroup(),
@@ -311,14 +340,15 @@ function redraw() {
 }
 
 async function main() {
-  const [regions, boundary, parks, potholes, sources] = await Promise.all([
+  const [regions, boundary, parks, potholes, facilities, sources] = await Promise.all([
     getJSON('./data/regions.json'),
     getJSON('./data/eupmyeon.geojson'),
     getJSON('./data/parks.json'),
     getJSON('./data/potholes.json'),
+    getJSON('./data/facilities.json'),
     getJSON('./data/sources.json'),
   ]);
-  Object.assign(store, { regions, boundary, parks, potholes, sources });
+  Object.assign(store, { regions, boundary, parks, potholes, facilities, sources });
 
   if (boundary.features.length !== 8) {
     throw new Error(`읍면 경계가 8개가 아님: ${boundary.features.length}`);

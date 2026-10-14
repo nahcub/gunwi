@@ -33,6 +33,20 @@ INDICATORS = [
      "status": "available", "higher_is_worse": False},
     {"id": "elderly_ratio", "label": "고령화율", "unit": "%",
      "status": "available", "higher_is_worse": True},
+    # 아래 시설·SGIS 지표는 시점 전환과 무관한 값이다. 기준일은 reference 에 적는다
+    {"id": "aging_index", "label": "노령화지수", "unit": "",
+     "status": "available", "higher_is_worse": True, "reference": "SGIS 2024"},
+    {"id": "density_per_km2", "label": "인구밀도", "unit": "명/㎢",
+     "status": "available", "higher_is_worse": False, "reference": "SGIS 2024"},
+    {"id": "senior_center_count", "label": "경로당 수", "unit": "개소",
+     "status": "available", "higher_is_worse": False, "reference": "2025-12-19"},
+    {"id": "senior_center_per_1k_elderly", "label": "고령인구 1천명당 경로당", "unit": "개소",
+     "status": "available", "higher_is_worse": False,
+     "reference": "경로당 2025-12-19 / 고령인구는 선택 시점"},
+    {"id": "drainage_risk_count", "label": "위험지정 세천", "unit": "개소",
+     "status": "available", "higher_is_worse": True, "reference": "2026-07-15"},
+    {"id": "water_supply_rate", "label": "상수도보급률", "unit": "%",
+     "status": "available", "higher_is_worse": False, "reference": "2025-12-31"},
     {"id": "complaint_rate", "label": "민원발생률", "unit": "건/천명",
      "status": "missing", "blocked_by": "COMPLAINT_INTERNAL"},
     {"id": "repeat_rate", "label": "반복민원율", "unit": "%",
@@ -52,20 +66,37 @@ def load(name: str):
 
 
 def build_regions() -> dict:
-    """읍면 8개 x 2시점. 군 합계 행은 내보내지 않는다(중복 합산 방지)."""
+    """읍면 8개 x 2시점. 군 합계 행은 내보내지 않는다(중복 합산 방지).
+
+    시설·SGIS 값은 시점과 무관하므로 두 시점 행에 같은 값을 붙인다.
+    고령인구 1천명당 경로당만 분모가 시점마다 달라진다.
+    """
     pop = load("population.json")
+    sgis = load("sgis_stats.json")["by_region"]
+    seniors = load("senior_centers.json")["by_region"]
+    drainage = load("drainage_risk.json")["by_region"]
+    water = load("water_supply.json")["by_region"]
     by_period: dict[str, list] = {}
 
     for rec in pop["records"]:
         if rec["level"] != "eupmyeon":
             continue
+        code = rec["region_code"]
         ratio = round(rec["elderly"] / rec["population"] * 100, 1)
         by_period.setdefault(rec["period"], []).append({
-            "region_code": rec["region_code"],
+            "region_code": code,
             "name": rec["region_name"],
             "population": rec["population"],
             "elderly": rec["elderly"],
             "elderly_ratio": ratio,
+            "aging_index": sgis[code]["aging_index"],
+            "density_per_km2": sgis[code]["density_per_km2"],
+            "senior_center_count": seniors[code]["count"],
+            "senior_center_old_count": seniors[code]["old_count"],
+            "senior_center_per_1k_elderly": round(
+                seniors[code]["count"] / rec["elderly"] * 1000, 1),
+            "drainage_risk_count": drainage[code]["count"],
+            "water_supply_rate": water[code]["supply_rate_pct"],
         })
 
     for period, rows in by_period.items():
@@ -84,6 +115,27 @@ def build_regions() -> dict:
         },
         "indicators": INDICATORS,
         "regions": by_period,
+    }
+
+
+def build_facilities() -> dict:
+    """지도 마커용 시설 지점. 화면에 필요한 필드만 골라 내보낸다."""
+    seniors = load("senior_centers.json")
+    drainage = load("drainage_risk.json")
+    return {
+        "senior_centers": {
+            "reference_date": seniors["reference_date"],
+            "old_before_year": seniors["old_before_year"],
+            "points": [
+                {k: c[k] for k in ("name", "region_code", "lat", "lon", "built_year")}
+                for c in seniors["centers"]],
+        },
+        "drainage_risk": {
+            "reference_date": drainage["reference_date"],
+            "points": [
+                {k: s[k] for k in ("name", "region_code", "lat", "lon", "designated_on")}
+                for s in drainage["sites"]],
+        },
     }
 
 
@@ -128,6 +180,7 @@ def main() -> None:
         "period": potholes["period"],
         "points": potholes["points"],
     })
+    write("facilities.json", build_facilities())
     write("sources.json", build_sources())
 
     if boundary.get("_provenance") != "verified":
