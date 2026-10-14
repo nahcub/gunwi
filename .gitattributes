@@ -1,0 +1,5 @@
+# data/raw 는 동결 구역이다. _meta.json 의 sha256 은 받은 바이트 그대로의 해시이므로
+# Git 이 줄바꿈을 바꾸지 못하게 한다 (core.autocrlf 가 켜진 PC 에서도 동일 바이트 보장).
+data/raw/** -text
+# 출처 카드는 사람이 편집하는 텍스트라 일반 규칙을 따른다
+data/raw/**/_meta.json text
