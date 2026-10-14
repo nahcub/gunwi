@@ -1,0 +1,31 @@
+{
+  "reference_date": "2025-12-31",
+  "provenance": "verified",
+  "_note": "읍면별 상수도보급률(%). 군 전체 값은 원본에 없고, 읍면 값을 평균하지 말 것(인구 가중 아님).",
+  "by_region": {
+    "2772025000": {
+      "supply_rate_pct": 95.0
+    },
+    "2772031000": {
+      "supply_rate_pct": 92.0
+    },
+    "2772032000": {
+      "supply_rate_pct": 96.0
+    },
+    "2772033000": {
+      "supply_rate_pct": 86.0
+    },
+    "2772034000": {
+      "supply_rate_pct": 98.0
+    },
+    "2772035000": {
+      "supply_rate_pct": 99.0
+    },
+    "2772036000": {
+      "supply_rate_pct": 99.0
+    },
+    "2772037000": {
+      "supply_rate_pct": 65.0
+    }
+  }
+}

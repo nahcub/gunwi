@@ -8,13 +8,13 @@
       "name": "행정동별 연령별 주민등록인구",
       "provider": "행정안전부 주민등록 인구통계",
       "url": "https://jumin.mois.go.kr/ageStatMonth.do",
-      "reference_date": "2023-12-31 / 2024-12-31 / 2025-12-31 / 2026-08-31",
+      "reference_date": "2025-12-31 / 2026-08-31",
       "license": "공식 통계 출처표시",
       "status": "확보",
       "request_status": null,
       "raw_dir": "data/raw/mois-age-2025-12",
       "used_for": ["읍면 인구", "고령화율", "민원 1천명당 환산 분모"],
-      "notes": "4개 시점. 군 합계와 읍면 합계를 중복 합산하지 말 것. 성별 '계'와 '남'·'여'도 중복 합산 금지."
+      "notes": "2개 시점(2023-12·2024-12 는 분석 미사용으로 raw 삭제, 커밋 38c9139 에서 복구 가능). 분석 기준은 2025-12. 군 합계와 읍면 합계를 중복 합산하지 말 것. 성별 '계'와 '남'·'여'도 중복 합산 금지."
     },
     {
       "id": "DATAGOKR_PARK",
@@ -36,11 +36,11 @@
       "url": "https://www.data.go.kr/data/15030769/fileData.do",
       "reference_date": "2021-12-31",
       "license": "이용허락범위 제한 없음",
-      "status": "확보/품질주의",
+      "status": "분석제외",
       "request_status": null,
-      "raw_dir": "data/raw/gunwi-village-population-2008-2021",
-      "used_for": ["과거 추이 참고용"],
-      "notes": "남+여 != 총인구 214행, 연도+리명 중복 키 존재. 자동 교정 금지. 최신 인구 분모로 사용 금지. 읍면코드가 없어 리명만으로 결합 금지."
+      "raw_dir": null,
+      "used_for": [],
+      "notes": "[2026-10-14 분석 제외, raw 삭제] 사유: 2021년까지만 있고 읍면 코드가 없어 8개 읍면에 붙일 수 없으며 품질 문제가 많음. 원본은 git 커밋 38c9139 의 data/raw/gunwi-village-population-2008-2021 에서 복구할 수 있다. — 이전 기록: 남+여 != 총인구 214행, 연도+리명 중복 키 존재. 자동 교정 금지. 최신 인구 분모로 사용 금지. 읍면코드가 없어 리명만으로 결합 금지."
     },
     {
       "id": "BOUNDARY_EUPMYEON",
@@ -65,7 +65,7 @@
       "status": "확보/군 단위",
       "request_status": null,
       "raw_dir": "data/raw/daegu-salpiso-reports-2024-11-27",
-      "used_for": ["처리지연율 참고 (군 단위, 지표 미사용)"],
+      "used_for": ["보고서 배경 수치(군 단위, 지표 미사용)"],
       "notes": "처리기관 단위 14행 집계. 군위군 1행: 제보 87 / 처리 68 / 미처리 10 / 반송 9. 읍면 구분·좌표 없음. '대구광역시' 행은 합계가 아니라 본청 몫(전체 = 14행 합). 집계 연도 미명시 — reference_date는 파일데이터명 접미사. 처리기관 기준이라 군위 지역 제보 전체라는 보장 없음."
     },
     {
@@ -75,11 +75,11 @@
       "url": "https://www.data.go.kr/data/15155502/fileData.do",
       "reference_date": "2024-12-31",
       "license": "이용허락범위 제한 없음",
-      "status": "확보/표본부족",
+      "status": "분석제외",
       "request_status": null,
-      "raw_dir": "data/raw/datagokr-gunwi-illegal-parking-2024-12-31",
+      "raw_dir": null,
       "used_for": [],
-      "notes": "2024년 안전신문고 신고 2건뿐(군위읍, 횡단보도). 좌표 없음(지번주소). cp949. 지표 근거로 쓰기엔 표본이 너무 작다."
+      "notes": "[2026-10-14 분석 제외, raw 삭제] 사유: 신고 2건뿐이라 지표 근거로 쓸 수 없음. 원본은 git 커밋 38c9139 의 data/raw/datagokr-gunwi-illegal-parking-2024-12-31 에서 복구할 수 있다. — 이전 기록: 2024년 안전신문고 신고 2건뿐(군위읍, 횡단보도). 좌표 없음(지번주소). cp949. 지표 근거로 쓰기엔 표본이 너무 작다."
     },
     {
       "id": "DATAGOKR_GUNWI_SMALL_FACILITY_RISK",
@@ -114,11 +114,11 @@
       "url": "https://www.data.go.kr/data/15012896/standard.do",
       "reference_date": "2026-04-15",
       "license": "이용허락범위 제한 없음",
-      "status": "확보",
+      "status": "분석제외",
       "request_status": null,
-      "raw_dir": "data/raw/datagokr-gunwi-parking-2026-04-15",
-      "used_for": ["시설 분포 참고"],
-      "notes": "61행, 위도·경도 전 행. 관리기관 군위군청 56 + 민간·기타 5. 반기 갱신(차기 2026-10-15)."
+      "raw_dir": null,
+      "used_for": [],
+      "notes": "[2026-10-14 분석 제외, raw 삭제] 사유: 엮을 가설이 없음(짝이 될 불법주정차 자료가 표본 부족). 원본은 git 커밋 38c9139 의 data/raw/datagokr-gunwi-parking-2026-04-15 에서 복구할 수 있다. — 이전 기록: 61행, 위도·경도 전 행. 관리기관 군위군청 56 + 민간·기타 5. 반기 갱신(차기 2026-10-15)."
     },
     {
       "id": "DATAGOKR_GUNWI_WATER_SUPPLY_RATE",
@@ -130,7 +130,7 @@
       "status": "확보",
       "request_status": null,
       "raw_dir": "data/raw/datagokr-gunwi-water-supply-rate-2025-12-31",
-      "used_for": ["상수도 관련 참고 (지표 미사용)"],
+      "used_for": ["읍면별 상수도보급률 (derived/water_supply.json)"],
       "notes": "읍면 8행(%), 읍면명이 프로젝트 표준과 일치. 군 합계 행 없음. cp949. 삼국유사면 65, 나머지 86~99."
     },
     {
@@ -140,11 +140,11 @@
       "url": "https://www.data.go.kr/data/15129242/fileData.do",
       "reference_date": "2025-06-25",
       "license": "이용허락범위 제한 없음",
-      "status": "부분확보",
+      "status": "분석제외",
       "request_status": null,
-      "raw_dir": "data/raw/daegu-unserved-water-pop-2025-06-25",
-      "used_for": ["상수도 관련 참고 (지표 미사용)"],
-      "notes": "4행: 소보 143 · 부계 417 · 의흥 5 · 삼국유사 467명. 나머지 4개 읍면은 행 없음 — 0으로 채우지 말 것. 주소에 이중·후행 공백. cp949."
+      "raw_dir": null,
+      "used_for": [],
+      "notes": "[2026-10-14 분석 제외, raw 삭제] 사유: 4개 읍면에만 값이 있고 상수도보급률(DATAGOKR_GUNWI_WATER_SUPPLY_RATE)과 내용이 겹침. 원본은 git 커밋 38c9139 의 data/raw/daegu-unserved-water-pop-2025-06-25 에서 복구할 수 있다. — 이전 기록: 4행: 소보 143 · 부계 417 · 의흥 5 · 삼국유사 467명. 나머지 4개 읍면은 행 없음 — 0으로 채우지 말 것. 주소에 이중·후행 공백. cp949."
     },
     {
       "id": "COMPLAINT_INTERNAL",
@@ -208,7 +208,7 @@
       "status": "확보",
       "request_status": null,
       "raw_dir": "data/raw/sgis-admstat-2025-2q",
-      "used_for": ["읍면 단위 인구·가구·주택·사업체 대리지표", "고령 1인가구", "건축물 노후도", "경계 재취득(미해결 과제)"],
+      "used_for": ["읍면별 인구총괄·가구·주택·사업체 총괄 (derived/sgis_stats.json)", "경계 재취득(미해결 과제)"],
       "notes": "읍면 8개 단위. SGIS 제공용 코드 22520은 프로젝트 표준(2772025000 계열)과 다른 체계이므로 빌드 시점에 한 번만 매핑할 것. 원본 전국 zip(50MB 초과)은 커밋하지 않고 ~/Downloads/gunwi-dl/ 에 보관(sha256은 _meta.json). 경계 shp는 EPSG:5179로 재투영 필요."
     },
     {

@@ -19,7 +19,8 @@ RAW = ROOT / "data" / "raw"
 DERIVED = ROOT / "data" / "derived"
 
 # 주민등록 인구 파일이 제공하는 기준시점별 폴더
-MOIS_PERIODS = ["2023-12", "2024-12", "2025-12", "2026-08"]
+# 2023-12·2024-12 는 분석에 쓰지 않아 raw 에서 삭제했다(커밋 38c9139 에서 복구 가능)
+MOIS_PERIODS = ["2025-12", "2026-08"]
 
 GUNWI_CODE = "2772000000"        # 군 합계 행. 읍면과 절대 함께 더하지 않는다
 ELDERLY_FROM_BUCKET = 13         # 5세 구간 인덱스 13 == 65세
@@ -40,7 +41,7 @@ def read_meta(folder: str) -> dict:
 # ---------------------------------------------------------------- 인구
 
 def prepare_population():
-    """행정안전부 연령별 인구. 4개 시점 x (군 합계 1 + 읍면 8) = 36행."""
+    """행정안전부 연령별 인구. 2개 시점 x (군 합계 1 + 읍면 8) = 18행."""
     records = []
     name_by_code = {}
 
@@ -128,45 +129,6 @@ def prepare_parks():
             "reference_date": r["REFERENCE_DATE"],
         })
     return parks, labels
-
-
-# ---------------------------------------------------------- 행정리 과거인구
-
-def prepare_village_history() -> dict:
-    """2008~2021 행정리 인구. 원본 품질 문제를 '보존한 채로' 기록한다."""
-    folder = "gunwi-village-population-2008-2021"
-    meta = read_meta(folder)
-    text = (RAW / folder / "population.csv").read_bytes().decode(meta["encoding"])
-    raw_rows = list(csv.reader(io.StringIO(text)))
-    header, body = raw_rows[0], raw_rows[1:]
-
-    rows = []
-    for r in body:
-        rows.append({
-            "year": int(r[0]),
-            "village": r[1].strip(),
-            "male": _num(r[2]),
-            "female": _num(r[3]),
-            "total": _num(r[4]),
-            "households": _num(r[5]),
-        })
-
-    sum_mismatch = [x for x in rows if x["male"] + x["female"] != x["total"]]
-    dup_keys = Counter((x["year"], x["village"]) for x in rows)
-    duplicates = {f"{y}/{v}": n for (y, v), n in dup_keys.items() if n > 1}
-
-    return {
-        "_warning": (
-            "자동 교정하지 않은 원본이다. 최신 인구 분모로 사용 금지. "
-            "읍면코드가 없어 리명만으로 결합 금지."),
-        "header": header,
-        "row_count": len(rows),
-        "years": sorted({x["year"] for x in rows}),
-        "sum_mismatch_count": len(sum_mismatch),
-        "duplicate_key_count": len(duplicates),
-        "duplicate_keys": duplicates,
-        "rows": rows,
-    }
 
 
 # ---------------------------------------------------------------- 경계
@@ -438,6 +400,125 @@ def prepare_drainage_risk(name_by_code: dict) -> dict:
     }
 
 
+# ---------------------------------------------------------------- 상수도
+
+def prepare_water_supply(name_by_code: dict) -> dict:
+    """읍면별 상수도보급률(%). 원본 8행, 군 합계 행 없음."""
+    folder = "datagokr-gunwi-water-supply-rate-2025-12-31"
+    meta = read_meta(folder)
+    rows = _read_csv(folder, meta)
+    code_by_name = {v: k for k, v in name_by_code.items()}
+
+    rate_col = "상수도보급률(2025년 12월말 기준)"
+    assert len(rows) == 8, f"{folder}: 8행이어야 하는데 {len(rows)}행"
+    assert rate_col in rows[0], f"{folder}: 컬럼명이 바뀜 {list(rows[0])}"
+
+    by_region = {}
+    for r in rows:
+        name = r["읍면명"].strip()
+        assert name in code_by_name, f"{folder}: 인구 데이터에 없는 읍면 {name!r}"
+        rate = float(r[rate_col])
+        assert 0 <= rate <= 100, f"{folder}/{name}: 보급률 범위 밖 {rate}"
+        by_region[code_by_name[name]] = {"supply_rate_pct": rate}
+    assert set(by_region) == set(name_by_code), "상수도 읍면 집합이 인구와 다름"
+
+    return {
+        "reference_date": meta["reference_date"],
+        "provenance": meta["provenance"],
+        "_note": "읍면별 상수도보급률(%). 군 전체 값은 원본에 없고, 읍면 값을 평균하지 말 것(인구 가중 아님).",
+        "by_region": by_region,
+    }
+
+
+# ---------------------------------------------------------------- SGIS 통계
+
+SGIS_FOLDER = "sgis-admstat-2025-2q"
+SGIS_GUN_CODE = "22520"           # SGIS 체계의 군 합계 코드
+# 파일명이 의미를 정해 주는 총괄 항목만 쓴다. 건축년도·주택유형·연건평 등
+# 주택 세부 항목은 사유 재산이라 공공시설 관리 분석 범위 밖이므로 쓰지 않는다.
+SGIS_ITEMS = {
+    # 항목코드: (파일명 접미, 출력 키, 단위, 읍면합 == 군합 검사 여부)
+    "to_in_001": ("인구총괄(총인구)", "population", "명", True),
+    "to_in_002": ("인구총괄(평균나이)", "avg_age", "세", False),
+    "to_in_003": ("인구총괄(인구밀도)", "density_per_km2", "명/㎢", False),
+    "to_in_004": ("인구총괄(노령화지수)", "aging_index", "유소년 100명당 고령인구", False),
+    "to_in_005": ("인구총괄(노년부양비)", "old_dependency", "생산연령 100명당 고령인구", False),
+    "to_in_006": ("인구총괄(유년부양비)", "young_dependency", "생산연령 100명당 유소년", False),
+    "to_ga_001": ("가구총괄", "households", "가구", True),
+    "to_ho_001": ("주택총괄_총주택(거처)수", "houses", "호", True),
+    "to_fa_010": ("산업분류별(11차_대분류)_총괄사업체수", "businesses", "개", True),
+    "to_em_020": ("산업분류별(11차_대분류)_총괄종사자수", "employees", "명", True),
+}
+# SGIS 인구(등록센서스)와 주민등록 인구는 정의가 달라 같지 않다. 매핑이
+# 뒤바뀌면 수배 차이가 나므로 이 정도 허용 폭이면 뒤바뀜만 잡는다.
+SGIS_POP_TOLERANCE = 0.15
+
+
+def prepare_sgis_stats(boundary: dict, population: list) -> dict:
+    """SGIS 행정구역 통계(2024년)를 읍면별로 정리한다.
+
+    SGIS 코드(22520111 계열)는 경계 원본 ADM_CD 와 같은 체계다. prepare_boundary()
+    가 심어 둔 source_adm_cd -> region_code 대응을 그대로 써서, 코드 변환을
+    한 곳에만 둔다.
+    """
+    meta = read_meta(SGIS_FOLDER)
+    region_by_sgis = {f["properties"]["source_adm_cd"]: f["properties"]["region_code"]
+                      for f in boundary["features"]}
+    assert len(region_by_sgis) == 8, "경계에서 SGIS 코드 8개를 얻지 못함"
+
+    by_region = {code: {} for code in region_by_sgis.values()}
+    gun = {}
+    na_cells = []
+    for item, (suffix, key, _unit, additive) in SGIS_ITEMS.items():
+        name = f"2025년기준_2024년_{suffix}.csv"
+        assert name in meta["files"], f"{SGIS_FOLDER}: _meta.json 에 없는 파일 {name}"
+        text = (RAW / SGIS_FOLDER / name).read_bytes().decode(meta["encoding"])
+        rows = [r for r in csv.DictReader(io.StringIO(text)) if r["통계항목"] == item]
+        assert {r["기준연도"] for r in rows} == {"2024"}, f"{name}: 기준연도가 2024가 아님"
+        codes = [r["행정구역코드"] for r in rows]
+        assert sorted(codes) == sorted([SGIS_GUN_CODE, *region_by_sgis]), (
+            f"{name}: 지역코드가 군 1 + 읍면 8 이 아님 {codes}")
+
+        for r in rows:
+            raw = r["통계값"].strip()
+            # N/A 는 비공개(소수 셀) 표시다. 0 으로 바꾸지 않는다
+            value = None if raw == "N/A" else (int(raw) if additive else float(raw))
+            if value is None:
+                na_cells.append(f"{r['행정구역코드']}/{item}")
+            if r["행정구역코드"] == SGIS_GUN_CODE:
+                gun[key] = value
+            else:
+                by_region[region_by_sgis[r["행정구역코드"]]][key] = value
+
+        if additive:
+            parts = [by_region[c][key] for c in by_region]
+            if None not in parts and gun[key] is not None:
+                assert sum(parts) == gun[key], (
+                    f"{name}: 읍면 합 {sum(parts)} != 군 합계 {gun[key]}")
+
+    # 매핑 검산: 분석 기준 시점(2025-12) 주민등록 인구와 크게 다르면 코드가 뒤바뀐 것
+    mois = {r["region_code"]: r["population"] for r in population
+            if r["period"] == "2025-12"}
+    for code, v in by_region.items():
+        gap = abs(v["population"] - mois[code]) / mois[code]
+        assert gap <= SGIS_POP_TOLERANCE, (
+            f"SGIS {code}: 인구 {v['population']:.0f} vs 주민등록 {mois[code]} "
+            f"({gap:.0%} 차이) - 코드 매핑 확인")
+
+    return {
+        "reference_date": "2024-12-31",
+        "provenance": meta["provenance"],
+        "_note": ("SGIS 등록센서스 기반 2024년 통계. 인구는 주민등록 인구와 정의가 달라 "
+                  "값이 다르다 - 섞어 쓰지 말 것. 주택 세부 항목(건축년도 등)은 "
+                  "사유 재산이라 분석 범위 밖으로 제외."),
+        "items": {key: {"sgis_code": item, "label": suffix, "unit": unit}
+                  for item, (suffix, key, unit, _) in SGIS_ITEMS.items()},
+        "na_cells": na_cells,
+        "gun_total": gun,
+        "by_region": by_region,
+    }
+
+
 # ---------------------------------------------------------------- main
 
 def main() -> None:
@@ -445,11 +526,12 @@ def main() -> None:
 
     population, name_by_code = prepare_population()
     parks, park_labels = prepare_parks()
-    history = prepare_village_history()
     boundary = prepare_boundary(name_by_code)
     potholes = prepare_potholes(boundary)
     seniors = prepare_senior_centers(name_by_code)
     drainage = prepare_drainage_risk(name_by_code)
+    water = prepare_water_supply(name_by_code)
+    sgis = prepare_sgis_stats(boundary, population)
 
     def write(name: str, obj) -> None:
         path = DERIVED / name
@@ -466,16 +548,14 @@ def main() -> None:
         "records": population,
     })
     write("parks.json", {"column_labels": park_labels, "parks": parks})
-    write("village_history.json", history)
     write("eupmyeon.geojson", boundary)
     write("potholes.json", potholes)
     write("senior_centers.json", seniors)
     write("drainage_risk.json", drainage)
+    write("water_supply.json", water)
+    write("sgis_stats.json", sgis)
 
-    print(f"\n  인구 {len(population)}행 / 공원 {len(parks)}건 / "
-          f"행정리 {history['row_count']}행 "
-          f"(합계불일치 {history['sum_mismatch_count']}행, "
-          f"중복키 {history['duplicate_key_count']}개)")
+    print(f"\n  인구 {len(population)}행 / 공원 {len(parks)}건")
     print(f"  포트홀 전국 {potholes['national_row_count']}행 중 군위 "
           f"{len(potholes['points'])}건 "
           f"(완전중복 {potholes['exact_duplicate_count']}행, "
@@ -485,6 +565,9 @@ def main() -> None:
           f"(노후 {old}곳, {SENIOR_OLD_BEFORE_YEAR}년 이전 - 임시 기준) / "
           f"위험지정 세천 {len(drainage['sites'])}곳 "
           f"(해제 {len(drainage['released_excluded'])}건 제외)")
+    print(f"  상수도보급률 읍면 {len(water['by_region'])}개 / "
+          f"SGIS 2024 항목 {len(sgis['items'])}개 x 읍면 {len(sgis['by_region'])}개 "
+          f"(N/A {len(sgis['na_cells'])}칸)")
 
 
 if __name__ == "__main__":

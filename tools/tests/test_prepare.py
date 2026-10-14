@@ -22,17 +22,12 @@ import prepare  # noqa: E402
 
 def test_pipeline_runs_and_reproduces_known_counts():
     population, name_by_code = prepare.prepare_population()
-    assert len(population) == 36          # 4시점 x (군 합계 + 읍면 8)
+    assert len(population) == 18          # 2시점 x (군 합계 + 읍면 8)
     assert len(name_by_code) == 8
     assert prepare.GUNWI_CODE not in name_by_code
 
     parks, _ = prepare.prepare_parks()
     assert len(parks) == 3                # 표준데이터 등록분. 전수가 아니다
-
-    history = prepare.prepare_village_history()
-    assert history["row_count"] == 2528
-    assert history["sum_mismatch_count"] == 214   # 원본 그대로 보존된 오류
-    assert history["duplicate_key_count"] == 56
 
     boundary = prepare.prepare_boundary(name_by_code)
     assert len(boundary["features"]) == 8
@@ -198,6 +193,40 @@ def test_address_must_resolve_to_one_eupmyeon():
     with pytest.raises(AssertionError, match="하나로 정할 수 없음"):
         prepare._region_code_from_address(
             code_by_name, "대구광역시 군위군 군위읍 X", "대구광역시 군위군 부계면 Y")
+
+
+def test_water_supply_known_values():
+    _, name_by_code = prepare.prepare_population()
+    out = prepare.prepare_water_supply(name_by_code)
+    by_name = {name_by_code[c]: v["supply_rate_pct"] for c, v in out["by_region"].items()}
+    assert len(by_name) == 8
+    assert by_name["삼국유사면"] == 65
+    assert by_name["의흥면"] == 99
+
+
+# ---------------------------------------------------------------- SGIS
+
+def test_sgis_known_values_and_mapping():
+    """원본이 바뀌거나 SGIS 코드 매핑이 뒤바뀌면 알아채도록 고정한다."""
+    population, name_by_code = prepare.prepare_population()
+    out = prepare.prepare_sgis_stats(prepare.prepare_boundary(name_by_code), population)
+    assert set(out["by_region"]) == set(name_by_code)   # 군 합계 코드 없음
+    assert out["gun_total"]["population"] == 21493
+    by_name = {name_by_code[c]: v for c, v in out["by_region"].items()}
+    assert by_name["군위읍"]["population"] == 7606
+    assert by_name["삼국유사면"]["aging_index"] == 5315.4
+    assert out["na_cells"] == []
+
+
+def test_sgis_swapped_mapping_guard():
+    """SGIS 코드가 다른 읍면에 붙으면 주민등록 인구 검산에서 멈춰야 한다."""
+    population, name_by_code = prepare.prepare_population()
+    boundary = prepare.prepare_boundary(name_by_code)
+    props = {f["properties"]["region_name"]: f["properties"] for f in boundary["features"]}
+    props["군위읍"]["source_adm_cd"], props["산성면"]["source_adm_cd"] = (
+        props["산성면"]["source_adm_cd"], props["군위읍"]["source_adm_cd"])
+    with pytest.raises(AssertionError, match="코드 매핑 확인"):
+        prepare.prepare_sgis_stats(boundary, population)
 
 
 def test_senior_center_coordinate_guard(tmp_path, monkeypatch):

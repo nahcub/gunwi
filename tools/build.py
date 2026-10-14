@@ -52,7 +52,7 @@ def load(name: str):
 
 
 def build_regions() -> dict:
-    """읍면 8개 x 4시점. 군 합계 행은 내보내지 않는다(중복 합산 방지)."""
+    """읍면 8개 x 2시점. 군 합계 행은 내보내지 않는다(중복 합산 방지)."""
     pop = load("population.json")
     by_period: dict[str, list] = {}
 
@@ -130,9 +130,6 @@ def main() -> None:
     })
     write("sources.json", build_sources())
 
-    # 공개하지 않는 것을 명시적으로 남긴다
-    print("\n  공개 제외(derived/에만 보관): village_history.json"
-          "  - 원본 품질 문제 보존분")
     if boundary.get("_provenance") != "verified":
         print(f"  ! 경계 출처 {boundary['_provenance']} "
               "- 화면 상단에 경고 배너가 뜹니다")

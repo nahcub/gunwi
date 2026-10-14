@@ -1,0 +1,168 @@
+{
+  "reference_date": "2024-12-31",
+  "provenance": "verified",
+  "_note": "SGIS 등록센서스 기반 2024년 통계. 인구는 주민등록 인구와 정의가 달라 값이 다르다 - 섞어 쓰지 말 것. 주택 세부 항목(건축년도 등)은 사유 재산이라 분석 범위 밖으로 제외.",
+  "items": {
+    "population": {
+      "sgis_code": "to_in_001",
+      "label": "인구총괄(총인구)",
+      "unit": "명"
+    },
+    "avg_age": {
+      "sgis_code": "to_in_002",
+      "label": "인구총괄(평균나이)",
+      "unit": "세"
+    },
+    "density_per_km2": {
+      "sgis_code": "to_in_003",
+      "label": "인구총괄(인구밀도)",
+      "unit": "명/㎢"
+    },
+    "aging_index": {
+      "sgis_code": "to_in_004",
+      "label": "인구총괄(노령화지수)",
+      "unit": "유소년 100명당 고령인구"
+    },
+    "old_dependency": {
+      "sgis_code": "to_in_005",
+      "label": "인구총괄(노년부양비)",
+      "unit": "생산연령 100명당 고령인구"
+    },
+    "young_dependency": {
+      "sgis_code": "to_in_006",
+      "label": "인구총괄(유년부양비)",
+      "unit": "생산연령 100명당 유소년"
+    },
+    "households": {
+      "sgis_code": "to_ga_001",
+      "label": "가구총괄",
+      "unit": "가구"
+    },
+    "houses": {
+      "sgis_code": "to_ho_001",
+      "label": "주택총괄_총주택(거처)수",
+      "unit": "호"
+    },
+    "businesses": {
+      "sgis_code": "to_fa_010",
+      "label": "산업분류별(11차_대분류)_총괄사업체수",
+      "unit": "개"
+    },
+    "employees": {
+      "sgis_code": "to_em_020",
+      "label": "산업분류별(11차_대분류)_총괄종사자수",
+      "unit": "명"
+    }
+  },
+  "na_cells": [],
+  "gun_total": {
+    "population": 21493,
+    "avg_age": 59.2,
+    "density_per_km2": 35.1,
+    "aging_index": 1188.7,
+    "old_dependency": 89.6,
+    "young_dependency": 7.5,
+    "households": 10883,
+    "houses": 9735,
+    "businesses": 3372,
+    "employees": 9893
+  },
+  "by_region": {
+    "2772025000": {
+      "population": 7606,
+      "avg_age": 52.7,
+      "density_per_km2": 91.0,
+      "aging_index": 462.0,
+      "old_dependency": 54.9,
+      "young_dependency": 11.9,
+      "households": 3457,
+      "houses": 2938,
+      "businesses": 1321,
+      "employees": 5405
+    },
+    "2772031000": {
+      "population": 2169,
+      "avg_age": 63.1,
+      "density_per_km2": 21.7,
+      "aging_index": 3147.2,
+      "old_dependency": 113.3,
+      "young_dependency": 3.6,
+      "households": 1179,
+      "houses": 1083,
+      "businesses": 488,
+      "employees": 705
+    },
+    "2772032000": {
+      "population": 3522,
+      "avg_age": 60.5,
+      "density_per_km2": 35.8,
+      "aging_index": 1990.6,
+      "old_dependency": 97.0,
+      "young_dependency": 4.9,
+      "households": 1749,
+      "houses": 1562,
+      "businesses": 558,
+      "employees": 1751
+    },
+    "2772033000": {
+      "population": 1987,
+      "avg_age": 62.1,
+      "density_per_km2": 30.7,
+      "aging_index": 1744.6,
+      "old_dependency": 102.4,
+      "young_dependency": 5.9,
+      "households": 995,
+      "houses": 894,
+      "businesses": 299,
+      "employees": 645
+    },
+    "2772034000": {
+      "population": 1760,
+      "avg_age": 64.5,
+      "density_per_km2": 29.2,
+      "aging_index": 3765.4,
+      "old_dependency": 129.7,
+      "young_dependency": 3.4,
+      "households": 1007,
+      "houses": 932,
+      "businesses": 193,
+      "employees": 332
+    },
+    "2772035000": {
+      "population": 2130,
+      "avg_age": 63.6,
+      "density_per_km2": 39.1,
+      "aging_index": 3110.5,
+      "old_dependency": 129.9,
+      "young_dependency": 4.2,
+      "households": 1163,
+      "houses": 1073,
+      "businesses": 275,
+      "employees": 581
+    },
+    "2772036000": {
+      "population": 1101,
+      "avg_age": 64.6,
+      "density_per_km2": 29.6,
+      "aging_index": 2357.7,
+      "old_dependency": 132.7,
+      "young_dependency": 5.6,
+      "households": 632,
+      "houses": 587,
+      "businesses": 129,
+      "employees": 296
+    },
+    "2772037000": {
+      "population": 1218,
+      "avg_age": 65.0,
+      "density_per_km2": 10.6,
+      "aging_index": 5315.4,
+      "old_dependency": 134.4,
+      "young_dependency": 2.5,
+      "households": 701,
+      "houses": 666,
+      "businesses": 109,
+      "employees": 178
+    }
+  }
+}
