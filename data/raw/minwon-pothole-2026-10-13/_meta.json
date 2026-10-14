@@ -1,0 +1,26 @@
+{
+  "source_id": "MINWON_POTHOLE_LATLON",
+  "name": "국민권익위원회 민원빅데이터 포트홀 민원 위경도 (minPotholeLatLonInfo)",
+  "provider": "공공데이터포털 / 국민권익위원회 민원정보분석과",
+  "url": "https://www.data.go.kr/data/15114773/openapi.do",
+  "reference_date": "2026-10-13",
+  "retrieved_at": "2026-10-14",
+  "retrieved_by": "사용자 (tools/fetch_pothole.py, 개인 PC)",
+  "license": "공공저작물 출처표시·상업적이용금지(2유형)",
+  "provenance": "verified",
+  "notes": "전국 포트홀 민원 좌표. 수집기간 create_dt 2025-01-01 ~ 2026-10-13(reference_date는 수집 구간 끝날). 엔드포인트 apis.data.go.kr/1140100/minAnalsInfoView7/minPotholeLatLonInfo, dateFrom/dateTo 최대 15일 구간으로 나눠 호출(progress.json = 완료 구간 44개 기록). pothole_all.csv 는 API 응답 그대로가 아니라 fetch_pothole.py 가 item 의 create_dt·event_lat·event_lon 3개 필드만 옮겨 적은 것(utf-8 BOM). test_response.txt = 2025-01-01 하루치 원응답 표본(JSON). 57,060행. 품질: 완전중복 행 653개(같은 날 같은 좌표 반복 신고 추정), 위도가 쉼표 소수점('37,642')인 행 2개(2026-03-01, 인천 부근) — 자동 교정하지 말고 prepare.py 에서 개수를 세어 제외할 것. 군위군 읍면 경계 내부 4건뿐(우보면 2, 효령면 2) — 읍면 비교 지표로는 표본 부족이므로 지도에 지점으로만 표시. 루트의 gunwi_candidate.csv 는 bbox 남쪽 한계(36.05)가 실제 경계(36.007)보다 북쪽이라 불완전하므로 등록하지 않음.",
+  "files": {
+    "pothole_all.csv": {
+      "sha256": "454300cb2dd46d3da148688e076cf9a0f545ef5bfe598cfd4c885e2f141e06ae",
+      "bytes": 2487462
+    },
+    "progress.json": {
+      "sha256": "96e7f1bdc4d3c4a132bc7fcd92aabc79854800ba5de043081455b7875e34e039",
+      "bytes": 1154
+    },
+    "test_response.txt": {
+      "sha256": "13b1ac0ed88e4a6d5982a107a2f220e01167a72e523202cbcf5fd33e62ef323d",
+      "bytes": 784
+    }
+  }
+}

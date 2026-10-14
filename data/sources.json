@@ -91,8 +91,21 @@
       "status": "확보",
       "request_status": null,
       "raw_dir": "data/raw/datagokr-gunwi-small-facility-risk-2026-07-15",
-      "used_for": ["시설관리 필요도 후보 (산식 미확정)"],
-      "notes": "39행, 위도·경도 전 행. 세천 28·소교량 7·농로 3·마을진입로 1. 해제 1건(내량천 2018-06-05) → 현행 38건. 지정사유 컬럼 전부 공란. 지표로 쓰려면 methodology.md 에 근거를 먼저 기록할 것."
+      "used_for": ["시설관리 필요도 후보 (산식 미확정)", "배수시설: 현행 위험지정 세천 읍면별 집계 (derived/drainage_risk.json)"],
+      "notes": "39행, 위도·경도 전 행. 세천 28·소교량 7·농로 3·마을진입로 1. 해제 1건(내량천 2018-06-05) → 현행 38건. 지정사유 컬럼 전부 공란. 지표로 쓰려면 methodology.md 에 근거를 먼저 기록할 것. 배수시설로는 세천만 쓴다(해제 1건 제외 현행 27건). 빗물받이·맨홀 전수대장이 아니다."
+    },
+    {
+      "id": "DATAGOKR_GUNWI_SENIOR",
+      "name": "전국마을회관및경로당표준데이터 중 군위군 경로당",
+      "provider": "대구광역시 군위군 (공공데이터포털 표준데이터)",
+      "url": "https://www.data.go.kr/data/15114136/standard.do",
+      "reference_date": "2025-12-19",
+      "license": "공식 출처의 이용조건 확인 필요",
+      "status": "확보/이관자료",
+      "request_status": null,
+      "raw_dir": "data/raw/datagokr-gunwi-senior-2025-12-19",
+      "used_for": ["경로당 읍면별 수·건립연도 분포 (derived/senior_centers.json)", "노후 경로당 수 (기준 연도 미확정)"],
+      "notes": "215행, 좌표·건립일자·면적, 전 행 영업. 팀원(윤현준) 추출본을 받은 그대로 동결 — 정부 원본 바이트가 아니므로 provenance=verified_import. 건립일자 전 행 YYYY-01-01 → 연도 정밀도. 읍면 컬럼이 없어 주소에서 추출한다. 경로당을 무더위쉼터로 간주하지 않는다. 공식 원본 재다운로드 시 새 raw 폴더로 교체할 것."
     },
     {
       "id": "DATAGOKR_GUNWI_PARKING",
@@ -209,7 +222,20 @@
       "request_status": "DATA_GO_KR_KEY 발급·활용신청 필요",
       "raw_dir": null,
       "used_for": ["민원발생률 직접 대체", "읍면 단위 민원 통계(미확인)"],
-      "notes": "포트홀 좌표(minPotholeLatLonInfo)는 다른 PC에서 수집 중이므로 제외. 기술문서로 오퍼레이션 확인 완료(docs/data-survey.md §1.5). 핵심은 2023 minAddrClsfDocCnt(민원발생지별×민원분야별 건수), 2022 minMrPopltnRtInfo5(지역 인구수 대비 민원건수). 지역 단위는 시도/시군구까지 — 읍면 단위는 제공되지 않음. 호출은 https://apis.data.go.kr 443 가능. 키는 저장소에 저장됨(보류 중): 사용하려면 시크릿 egress 프록시 활성화+게이트웨이 재시작 필요."
+      "notes": "포트홀 좌표(minPotholeLatLonInfo)는 별도 항목 MINWON_POTHOLE_LATLON 으로 확보. 기술문서로 오퍼레이션 확인 완료(docs/data-survey.md §1.5). 핵심은 2023 minAddrClsfDocCnt(민원발생지별×민원분야별 건수), 2022 minMrPopltnRtInfo5(지역 인구수 대비 민원건수). 지역 단위는 시도/시군구까지 — 읍면 단위는 제공되지 않음. 호출은 https://apis.data.go.kr 443 가능. 키는 저장소에 저장됨(보류 중): 사용하려면 시크릿 egress 프록시 활성화+게이트웨이 재시작 필요."
+    },
+    {
+      "id": "MINWON_POTHOLE_LATLON",
+      "name": "국민권익위원회 민원빅데이터 포트홀 민원 위경도 (minPotholeLatLonInfo)",
+      "provider": "공공데이터포털 / 국민권익위원회 민원정보분석과",
+      "url": "https://www.data.go.kr/data/15114773/openapi.do",
+      "reference_date": "2025-01-01 ~ 2026-10-13",
+      "license": "공공저작물 출처표시·상업적이용금지(2유형)",
+      "status": "확보/표본부족",
+      "request_status": null,
+      "raw_dir": "data/raw/minwon-pothole-2026-10-13",
+      "used_for": ["포트홀 민원 지점 지도 표시"],
+      "notes": "전국 57,060건을 원자료로 보존하고 군위 경계 내부만 prepare.py 에서 파생. 군위 내부 4건(우보면 2, 효령면 2)뿐이라 읍면 비교 지표로 쓰지 않고 지점으로만 표시. 완전중복 653행, 위도 쉼표 소수점 2행 — 교정하지 않고 개수를 기록. 읍면 판정은 출처 미확인 경계(BOUNDARY_EUPMYEON)에 의존."
     },
     {
       "id": "GUNWI_BOARD",

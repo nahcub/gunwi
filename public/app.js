@@ -148,6 +148,8 @@ function renderDetail() {
 
   const nearby = store.parks.parks.filter(
     (p) => p.address && p.address.includes(r.name));
+  const potholes = store.potholes.points.filter(
+    (p) => p.region_code === r.region_code);
 
   $('detail').innerHTML =
     `<div class="name">${r.name}</div>` +
@@ -156,6 +158,7 @@ function renderDetail() {
     `<dt>65세 이상</dt><dd>${r.elderly.toLocaleString('ko-KR')} 명</dd>` +
     `<dt>고령화율</dt><dd>${r.elderly_ratio} %</dd>` +
     `<dt>도시공원</dt><dd>${nearby.length} 건</dd>` +
+    `<dt>포트홀 민원</dt><dd>${potholes.length} 건</dd>` +
     `<dt>행정기관코드</dt><dd>${r.region_code}</dd>` +
     '</dl>' +
     '<p class="why" style="margin:10px 0 0;color:#9ca3af;font-size:11px">' +
@@ -189,7 +192,7 @@ function renderSources() {
   const list = store.sources.sources.filter((s) => {
     if (state.sourceFilter === 'all') return true;
     if (state.sourceFilter === 'missing') return s.status === '미확보' || s.status === '출처미확인';
-    return s.status === '확보' || s.status === '부분확보' || s.status === '확보/품질주의';
+    return s.status.startsWith('확보') || s.status === '부분확보';
   });
 
   list.forEach((s) => {
@@ -264,9 +267,19 @@ function initMap() {
       }).bindTooltip(`${p.name} (${p.category})`))
   );
 
+  const [from, to] = store.potholes.period;
+  const potholeLayer = L.layerGroup(
+    store.potholes.points.map((p) =>
+      L.circleMarker([p.lat, p.lon], {
+        radius: 6, color: '#7a2e0e', fillColor: '#f97316',
+        fillOpacity: 0.9, weight: 1.5,
+      }).bindTooltip(`포트홀 민원 · ${p.date} · ${p.region_name}`))
+  ).addTo(map);
+
   L.control.layers(null, {
     '읍면 이름': labels,
     '도시공원 3건': parkLayer,
+    [`포트홀 민원 ${store.potholes.points.length}건 (${from}~${to})`]: potholeLayer,
     '가로등·보안등 (미확보)': L.layerGroup(),
     '상·하수도 관망 (미확보)': L.layerGroup(),
     '민원 발생지점 (미확보)': L.layerGroup(),
@@ -298,13 +311,14 @@ function redraw() {
 }
 
 async function main() {
-  const [regions, boundary, parks, sources] = await Promise.all([
+  const [regions, boundary, parks, potholes, sources] = await Promise.all([
     getJSON('./data/regions.json'),
     getJSON('./data/eupmyeon.geojson'),
     getJSON('./data/parks.json'),
+    getJSON('./data/potholes.json'),
     getJSON('./data/sources.json'),
   ]);
-  Object.assign(store, { regions, boundary, parks, sources });
+  Object.assign(store, { regions, boundary, parks, potholes, sources });
 
   if (boundary.features.length !== 8) {
     throw new Error(`읍면 경계가 8개가 아님: ${boundary.features.length}`);

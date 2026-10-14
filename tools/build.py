@@ -116,11 +116,18 @@ def main() -> None:
 
     boundary = load("eupmyeon.geojson")
     parks = load("parks.json")
+    potholes = load("potholes.json")
 
     print("public/data 생성:")
     write("regions.json", build_regions())
     write("eupmyeon.geojson", boundary)
     write("parks.json", {"parks": parks["parks"]})
+    # 지점만 공개한다. 전국 원자료와 품질 집계는 derived/에 남는다
+    write("potholes.json", {
+        "source_id": potholes["source_id"],
+        "period": potholes["period"],
+        "points": potholes["points"],
+    })
     write("sources.json", build_sources())
 
     # 공개하지 않는 것을 명시적으로 남긴다

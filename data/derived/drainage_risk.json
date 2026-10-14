@@ -1,0 +1,393 @@
+{
+  "reference_date": "2026-07-15",
+  "provenance": "verified",
+  "_note": "현행 위험지정 세천만 포함. 빗물받이·맨홀 전수대장이 아니며 지정사유는 원본에서 전부 공란.",
+  "source_type_counts": {
+    "세천": 28,
+    "소교량": 7,
+    "마을진입로": 1,
+    "농로": 3
+  },
+  "released_excluded": [
+    "내량천"
+  ],
+  "by_region": {
+    "2772025000": {
+      "count": 3
+    },
+    "2772031000": {
+      "count": 2
+    },
+    "2772032000": {
+      "count": 3
+    },
+    "2772033000": {
+      "count": 7
+    },
+    "2772034000": {
+      "count": 3
+    },
+    "2772035000": {
+      "count": 2
+    },
+    "2772036000": {
+      "count": 4
+    },
+    "2772037000": {
+      "count": 3
+    }
+  },
+  "sites": [
+    {
+      "name": "새터천",
+      "region_code": "2772033000",
+      "address": "대구광역시 군위군 부계면 춘산리 957",
+      "lon": 128.6578018,
+      "lat": 36.0931234,
+      "designated_on": "2017-02-28",
+      "notice_no": "군위군 고시 제2017-14호(2017.2.28)",
+      "length_m": 300.0,
+      "width_m": 4.0,
+      "reference_date": "2026-07-15",
+      "source_row": 2
+    },
+    {
+      "name": "대율리_세천 0008",
+      "region_code": "2772033000",
+      "address": "대구광역시 군위군 부계면 대율리 946",
+      "lon": 128.649123,
+      "lat": 36.05785516,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 956.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 3
+    },
+    {
+      "name": "대율리_세천 0009",
+      "region_code": "2772033000",
+      "address": "대구광역시 군위군 부계면 대율리 944",
+      "lon": 128.6496845,
+      "lat": 36.05757964,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 1382.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 4
+    },
+    {
+      "name": "광현리_세천 0007",
+      "region_code": "2772025000",
+      "address": "대구광역시 군위군 군위읍 광현리 808-3",
+      "lon": 128.6204859,
+      "lat": 36.23505551,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 908.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 5
+    },
+    {
+      "name": "운산리_세천 0003",
+      "region_code": "2772036000",
+      "address": "대구광역시 군위군 산성면 운산리 785",
+      "lon": 128.6939376,
+      "lat": 36.11135626,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 818.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 6
+    },
+    {
+      "name": "두북리_세천 0006",
+      "region_code": "2772034000",
+      "address": "대구광역시 군위군 우보면 두북리 71",
+      "lon": 128.6665707,
+      "lat": 36.20392431,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 1503.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 10
+    },
+    {
+      "name": "성리_세천 0001",
+      "region_code": "2772032000",
+      "address": "대구광역시 군위군 효령면 성리 413-1",
+      "lon": 128.5888245,
+      "lat": 36.19282678,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 1298.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 11
+    },
+    {
+      "name": "화전리_세천 0007",
+      "region_code": "2772036000",
+      "address": "대구광역시 군위군 산성면 화전리 877",
+      "lon": 128.7092853,
+      "lat": 36.14207975,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 1308.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 12
+    },
+    {
+      "name": "도산리_세천 0004",
+      "region_code": "2772031000",
+      "address": "대구광역시 군위군 소보면 도산리 328",
+      "lon": 128.4595019,
+      "lat": 36.23840761,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 566.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 14
+    },
+    {
+      "name": "가암리_세천 0006",
+      "region_code": "2772037000",
+      "address": "대구광역시 군위군 삼국유사면 가암리 686",
+      "lon": 128.8437232,
+      "lat": 36.19670595,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 192.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 16
+    },
+    {
+      "name": "신덕리_세천 0002",
+      "region_code": "2772035000",
+      "address": "대구광역시 군위군 의흥면 신덕리 806",
+      "lon": 128.7482889,
+      "lat": 36.17914501,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 1072.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 17
+    },
+    {
+      "name": "장곡리_세천 0001",
+      "region_code": "2772037000",
+      "address": "대구광역시 군위군 삼국유사면 장곡리 354",
+      "lon": 128.81868,
+      "lat": 36.13103418,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 870.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 19
+    },
+    {
+      "name": "신화리_세천 0003",
+      "region_code": "2772033000",
+      "address": "대구광역시 군위군 부계면 신화리 1004",
+      "lon": 128.6485587,
+      "lat": 36.09796341,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 386.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 20
+    },
+    {
+      "name": "인곡리_세천 0006",
+      "region_code": "2772037000",
+      "address": "대구광역시 군위군 삼국유사면 인곡리 499-1",
+      "lon": 128.8238766,
+      "lat": 36.1445329,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 1319.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 21
+    },
+    {
+      "name": "운산리_세천 0005",
+      "region_code": "2772036000",
+      "address": "대구광역시 군위군 산성면 운산리 794",
+      "lon": 128.6919402,
+      "lat": 36.1121323,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 520.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 22
+    },
+    {
+      "name": "나호리_세천 0004",
+      "region_code": "2772034000",
+      "address": "대구광역시 군위군 우보면 나호리 1292-102",
+      "lon": 128.6287276,
+      "lat": 36.18340798,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 555.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 23
+    },
+    {
+      "name": "대흥리_세천 0005",
+      "region_code": "2772025000",
+      "address": "대구광역시 군위군 군위읍 대흥리 894-3",
+      "lon": 128.5317793,
+      "lat": 36.2786009,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 215.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 24
+    },
+    {
+      "name": "남산리_세천 0007",
+      "region_code": "2772033000",
+      "address": "대구광역시 군위군 부계면 남산리 622-2",
+      "lon": 128.6390686,
+      "lat": 36.04196232,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 1287.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 25
+    },
+    {
+      "name": "춘산리_세천 0003",
+      "region_code": "2772033000",
+      "address": "대구광역시 군위군 부계면 춘산리 570-6",
+      "lon": 128.6558321,
+      "lat": 36.07798433,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 929.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 26
+    },
+    {
+      "name": "남산리_세천 0008",
+      "region_code": "2772033000",
+      "address": "대구광역시 군위군 부계면 남산리 508-1",
+      "lon": 128.6367148,
+      "lat": 36.04750437,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 1098.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 27
+    },
+    {
+      "name": "하곡리_세천 0002",
+      "region_code": "2772025000",
+      "address": "대구광역시 군위군 군위읍 하곡리 282",
+      "lon": 128.5926021,
+      "lat": 36.23981335,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 430.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 28
+    },
+    {
+      "name": "오천리_세천 0002",
+      "region_code": "2772032000",
+      "address": "대구광역시 군위군 효령면 오천리 231-3",
+      "lon": 128.6109751,
+      "lat": 36.19069492,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 1592.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 29
+    },
+    {
+      "name": "서경리_세천 0003",
+      "region_code": "2772031000",
+      "address": "대구광역시 군위군 소보면 서경리 49",
+      "lon": 128.5007716,
+      "lat": 36.24431812,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 1008.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 30
+    },
+    {
+      "name": "운산리_세천 0001",
+      "region_code": "2772036000",
+      "address": "대구광역시 군위군 산성면 운산리 405",
+      "lon": 128.6984982,
+      "lat": 36.10709252,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 424.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 33
+    },
+    {
+      "name": "금양리_세천 0005",
+      "region_code": "2772035000",
+      "address": "대구광역시 군위군 의흥면 금양리 953-7",
+      "lon": 128.7459826,
+      "lat": 36.14867863,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 1003.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 37
+    },
+    {
+      "name": "문덕리_세천 0003",
+      "region_code": "2772034000",
+      "address": "대구광역시 군위군 우보면 문덕리 740",
+      "lon": 128.6846985,
+      "lat": 36.13644115,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 761.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 38
+    },
+    {
+      "name": "화계리_세천 0003",
+      "region_code": "2772032000",
+      "address": "대구광역시 군위군 효령면 화계리 345",
+      "lon": 128.650601,
+      "lat": 36.12587921,
+      "designated_on": "2024-02-07",
+      "notice_no": "군위군 고시 제2024-9호(2024.2.7)",
+      "length_m": 684.0,
+      "width_m": null,
+      "reference_date": "2026-07-15",
+      "source_row": 39
+    }
+  ]
+}

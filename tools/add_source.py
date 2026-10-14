@@ -49,6 +49,10 @@ def main() -> None:
     ap.add_argument("--retrieved-by", default="")
     ap.add_argument("--encoding", default=None, help="csv 등 비 utf-8 인 경우")
     ap.add_argument("--notes", default="")
+    ap.add_argument("--provenance", choices=["verified", "verified_import"],
+                    default="verified",
+                    help="verified: 공식 원본 그대로 / verified_import: 출처는 확인됐지만 "
+                         "팀원 등에게서 받은 가공본")
     ap.add_argument("--file", action="append", default=[], required=True,
                     help="복사해 넣을 파일 (여러 번 지정 가능)")
     args = ap.parse_args()
@@ -78,7 +82,7 @@ def main() -> None:
         "retrieved_at": args.retrieved_at,
         "retrieved_by": args.retrieved_by or None,
         "license": args.license,
-        "provenance": "verified",
+        "provenance": args.provenance,
         "notes": args.notes,
         "files": files,
     }

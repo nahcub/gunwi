@@ -1,0 +1,42 @@
+{
+  "_warning": "표본이 너무 적어 읍면 비교 지표로 쓰지 않는다. 지점 표시 전용. 읍면 판정은 출처 미확인 경계에 의존한다.",
+  "source_id": "MINWON_POTHOLE_LATLON",
+  "period": [
+    "2025-01-01",
+    "2026-10-13"
+  ],
+  "boundary_provenance": "UNVERIFIED",
+  "national_row_count": 57060,
+  "exact_duplicate_count": 653,
+  "unparsable_coord_count": 2,
+  "points": [
+    {
+      "date": "2025-03-12",
+      "lat": 36.190202038744395,
+      "lon": 128.66759242588537,
+      "region_code": "2772034000",
+      "region_name": "우보면"
+    },
+    {
+      "date": "2025-03-12",
+      "lat": 36.19281653936374,
+      "lon": 128.65787509240477,
+      "region_code": "2772034000",
+      "region_name": "우보면"
+    },
+    {
+      "date": "2025-05-12",
+      "lat": 36.11766446287235,
+      "lon": 128.62178953143854,
+      "region_code": "2772032000",
+      "region_name": "효령면"
+    },
+    {
+      "date": "2026-05-27",
+      "lat": 36.0958097,
+      "lon": 128.5832059,
+      "region_code": "2772032000",
+      "region_name": "효령면"
+    }
+  ]
+}
