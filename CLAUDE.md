@@ -40,14 +40,18 @@ tools/tests/           pytest. 원자료 기준 "알려진 개수"를 고정해 
 
 `npm run dev` 는 build.py 후 `python -m http.server 8787 --directory public`.
 
-## 배포: main 에 push 하면 바로 공개된다
+## 배포: main 에 push 하면 CI 가 돈다
 
 `.github/workflows/deploy.yml` 이 main push 마다 실행된다.
 
-1. `prepare.py` 를 다시 돌리고 `git diff --exit-code data/derived/`
-   → **derived 를 재생성하지 않고 커밋했거나 손으로 고쳤으면 여기서 실패**
-2. pytest
-3. build.py → Cloudflare(wrangler) 배포
+1. `npm ci` — `package-lock.json` 이 있어야 한다. 지우지 말 것
+2. `prepare.py` 를 다시 돌리고 `git diff --exit-code data/derived/`
+   → **derived 를 재생성하지 않고 커밋했거나 손으로 고쳤으면 여기서 실패**.
+   그래서 prepare.py 출력에 실행 날짜 같은 매번 바뀌는 값을 넣으면 안 된다
+3. pytest
+4. build.py → Cloudflare(wrangler) 배포. **단 GitHub Secrets 에
+   `CLOUDFLARE_API_TOKEN`·`CLOUDFLARE_ACCOUNT_ID` 가 없으면 배포는 건너뛴다**
+   (2026-10-15 현재 없음 → 검증만 하고 실제 공개 배포는 안 되는 상태)
 
 그래서 raw 나 prepare.py 를 바꿨으면 반드시 `python tools/prepare.py` 를 돌리고
 바뀐 `data/derived/` 를 **같이 커밋**한다. 실험은 브랜치에서 한다.

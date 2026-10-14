@@ -87,6 +87,8 @@ python tools/export_excel.py
 ## 6. 배포
 
 - main 에 push 하면 GitHub Actions 가 검증 → Cloudflare 배포까지 자동으로 한다
+- 단 Cloudflare 키가 GitHub Secrets 에 없으면 배포 단계는 건너뛴다(현재 그 상태).
+  실제로 공개하려면 레포 Settings → Secrets 에 `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` 등록
 - 실패 원인 1순위: raw/prepare.py 를 바꾸고 `data/derived/` 를 재생성·커밋하지 않음
   → `python tools/prepare.py` 후 derived 변경분까지 커밋
 - 커밋 전 로컬 점검:

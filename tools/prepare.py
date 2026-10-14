@@ -11,7 +11,6 @@ import csv
 import io
 import json
 from collections import Counter
-from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -542,8 +541,9 @@ def main() -> None:
         print(f"  {path.relative_to(ROOT)}  ({path.stat().st_size:,} bytes)")
 
     print("PASS: 검증 통과. derived/ 생성:")
+    # 실행 날짜를 넣지 않는다 - CI 가 derived 재생성 결과를 커밋과 바이트 비교하므로
+    # 같은 raw 에서는 언제 돌려도 같은 파일이 나와야 한다
     write("population.json", {
-        "generated_at": date.today().isoformat(),
         "periods": MOIS_PERIODS,
         "records": population,
     })
