@@ -6,6 +6,7 @@
 from __future__ import annotations
 
 import json
+from collections import Counter
 import sys
 from pathlib import Path
 
@@ -127,3 +128,90 @@ def _patch_age(tmp_path, monkeypatch, corrupt):
         (dst / "age.json").write_text(json.dumps(rows, ensure_ascii=False),
                                       encoding="utf-8")
     monkeypatch.setattr(prepare, "RAW", raw)
+
+
+# ---------------------------------------------------------------- 포트홀
+
+def _boundary():
+    _, name_by_code = prepare.prepare_population()
+    return prepare.prepare_boundary(name_by_code)
+
+
+def test_pothole_known_counts():
+    """원본이 바뀌면 알아채도록 숫자를 고정한다. 품질 문제는 교정하지 않는다."""
+    out = prepare.prepare_potholes(_boundary())
+    assert out["national_row_count"] == 57060
+    assert out["exact_duplicate_count"] == 653
+    assert out["unparsable_coord_count"] == 2       # 위도 '37,642'
+    assert out["period"] == ["2025-01-01", "2026-10-13"]
+    by_name = Counter(p["region_name"] for p in out["points"])
+    assert by_name == {"우보면": 2, "효령면": 2}
+
+
+def test_pothole_points_carry_population_region_code():
+    _, name_by_code = prepare.prepare_population()
+    out = prepare.prepare_potholes(prepare.prepare_boundary(name_by_code))
+    for p in out["points"]:
+        assert name_by_code[p["region_code"]] == p["region_name"]
+
+
+def test_point_in_polygon_respects_holes():
+    square = [[0, 0], [10, 0], [10, 10], [0, 10], [0, 0]]
+    hole = [[4, 4], [6, 4], [6, 6], [4, 6], [4, 4]]
+    geom = {"type": "Polygon", "coordinates": [square, hole]}
+    assert prepare._in_geometry(2, 2, geom)
+    assert not prepare._in_geometry(5, 5, geom)
+    assert not prepare._in_geometry(11, 5, geom)
+
+
+# ------------------------------------------------------- 경로당 / 배수시설
+
+def test_senior_center_known_counts():
+    """원본이 바뀌면 알아채도록 숫자를 고정한다."""
+    _, name_by_code = prepare.prepare_population()
+    out = prepare.prepare_senior_centers(name_by_code)
+    assert len(out["centers"]) == 215
+    assert out["provenance"] == "verified_import"   # 정부 원본 바이트가 아니다
+    by_name = {name_by_code[c]: v for c, v in out["by_region"].items()}
+    assert by_name["군위읍"] == {"count": 38, "old_count": 8}
+    assert by_name["의흥면"] == {"count": 28, "old_count": 8}
+    assert sum(v["old_count"] for v in out["by_region"].values()) == 41
+    assert set(out["by_region"]) == set(name_by_code)   # 군 합계 코드 없음
+
+
+def test_drainage_keeps_only_current_streams():
+    _, name_by_code = prepare.prepare_population()
+    out = prepare.prepare_drainage_risk(name_by_code)
+    assert out["source_type_counts"]["세천"] == 28
+    assert out["released_excluded"] == ["내량천"]    # 2018-06-05 해제
+    assert len(out["sites"]) == 27
+    by_name = {name_by_code[c]: v["count"] for c, v in out["by_region"].items()}
+    assert by_name["부계면"] == 7
+
+
+def test_address_must_resolve_to_one_eupmyeon():
+    code_by_name = {"군위읍": "2772025000", "부계면": "2772033000"}
+    assert prepare._region_code_from_address(
+        code_by_name, "대구광역시 군위군 군위읍 동서길 27", "") == "2772025000"
+    with pytest.raises(AssertionError, match="하나로 정할 수 없음"):
+        prepare._region_code_from_address(code_by_name, "대구광역시 군위군", "")
+    with pytest.raises(AssertionError, match="하나로 정할 수 없음"):
+        prepare._region_code_from_address(
+            code_by_name, "대구광역시 군위군 군위읍 X", "대구광역시 군위군 부계면 Y")
+
+
+def test_senior_center_coordinate_guard(tmp_path, monkeypatch):
+    """군위군 범위 밖 좌표는 통과하면 안 된다."""
+    _, name_by_code = prepare.prepare_population()   # RAW 바꾸기 전에 읽는다
+    folder = "datagokr-gunwi-senior-2025-12-19"
+    src = ROOT / "data" / "raw" / folder
+    dst = tmp_path / "data" / "raw" / folder
+    dst.mkdir(parents=True)
+    (dst / "_meta.json").write_bytes((src / "_meta.json").read_bytes())
+    text = (src / "15114136_gunwi.csv").read_bytes().decode("utf-8-sig")
+    lines = text.splitlines(keepends=True)
+    lines[1] = lines[1].replace("36.2363029", "37.5665")   # 서울
+    (dst / "15114136_gunwi.csv").write_text("".join(lines), encoding="utf-8-sig")
+    monkeypatch.setattr(prepare, "RAW", tmp_path / "data" / "raw")
+    with pytest.raises(AssertionError, match="범위 밖"):
+        prepare.prepare_senior_centers(name_by_code)

@@ -1,0 +1,18 @@
+{
+  "source_id": "DATAGOKR_GUNWI_SENIOR",
+  "name": "전국마을회관및경로당표준데이터 중 군위군 경로당",
+  "provider": "대구광역시 군위군 (공공데이터포털 표준데이터)",
+  "url": "https://www.data.go.kr/data/15114136/standard.do",
+  "reference_date": "2025-12-19",
+  "retrieved_at": "2026-10-14",
+  "retrieved_by": "윤현준 (팀원 수집본 이관, Claude Code 등록)",
+  "license": "공식 출처의 이용조건 확인 필요",
+  "provenance": "verified_import",
+  "notes": "정부 원본 바이트가 아니다. 팀원이 전국 표준데이터에서 군위군 215행을 추출한 CSV(UTF-8 BOM, CRLF)를 받은 그대로 동결. 출발본: knustu/- 커밋 3340f8a data/gunwi/living/15114136_gunwi.csv (sha256 bbcf529f... 팀원 _meta 기록과 일치). 데이터기준일자 전 행 2025-12-19. 건립일자는 전 행 YYYY-01-01 형식이라 연도 정밀도로만 쓴다. 공식 원본을 재다운로드하면 새 폴더로 등록하고 이 폴더를 대체할 것.",
+  "files": {
+    "15114136_gunwi.csv": {
+      "sha256": "bbcf529fe02d1681ccaf68672d497699de3ab210168985c558683a7598a21606",
+      "bytes": 37445
+    }
+  }
+}
