@@ -131,7 +131,9 @@ def fig_maps(rows: list[dict]) -> None:
         ax.text(0.5, -0.02, f"{'높을수록 취약' if ind['higher_is_worse'] else '낮을수록 취약'}{ref}",
                 transform=ax.transAxes, ha="center", va="top", fontsize=7, color="#666")
     fig.suptitle(f"군위군 읍면별 가설 지표 (인구 기준 {ANALYSIS_PERIOD}, 진할수록 취약 방향)", fontsize=14)
-    fig.text(0.5, 0.01, "색 구간은 8개 읍면 안에서의 상대 척도다. 읍면 경계 출처 미확인(UNVERIFIED).",
+    note = ("읍면 경계: SGIS 2025년 2분기" if gj.get("_provenance") == "verified"
+            else f"읍면 경계 출처 {gj.get('_provenance')}")
+    fig.text(0.5, 0.01, f"색 구간은 8개 읍면 안에서의 상대 척도다. {note}.",
              ha="center", fontsize=8, color="#666")
     _save(fig, "그림1_읍면별_지표지도.png")
 

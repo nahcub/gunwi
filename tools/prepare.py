@@ -250,7 +250,7 @@ def prepare_potholes(boundary: dict) -> dict:
     return {
         "_warning": (
             "표본이 너무 적어 읍면 비교 지표로 쓰지 않는다. 지점 표시 전용. "
-            "읍면 판정은 출처 미확인 경계에 의존한다."),
+            "읍면 판정은 boundary_provenance 에 적힌 경계를 따른다."),
         "source_id": meta["source_id"],
         "period": [f"{d[:4]}-{d[4:6]}-{d[6:8]}" for d in (dates[0], dates[-1])],
         "boundary_provenance": boundary["_provenance"],

@@ -258,3 +258,20 @@ def test_salpiso_known_counts():
     assert g["status"] == {"처리": 68, "미처리": 10, "반송": 9}
     assert g["by_field"]["현수막"] == 37
     assert g["by_field"]["도로시설"] == 13 and g["by_field"]["교통시설"] == 13
+
+
+# ---------------------------------------------------------------- 경계 출처
+
+def test_boundary_is_verified_and_bytes_unchanged():
+    """경계는 2026-10-15 SGIS 원본과 대조해 verified 가 됐다.
+
+    그 판정은 지금 바이트에 대한 것이다. 파일이 바뀌면 해시가 달라져 여기서 멈춘다 -
+    새 경계는 tools/verify_boundary.py 로 다시 대조하고 새 raw 폴더로 등록할 것.
+    """
+    import hashlib
+    folder = ROOT / "data" / "raw" / "boundary-eupmyeon-2025-06-30"
+    meta = json.loads((folder / "_meta.json").read_text(encoding="utf-8"))
+    assert meta["provenance"] == "verified"
+    data = (folder / "eupmyeon.geojson").read_bytes()
+    assert hashlib.sha256(data).hexdigest() == meta["files"]["eupmyeon.geojson"]["sha256"]
+    assert _boundary()["_provenance"] == "verified"

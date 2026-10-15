@@ -85,8 +85,8 @@ docs/hypotheses.md   지표–민원 가설, 사분면, 지표 간 상관 읽는
 
 ## 알려진 과제
 
-1. **경계 GeoJSON 출처 미확인** — 지도 전체가 출처 기록 없는 파일 위에 있다.
-   SGIS 에서 재취득해 대조할 것. 화면에 경고 배너가 뜬다. → `CLAUDE.md`
+1. ~~경계 GeoJSON 출처 미확인~~ — **2026-10-15 해결.** SGIS 2025 2Q 원본과 8개 읍면
+   도형 일치 확인(`tools/verify_boundary.py`). → `CLAUDE.md`
 2. **민원 건별 원자료 요청 미발송** — 군청 자료요청이 아직 발송되지 않았다.
    이게 들어오면 3개 지표가 한꺼번에 풀린다. → `data/sources.json`
 3. **종합 우선순위 가중치 근거 없음** → `docs/methodology.md`

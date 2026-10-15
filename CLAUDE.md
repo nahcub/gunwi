@@ -96,19 +96,18 @@ tools/tests/           pytest. 원자료 기준 "알려진 개수"를 고정해 
 
 보고서에 쓸 때는 "프로젝트 임시 기준"이라고 명시한다.
 
-## 미해결: 경계 GeoJSON 출처 불명
+## 해결됨: 경계 GeoJSON 출처 (2026-10-15)
 
-`data/raw/boundary-eupmyeon-2025-06-30/` 의 `provenance` 가 `UNVERIFIED` 다.
-팀 저장소 첫 커밋에 이미 있었고 다운로드 이력이 없다. `reference_date`
-2025-06-30 은 피처 속성 `BASE_DATE` 에서 읽은 값일 뿐 출처 문서로 확인된 게
-아니다. 워크북 G01 은 경계를 "원본 미확보"로 적어놨는데 파일은 존재한다 —
-문서와 실제가 모순된다.
+`data/raw/boundary-eupmyeon-2025-06-30/eupmyeon.geojson` 은 다운로드 이력 없이
+첫 커밋부터 있던 파일이라 `UNVERIFIED` 였다. 2026-10-15 SGIS 행정구역 경계
+2025 2Q 원본(`bnd_dong_00_2025_2Q.shp`, EPSG:5179)에서 군위군 8개를 직접 뽑아
+대조했더니 **도형·속성이 8개 모두 같았다**(IoU 1.000000). 파일 바이트는 그대로 두고
+`_meta.json` 의 `provenance` 만 `verified` 로 바꿨다 → 경고 배너가 사라진다.
 
-**지도 전체와 포트홀 읍면 판정, SGIS 코드 대응이 이 파일 위에 서 있다.**
-SGIS 전국 원본 zip(`sgis-admstat-2025-2q/_meta.json` 참고, 경계 shp 포함,
-EPSG:5179)에서 2025 2Q 경계를 추출·대조하고, 새 raw 폴더로 등록한 뒤
-`provenance` 를 `verified` 로 바꿀 것. 그때까지 화면 상단에 경고 배너가 뜬다
-(`renderBanner()`). 보고서에도 "경계 출처 미확인"을 적는다.
+- 재현: `python tools/verify_boundary.py --shp <bnd_dong_00_2025_2Q.shp>` (geopandas 필요,
+  전국 shp 135MB 는 저장소 밖)
+- 같은 폴더의 `boundary-alt.geojson` 은 여전히 출처 미확인. 쓰지 않는다
+- 경계를 새 시점으로 바꿀 때도 같은 스크립트로 대조하고 새 raw 폴더로 등록한다
 
 ## 종합 우선순위는 계산하지 않는다
 

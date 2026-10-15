@@ -19,7 +19,7 @@ public/data/*.json        웹 화면용
 |---|---|---|---|---|
 | `mois-age-2025-12` | 행안부 연령별 주민등록인구 | 2025-12-31 | `population.json` | 사용 |
 | `mois-age-2026-08` | 〃 | 2026-08-31 | `population.json` | 사용 |
-| `boundary-eupmyeon-2025-06-30` | 읍면 경계 GeoJSON | 2025-06-30(추정) | `eupmyeon.geojson` | 사용 ⚠️ 출처 미확인 |
+| `boundary-eupmyeon-2025-06-30` | 읍면 경계 GeoJSON (SGIS 2025 2Q) | 2025-06-30 | `eupmyeon.geojson` | 사용 (2026-10-15 출처 확인) |
 | `datagokr-park-2026-03-05` | 도시공원 표준데이터(군위 3건) | 2026-03-05 | `parks.json` | 사용 |
 | `minwon-pothole-2026-10-13` | 권익위 포트홀 민원 좌표(전국) | 2025-01-01~2026-10-13 | `potholes.json` | 사용(지점 표시 전용) |
 | `datagokr-gunwi-senior-2025-12-19` | 경로당 표준데이터(군위 215곳) | 2025-12-19 | `senior_centers.json` | 사용 |
@@ -92,9 +92,11 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 
 **raw**: `boundary-eupmyeon-2025-06-30/eupmyeon.geojson` (피처 8개)
 
-- ⚠️ `provenance: UNVERIFIED`. 다운로드 이력이 없는 파일이다. 기준일 2025-06-30 도
-  피처 속성 `BASE_DATE` 에서 읽었을 뿐 출처 문서로 확인되지 않았다.
-- `boundary-alt.geojson` 은 속성 구조가 다른 대체본(역시 출처 미확인). **쓰지 않는다.**
+- `provenance: verified` (2026-10-15). 원래 다운로드 이력이 없어 UNVERIFIED 였으나,
+  SGIS 행정구역 경계 2025 2Q 원본 `bnd_dong_00_2025_2Q.shp` 에서 군위군 8개를 뽑아
+  대조한 결과 도형·속성(ADM_CD, ADM_NM, BASE_DATE)이 모두 같았다(IoU 1.000000).
+  재현은 `tools/verify_boundary.py`. 파일 자체는 바꾸지 않았다.
+- `boundary-alt.geojson` 은 속성 구조가 다른 대체본(출처 미확인). **쓰지 않는다.**
 
 **가공** (`prepare_boundary`)
 
@@ -102,7 +104,7 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 2. 검증: 피처 8개, 중복 없음, 인구의 읍면 8개와 집합이 같음.
 3. 피처 속성을 아래 4개로 **교체**한다(원래 속성은 버린다). 도형은 그대로.
 
-**derived**: 피처 8개 + 최상위 `_provenance: "UNVERIFIED"`
+**derived**: 피처 8개 + 최상위 `_provenance: "verified"`
 
 ```json
 {"region_code": "2772025000", "region_name": "군위읍",
@@ -110,7 +112,7 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 ```
 
 - `source_adm_cd` 는 SGIS 통계를 붙일 때 다리로 쓰인다(§7).
-- `_provenance` 가 `verified` 가 아니면 웹 화면 상단에 경고 배너가 뜬다.
+- `_provenance` 가 `verified` 가 아니면 웹 화면 상단에 경고 배너가 뜬다(현재는 verified 라 뜨지 않는다).
 
 ## 3. 도시공원 → `parks.json`
 
@@ -157,14 +159,14 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 
 ```json
 {"source_id": "MINWON_POTHOLE_LATLON", "period": ["2025-01-01", "2026-10-13"],
- "boundary_provenance": "UNVERIFIED",
+ "boundary_provenance": "verified",
  "national_row_count": 57060, "exact_duplicate_count": 653, "unparsable_coord_count": 2,
  "points": [{"date": "2025-03-12", "lat": 36.19..., "lon": 128.66...,
              "region_code": "2772034000", "region_name": "우보면"}, ...]}
 ```
 
 - 표본이 너무 적어 **읍면 비교 지표로 쓰지 않는다.** 지도에 지점으로만 표시.
-- 읍면 판정이 출처 미확인 경계(§2)에 의존한다.
+- 읍면 판정은 SGIS 2025 2Q 경계(§2)로 한다.
 
 ## 5. 경로당 → `senior_centers.json`
 
