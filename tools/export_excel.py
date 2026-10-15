@@ -17,6 +17,7 @@ from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 ROOT = Path(__file__).resolve().parents[1]
 DERIVED = ROOT / "data" / "derived"
 REGISTRY = ROOT / "data" / "sources.json"
+HYPOTHESES = ROOT / "data" / "hypotheses.json"
 OUT = ROOT / "outputs"
 BASENAME = "군위군_시설관리우선지역_기초지표_2025"
 
@@ -39,6 +40,7 @@ COLUMNS = [
     ("가구수", "정수", "가구", "SGIS 2024년 일반가구"),
     ("경로당수", "정수", "개소", "주소 기준 해당 읍면 소재 경로당 (2025-12-19 기준)"),
     ("노후경로당수", "정수", "개소", "건립연도 2000년 이전. 공식 기준이 아닌 프로젝트 임시 기준"),
+    ("노후경로당비율", "실수", "%", "노후경로당수 / 경로당수 × 100. 가설 H5 의 지표"),
     ("고령인구1천명당_경로당수", "실수", "개소", "경로당수 / 고령인구 × 1,000"),
     ("위험지정세천수", "정수", "개소", "소규모공공시설 위험지정 중 현행 지정된 세천 (2026-07-15 기준, 해제 1건 제외)"),
     ("상수도보급률", "실수", "%", "2025년 12월 말 기준. 군 전체 값을 읍면 평균으로 구하지 말 것"),
@@ -109,6 +111,7 @@ def build_rows() -> list[dict]:
             "가구수": sgis[code]["households"],
             "경로당수": seniors[code]["count"],
             "노후경로당수": seniors[code]["old_count"],
+            "노후경로당비율": round(seniors[code]["old_count"] / seniors[code]["count"] * 100, 2),
             "고령인구1천명당_경로당수": round(seniors[code]["count"] / p["elderly"] * 1000, 2),
             "위험지정세천수": drainage[code]["count"],
             "상수도보급률": water[code]["supply_rate_pct"],
@@ -141,6 +144,8 @@ def method_rows() -> list[tuple[str, str]]:
         ("고령화율", "65세 이상 인구 ÷ 총인구 × 100"),
         ("고령인구1천명당_경로당수", "경로당수 ÷ 고령인구 × 1,000"),
         ("노후경로당수", "건립연도 < 2000. 공식 기준이 아니라 프로젝트 임시 기준"),
+        ("민원 가설", "지표별 민원 가설은 '가설' 시트(data/hypotheses.json). 전부 미검증이며 "
+                     "점수·가중치를 만들지 않는다"),
         ("", ""),
         ("■ 자료 출처", ""),
     ]
@@ -182,6 +187,23 @@ THIN = Side(style="thin")
 BORDER = Border(left=THIN, right=THIN, top=THIN, bottom=THIN)
 
 
+def hypothesis_rows() -> list[list]:
+    """data/hypotheses.json -> '가설' 시트. 문구는 json 이 원본이다."""
+    hyp = json.loads(HYPOTHESES.read_text(encoding="utf-8"))
+    rows = []
+    for h in hyp["hypotheses"]:
+        rows.append([h["id"], h["indicator"], h["type"], h["direction"],
+                     ", ".join(h["complaint_fields"]), h["statement"], h["mechanism"],
+                     h["caveat"], h["verify_method"], ", ".join(h["verify_with"]), h["status"]])
+    for e in hyp["evidence"]:
+        rows.append([e["id"], e["source"], e["kind"], "", "", e["text"], "", "", "", "", ""])
+    return rows
+
+
+HYP_HEADER = ["ID", "지표", "유형", "방향", "민원 분야", "가설", "근거", "주의",
+              "검증 방법", "검증 자료", "상태"]
+
+
 def _sheet(ws, header: list[str], body: list[list], widths: list[float]) -> None:
     ws.append(header)
     for row in body:
@@ -220,6 +242,12 @@ def main() -> None:
         if str(row[0].value or "").startswith("■"):
             row[0].font = SECTION_FONT
         row[1].alignment = Alignment(wrap_text=True, vertical="top")
+
+    ws4 = wb.create_sheet("가설")
+    _sheet(ws4, HYP_HEADER, hypothesis_rows(), [6, 26, 9, 6, 18, 46, 46, 46, 46, 30, 13])
+    for row in ws4.iter_rows(min_row=2):
+        for cell in row:
+            cell.alignment = Alignment(wrap_text=True, vertical="top")
 
     xlsx = OUT / f"{BASENAME}.xlsx"
     wb.save(xlsx)
