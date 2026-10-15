@@ -100,8 +100,10 @@ function renderIndicators() {
 
     b.disabled = !available;
     b.setAttribute('aria-pressed', String(ind.id === state.indicator));
+    const hids = store.hypotheses.hypotheses
+      .filter((h) => h.indicator === ind.id).map((h) => h.id).join(' ');
     b.innerHTML =
-      `${ind.label}<span class="badge">${
+      `${ind.label}${hids ? `<span class="hyp-mark">${hids}</span>` : ''}<span class="badge">${
         available ? ind.unit : ind.status === 'blocked' ? '보류' : '미확보'
       }</span>`;
 
@@ -187,7 +189,19 @@ function renderHypothesis() {
   box.innerHTML = '';
   const list = store.hypotheses.hypotheses.filter((h) => h.indicator === state.indicator);
   if (!list.length) {
-    box.appendChild(el('p', 'why', '이 지표에 연결된 민원 가설이 없습니다.'));
+    // 가설이 없는 지표(총인구 등)를 보고 있어도 가설 전체가 보이게 목록을 띄운다
+    box.appendChild(el('p', 'why', '이 지표에는 연결된 가설이 없습니다. 가설이 있는 지표:'));
+    const ul = el('ul', 'hyp-index');
+    store.hypotheses.hypotheses.forEach((h) => {
+      const li = el('li');
+      const b = el('button', null, `${h.id} · ${indicatorById(h.indicator).label}`);
+      b.title = h.statement;
+      b.onclick = () => { state.indicator = h.indicator; redraw(); };
+      li.appendChild(b);
+      li.appendChild(el('span', 'why', ` ${h.statement}`));
+      ul.appendChild(li);
+    });
+    box.appendChild(ul);
   }
   list.forEach((h) => {
     const wrap = el('div', 'hyp');
@@ -488,7 +502,12 @@ async function main() {
   }
 
   state.period = regions.meta.default_period;
-  state.indicator = regions.indicators.find((i) => i.status === 'available').id;
+  // 처음 화면은 가설(H1)이 붙은 지표로 연다 - 가설 카드가 바로 보이게
+  const firstHyp = hypotheses.hypotheses[0];
+  state.indicator = firstHyp && regions.indicators.some(
+    (i) => i.id === firstHyp.indicator && i.status === 'available')
+    ? firstHyp.indicator
+    : regions.indicators.find((i) => i.status === 'available').id;
 
   renderBanner();
   initMap();

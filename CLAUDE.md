@@ -13,6 +13,7 @@
 | 아직 못 구한 자료 조사 결과 | `docs/data-survey.md` |
 | 군청 정보공개청구 초안(미발송) | `docs/requests/README.md` |
 | 지표–민원 가설과 사분면 (B 역할) | `docs/hypotheses.md` |
+| B 역할이 한 일 한 장 요약 | `docs/handoff-B.md` |
 
 ## 폴더 소유권
 
