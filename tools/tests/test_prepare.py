@@ -244,3 +244,17 @@ def test_senior_center_coordinate_guard(tmp_path, monkeypatch):
     monkeypatch.setattr(prepare, "RAW", tmp_path / "data" / "raw")
     with pytest.raises(AssertionError, match="범위 밖"):
         prepare.prepare_senior_centers(name_by_code)
+
+
+# ---------------------------------------------------------------- 살피소
+
+def test_salpiso_known_counts():
+    """군 단위 배경 수치. 원본이 바뀌면 알아채도록 고정한다."""
+    out = prepare.prepare_salpiso()
+    assert len(out["agencies"]) == 14
+    assert out["daegu_all"]["reports"] == 253043
+    g = out["gunwi"]
+    assert g["reports"] == 87
+    assert g["status"] == {"처리": 68, "미처리": 10, "반송": 9}
+    assert g["by_field"]["현수막"] == 37
+    assert g["by_field"]["도로시설"] == 13 and g["by_field"]["교통시설"] == 13

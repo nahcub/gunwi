@@ -26,7 +26,7 @@ public/data/*.json        웹 화면용
 | `datagokr-gunwi-small-facility-risk-2026-07-15` | 소규모공공시설 위험지정(39건) | 2026-07-15 | `drainage_risk.json` | 사용 |
 | `datagokr-gunwi-water-supply-rate-2025-12-31` | 읍면별 상수도보급률 | 2025-12-31 | `water_supply.json` | 사용 |
 | `sgis-admstat-2025-2q` | SGIS 행정구역 통계(2024년) | 2024-12-31 | `sgis_stats.json` | 19개 CSV 중 10개 사용 |
-| `daegu-salpiso-reports-2024-11-27` | 대구 살피소 제보 처리현황 | 2024-11-27 | — | **미가공** (raw 에만 있음) |
+| `daegu-salpiso-reports-2024-11-27` | 대구 살피소 제보 처리현황 | 2024-11-27 | `salpiso.json` | 사용(군 단위 배경 수치, 웹 미공개) |
 
 모든 폴더에 공통으로 있는 파일:
 
@@ -309,19 +309,34 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 - SGIS 인구(등록센서스, 2024)와 주민등록 인구(§1)는 **정의가 달라 값이 다르다**
   (군 전체 21,493 vs 22,452). 한 표에서 섞어 쓰지 말 것.
 
-## 9. 살피소 제보 처리현황 — 미가공
+## 9. 살피소 제보 처리현황 → `salpiso.json`
 
 **raw**: `daegu-salpiso-reports-2024-11-27/대구광역시_살피소처리현황.csv` (14행 × 15열, UTF-8 BOM)
 
 - 컬럼: 구분, 제보, 처리, 미처리, 반송 + 분야 10개(건축건설·도로시설·교통시설·각종시설물·
   환경청소·공원녹지·광고물·현수막·도로적치물·기타).
 - 행은 **처리기관 단위**(본청·사업본부 5개 + 구군 9개). 읍면 구분이 없다.
-- 군위군 1행: 제보 87, 처리 68, 미처리 10, 반송 9 (현수막 37, 도로시설 13, 교통시설 13 등).
 - 주의: `대구광역시` 행은 시 합계가 아니라 본청 몫이다. 전체는 14행 합(253,043).
 - 집계 연도가 확정되지 않았다(파일명 기준 2023년분, 등록일 기준 2024년분 추정).
 
-`prepare.py` 가 읽지 않으므로 derived 에 대응 파일이 없다. 군 단위 1행이라 읍면 비교에
-쓸 수 없고, 민원 관련 참고 자료로 raw 에만 보존되어 있다.
+**가공** (`prepare_salpiso`)
+
+1. 검증: 14행, 분야 컬럼 10개 순서 유지, 행마다 처리+미처리+반송 = 제보, 분야 합 = 제보.
+2. 군위군 1행과 14행 합계(대구 전체)를 따로 남긴다.
+
+**derived**
+
+```json
+{"reference_date": "2024-11-27", "fields": ["건축건설", ...],
+ "gunwi": {"agency": "군위군", "reports": 87,
+           "status": {"처리": 68, "미처리": 10, "반송": 9},
+           "by_field": {"현수막": 37, "도로시설": 13, "교통시설": 13, ...}},
+ "daegu_all": {"reports": 253043, "by_field": {...}},
+ "agencies": [...]}
+```
+
+- 군 단위 1행이라 **읍면 비교 지표로 쓰지 않는다.** `build.py` 는 이 파일을 공개하지 않는다.
+- 쓰는 곳: 가설 레지스트리의 배경 근거 E1, 그림4(군위군 vs 대구 전체 분야 구성).
 
 ---
 
@@ -331,12 +346,13 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 |---|---|---|
 | `population.json` | `regions.json` 에 합쳐짐(군 합계 행 제거) | 결과표 |
 | `sgis_stats.json` | `regions.json` 에 합쳐짐 | 결과표 |
-| `senior_centers.json` | `regions.json`(읍면 집계) + `facilities.json`(지점) | 결과표 |
+| `senior_centers.json` | `regions.json`(읍면 집계·노후 비율) + `facilities.json`(지점) | 결과표 |
 | `drainage_risk.json` | `regions.json`(읍면 집계) + `facilities.json`(지점) | 결과표 |
 | `water_supply.json` | `regions.json` | 결과표 |
 | `eupmyeon.geojson` | 그대로 복사 | — |
 | `parks.json` | `parks` 배열만 | — |
 | `potholes.json` | 지점만 공개(전국 행수·품질 집계는 derived 에 남음) | — |
+| `salpiso.json` | 공개하지 않음 | — (그림4 · 가설 E1 에만) |
 
 ## 원자료를 바꿀 때
 

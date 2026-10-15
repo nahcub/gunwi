@@ -518,6 +518,53 @@ def prepare_sgis_stats(boundary: dict, population: list) -> dict:
     }
 
 
+# ---------------------------------------------------------------- 살피소 제보
+
+SALPISO_FOLDER = "daegu-salpiso-reports-2024-11-27"
+SALPISO_FIELDS = ["건축건설", "도로시설", "교통시설", "각종시설물", "환경청소",
+                  "공원녹지", "광고물", "현수막", "도로적치물", "기타"]
+
+
+def prepare_salpiso() -> dict:
+    """대구 살피소 제보 처리현황. 처리기관 14행, 읍면 구분 없음 - 보고서 배경 수치용.
+
+    읍면 비교 지표로 쓰지 않는다. 군위군 1행의 분야 구성과 대구 전체 구성을
+    나란히 보여 주는 데만 쓴다. '대구광역시' 행은 시 합계가 아니라 본청 몫이다.
+    """
+    meta = read_meta(SALPISO_FOLDER)
+    rows = _read_csv(SALPISO_FOLDER, meta)
+    assert len(rows) == 14, f"{SALPISO_FOLDER}: 14행이어야 하는데 {len(rows)}행"
+    assert list(rows[0])[5:] == SALPISO_FIELDS, f"{SALPISO_FOLDER}: 분야 컬럼이 바뀜"
+
+    agencies = []
+    for r in rows:
+        n = {k: _num(v) for k, v in r.items() if k != "구분"}
+        # 처리상태 합과 분야 합이 각각 제보 수와 같아야 한다
+        assert n["제보"] == n["처리"] + n["미처리"] + n["반송"], f"{r['구분']}: 처리상태 합 != 제보"
+        assert n["제보"] == sum(n[f] for f in SALPISO_FIELDS), f"{r['구분']}: 분야 합 != 제보"
+        agencies.append({
+            "agency": r["구분"],
+            "reports": n["제보"],
+            "status": {k: n[k] for k in ("처리", "미처리", "반송")},
+            "by_field": {f: n[f] for f in SALPISO_FIELDS},
+        })
+
+    names = [a["agency"] for a in agencies]
+    assert names.count("군위군") == 1, "군위군 행이 하나가 아님"
+    all_fields = {f: sum(a["by_field"][f] for a in agencies) for f in SALPISO_FIELDS}
+
+    return {
+        "reference_date": meta["reference_date"],
+        "provenance": meta["provenance"],
+        "_note": ("처리기관 단위 집계. 읍면 구분·좌표 없음 - 읍면 비교 지표로 쓰지 않는다. "
+                  "'대구광역시' 행은 본청 몫이며 대구 전체는 14행 합. 집계 연도 미확정."),
+        "fields": SALPISO_FIELDS,
+        "gunwi": next(a for a in agencies if a["agency"] == "군위군"),
+        "daegu_all": {"reports": sum(a["reports"] for a in agencies), "by_field": all_fields},
+        "agencies": agencies,
+    }
+
+
 # ---------------------------------------------------------------- main
 
 def main() -> None:
@@ -531,6 +578,7 @@ def main() -> None:
     drainage = prepare_drainage_risk(name_by_code)
     water = prepare_water_supply(name_by_code)
     sgis = prepare_sgis_stats(boundary, population)
+    salpiso = prepare_salpiso()
 
     def write(name: str, obj) -> None:
         path = DERIVED / name
@@ -554,6 +602,7 @@ def main() -> None:
     write("drainage_risk.json", drainage)
     write("water_supply.json", water)
     write("sgis_stats.json", sgis)
+    write("salpiso.json", salpiso)
 
     print(f"\n  인구 {len(population)}행 / 공원 {len(parks)}건")
     print(f"  포트홀 전국 {potholes['national_row_count']}행 중 군위 "
@@ -568,6 +617,8 @@ def main() -> None:
     print(f"  상수도보급률 읍면 {len(water['by_region'])}개 / "
           f"SGIS 2024 항목 {len(sgis['items'])}개 x 읍면 {len(sgis['by_region'])}개 "
           f"(N/A {len(sgis['na_cells'])}칸)")
+    print(f"  살피소 제보 처리기관 {len(salpiso['agencies'])}행 "
+          f"(군위군 {salpiso['gunwi']['reports']}건, 대구 전체 {salpiso['daegu_all']['reports']:,}건)")
 
 
 if __name__ == "__main__":
