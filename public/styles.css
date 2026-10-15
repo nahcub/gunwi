@@ -231,3 +231,23 @@ main {
 .quad .qpt-hh { fill: #e57373; stroke: #9b2c2c; }
 .qcap { margin: 6px 0 0; font-size: 11px; color: var(--muted); line-height: 1.5; }
 .hyp .st { font-size: 11px; padding: 1px 6px; border-radius: 999px; background: #fff4e5; color: #8a5a11; }
+
+/* ------------------------------------------------ 지도 아래 데이터 출처 */
+#main-col { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+/* 넓은 칸이므로 출처 항목을 여러 열로 나눠 세로 길이를 줄인다 */
+#sources-card #sources {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  column-gap: 20px;
+}
+#sources-card #sources li:last-child { border-bottom: 1px solid #f1f3f5; }
+
+/* 좁은 화면: 지도 -> 조작 메뉴 -> 데이터 출처 순서 (출처가 메뉴를 밀어내지 않게).
+   위 #main-col 규칙보다 뒤에 있어야 덮어쓴다 */
+@media (max-width: 900px) {
+  #main-col { display: contents; }
+  #map-pane { order: 1; }
+  #side { order: 2; }
+  #sources-card { order: 3; }
+  #sources-card #sources { grid-template-columns: minmax(0, 1fr); }
+}

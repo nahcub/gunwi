@@ -17,10 +17,19 @@
 </header>
 
 <main>
-  <section id="map-pane">
-    <div id="map"></div>
-    <div id="legend"></div>
-  </section>
+  <div id="main-col">
+    <section id="map-pane">
+      <div id="map"></div>
+      <div id="legend"></div>
+    </section>
+
+    <!-- 데이터 출처는 지도 아래 넓은 칸에 둔다. 항목이 많아 사이드바에 두면 너무 길어진다 -->
+    <div class="card" id="sources-card">
+      <h2>데이터 출처</h2>
+      <div id="source-filters" class="tabs small"></div>
+      <ul id="sources"></ul>
+    </div>
+  </div>
 
   <aside id="side">
     <div class="card">
@@ -53,11 +62,6 @@
       <div id="detail"></div>
     </div>
 
-    <div class="card">
-      <h2>데이터 출처</h2>
-      <div id="source-filters" class="tabs small"></div>
-      <ul id="sources"></ul>
-    </div>
   </aside>
 </main>
 
