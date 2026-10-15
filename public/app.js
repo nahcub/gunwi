@@ -100,8 +100,10 @@ function renderIndicators() {
 
     b.disabled = !available;
     b.setAttribute('aria-pressed', String(ind.id === state.indicator));
+    const hids = store.hypotheses.hypotheses
+      .filter((h) => h.indicator === ind.id).map((h) => h.id).join(' ');
     b.innerHTML =
-      `${ind.label}<span class="badge">${
+      `${ind.label}${hids ? `<span class="hyp-mark">${hids}</span>` : ''}<span class="badge">${
         available ? ind.unit : ind.status === 'blocked' ? '보류' : '미확보'
       }</span>`;
 
@@ -160,7 +162,7 @@ function renderDetail() {
     `<dt>65세 이상</dt><dd>${r.elderly.toLocaleString('ko-KR')} 명</dd>` +
     `<dt>고령화율</dt><dd>${r.elderly_ratio} %</dd>` +
     `<dt>노령화지수</dt><dd>${r.aging_index}</dd>` +
-    `<dt>경로당</dt><dd>${r.senior_center_count} 개소 (노후 ${r.senior_center_old_count})</dd>` +
+    `<dt>경로당</dt><dd>${r.senior_center_count} 개소 (노후 ${r.senior_center_old_count}, ${r.senior_center_old_ratio}%)</dd>` +
     `<dt>고령 1천명당 경로당</dt><dd>${r.senior_center_per_1k_elderly} 개소</dd>` +
     `<dt>위험지정 세천</dt><dd>${r.drainage_risk_count} 개소</dd>` +
     `<dt>상수도보급률</dt><dd>${r.water_supply_rate} %</dd>` +
@@ -170,6 +172,140 @@ function renderDetail() {
     '</dl>' +
     '<p class="why" style="margin:10px 0 0;color:#9ca3af;font-size:11px">' +
     '민원 지표는 원자료 미확보로 표시하지 않습니다.</p>';
+}
+
+/* ------------------------------------------------------------- 가설 */
+
+// data/hypotheses.json 이 원본이다. 여기서 문구를 고치지 말 것
+function el(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+
+function renderHypothesis() {
+  const box = $('hypothesis');
+  box.innerHTML = '';
+  const list = store.hypotheses.hypotheses.filter((h) => h.indicator === state.indicator);
+  if (!list.length) {
+    // 가설이 없는 지표(총인구 등)를 보고 있어도 가설 전체가 보이게 목록을 띄운다
+    box.appendChild(el('p', 'why', '이 지표에는 연결된 가설이 없습니다. 가설이 있는 지표:'));
+    const ul = el('ul', 'hyp-index');
+    store.hypotheses.hypotheses.forEach((h) => {
+      const li = el('li');
+      const b = el('button', null, `${h.id} · ${indicatorById(h.indicator).label}`);
+      b.title = h.statement;
+      b.onclick = () => { state.indicator = h.indicator; redraw(); };
+      li.appendChild(b);
+      li.appendChild(el('span', 'why', ` ${h.statement}`));
+      ul.appendChild(li);
+    });
+    box.appendChild(ul);
+  }
+  list.forEach((h) => {
+    const wrap = el('div', 'hyp');
+    const head = el('div', 'hyp-head');
+    head.appendChild(el('span', 'hyp-id', h.id));
+    head.appendChild(el('span', 'hyp-tag', `${h.type} · 방향 ${h.direction}`));
+    head.appendChild(el('span', 'st st-partial', h.status));
+    wrap.appendChild(head);
+    wrap.appendChild(el('p', 'hyp-statement', h.statement));
+    const dl = el('dl');
+    [['민원 분야', h.complaint_fields.join(', ')], ['근거', h.mechanism],
+     ['주의', h.caveat], ['검증 방법', h.verify_method],
+     ['검증 자료', h.verify_with.join(', ')]].forEach(([k, v]) => {
+      dl.appendChild(el('dt', null, k));
+      dl.appendChild(el('dd', null, v));
+    });
+    wrap.appendChild(dl);
+    box.appendChild(wrap);
+  });
+  const ev = el('details', 'hyp-evidence');
+  ev.appendChild(el('summary', null, '참고 사실 (군 단위·표본 부족)'));
+  store.hypotheses.evidence.forEach((e) => ev.appendChild(el('p', null, `${e.id} · ${e.text}`)));
+  box.appendChild(ev);
+}
+
+/* ---------------------------------------------------------- 사분면 */
+
+// 두 지표를 8개 읍면의 중앙값으로 나눠 위치만 보여 준다. 점수·가중치 없음
+function median(xs) {
+  const s = [...xs].sort((a, b) => a - b);
+  const m = s.length / 2;
+  return s.length % 2 ? s[Math.floor(m)] : (s[m - 1] + s[m]) / 2;
+}
+
+function renderQuadrant() {
+  const v = store.hypotheses.views.find((x) => x.kind === 'quadrant');
+  const box = $('quadrant');
+  if (!v) { $('quadrant-card').hidden = true; return; }
+  const ix = indicatorById(v.x), iy = indicatorById(v.y);
+  $('quadrant-title').textContent = `사분면 · ${v.title}`;
+
+  const pts = rows().map((r) => ({ code: r.region_code, name: r.name, x: r[v.x], y: r[v.y] }));
+  const mx = median(pts.map((p) => p.x)), my = median(pts.map((p) => p.y));
+  const W = 320, H = 300, L = 40, R = 12, T = 12, B = 34;
+  const xs = pts.map((p) => p.x), ys = pts.map((p) => p.y);
+  const pad = (lo, hi) => { const d = (hi - lo) * 0.12 || 1; return [lo - d, hi + d]; };
+  const [x0, x1] = pad(Math.min(...xs), Math.max(...xs));
+  const [y0, y1] = pad(Math.min(...ys), Math.max(...ys));
+  const sx = (x) => L + ((x - x0) / (x1 - x0)) * (W - L - R);
+  const sy = (y) => H - B - ((y - y0) / (y1 - y0)) * (H - T - B);
+
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('class', 'quad');
+  const add = (tag, attrs, text) => {
+    const n = document.createElementNS(ns, tag);
+    Object.entries(attrs).forEach(([k, val]) => n.setAttribute(k, val));
+    if (text !== undefined) n.textContent = text;
+    svg.appendChild(n);
+    return n;
+  };
+  // 오른쪽 위 = 두 지표 모두 중앙값보다 높음
+  add('rect', { x: sx(mx), y: T, width: W - R - sx(mx), height: sy(my) - T, class: 'qhh' });
+  add('line', { x1: sx(mx), x2: sx(mx), y1: T, y2: H - B, class: 'qmid' });
+  add('line', { x1: L, x2: W - R, y1: sy(my), y2: sy(my), class: 'qmid' });
+  add('text', { x: (L + W - R) / 2, y: H - 6, 'text-anchor': 'middle', class: 'qaxis' },
+      `${ix.label} (${ix.unit}) →`);
+  add('text', { x: 10, y: (T + H - B) / 2, 'text-anchor': 'middle', class: 'qaxis',
+                transform: `rotate(-90 10 ${(T + H - B) / 2})` }, `${iy.label} (${iy.unit}) →`);
+  // 점이 몰린 곳에서 이름이 겹치지 않게 후보 위치 중 빈 곳에 붙인다
+  const placed = [];
+  const placeLabel = (name, x, y) => {
+    const w = name.length * 10 + 4, h = 11;
+    const tries = [[8, 4, 'start'], [8, -7, 'start'], [8, 15, 'start'],
+                   [-8, 4, 'end'], [-8, -7, 'end'], [-8, 15, 'end'], [0, -10, 'middle']];
+    let pick = tries[0];
+    for (const t of tries) {
+      const [dx, dy, anchor] = t;
+      const left = anchor === 'start' ? x + dx : anchor === 'end' ? x + dx - w : x - w / 2;
+      const box = [left, y + dy - h + 2, left + w, y + dy + 2];
+      const fits = box[0] >= 0 && box[2] <= W && box[1] >= 0 && box[3] <= H &&
+        placed.every((b) => box[2] < b[0] || box[0] > b[2] || box[3] < b[1] || box[1] > b[3]);
+      if (fits) { pick = t; placed.push(box); break; }
+    }
+    add('text', { x: x + pick[0], y: y + pick[1], 'text-anchor': pick[2], class: 'qname' }, name);
+  };
+  pts.forEach((p) => {
+    const hh = p.x > mx && p.y > my;
+    const c = add('circle', { cx: sx(p.x), cy: sy(p.y), r: p.code === state.selected ? 7 : 5,
+                              class: hh ? 'qpt qpt-hh' : 'qpt' });
+    c.addEventListener('click', () => select(p.code, true));
+    const tip = document.createElementNS(ns, 'title');
+    tip.textContent = `${p.name}: ${ix.label} ${p.x}${ix.unit}, ${iy.label} ${p.y}${iy.unit}`;
+    c.appendChild(tip);
+    placeLabel(p.name, sx(p.x), sy(p.y));
+  });
+
+  box.innerHTML = '';
+  box.appendChild(svg);
+  box.appendChild(el('p', 'qcap',
+    `빨간 점 = 두 지표 모두 중앙값보다 높음(${v.high_high_label}). 점선 = 8개 읍면 중앙값 (${ix.label} ${mx.toFixed(1)}${ix.unit}, ${iy.label} ` +
+    `${my.toFixed(1)}${iy.unit}). 위치 표시일 뿐 종합 우선순위가 아닙니다. ` +
+    `관련 가설: ${v.hypotheses.join(', ')}`));
 }
 
 function renderLegend() {
@@ -320,6 +456,7 @@ function select(code, fromList) {
   layer.setStyle(styleFor);
   renderRanking();
   renderDetail();
+  renderQuadrant();
   if (!fromList && state.selected) {
     const lyr = layer.getLayers().find(
       (l) => l.feature.properties.region_code === state.selected);
@@ -336,19 +473,22 @@ function redraw() {
   renderLegend();
   renderRanking();
   renderDetail();
+  renderHypothesis();
+  renderQuadrant();
   if (layer) layer.setStyle(styleFor);
 }
 
 async function main() {
-  const [regions, boundary, parks, potholes, facilities, sources] = await Promise.all([
+  const [regions, boundary, parks, potholes, facilities, sources, hypotheses] = await Promise.all([
     getJSON('./data/regions.json'),
     getJSON('./data/eupmyeon.geojson'),
     getJSON('./data/parks.json'),
     getJSON('./data/potholes.json'),
     getJSON('./data/facilities.json'),
     getJSON('./data/sources.json'),
+    getJSON('./data/hypotheses.json'),
   ]);
-  Object.assign(store, { regions, boundary, parks, potholes, facilities, sources });
+  Object.assign(store, { regions, boundary, parks, potholes, facilities, sources, hypotheses });
 
   if (boundary.features.length !== 8) {
     throw new Error(`읍면 경계가 8개가 아님: ${boundary.features.length}`);
@@ -362,7 +502,12 @@ async function main() {
   }
 
   state.period = regions.meta.default_period;
-  state.indicator = regions.indicators.find((i) => i.status === 'available').id;
+  // 처음 화면은 가설(H1)이 붙은 지표로 연다 - 가설 카드가 바로 보이게
+  const firstHyp = hypotheses.hypotheses[0];
+  state.indicator = firstHyp && regions.indicators.some(
+    (i) => i.id === firstHyp.indicator && i.status === 'available')
+    ? firstHyp.indicator
+    : regions.indicators.find((i) => i.status === 'available').id;
 
   renderBanner();
   initMap();

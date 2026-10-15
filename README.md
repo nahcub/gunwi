@@ -24,7 +24,8 @@ npm run dev               # 빌드 후 http://127.0.0.1:8787
 |---|---|
 | `npm run prepare-data` | 원자료 검증·정제 → `data/derived/` |
 | `npm run build` | `data/derived/` → `public/data/` |
-| `npm run export` | `data/derived/` → `outputs/` 제출용 엑셀·CSV |
+| `npm run export` | `data/derived/` → `outputs/` 제출용 엑셀·CSV (가설 시트 포함) |
+| `npm run figures` | `data/derived/` → `outputs/figures/` 보고서 삽화 5장 |
 | `npm test` | 검증 로직이 살아 있는지 확인 |
 | `npm run deploy` | 빌드 후 Cloudflare 배포 (main push 시 GitHub Actions 가 자동 실행) |
 
@@ -56,31 +57,36 @@ data/sources.json    출처 레지스트리 — 유일한 진실. public/data/so
 data/raw/            원자료 + _meta.json(출처 카드) + capture.html(원본 페이지 증빙)
 data/derived/        prepare.py 출력
 tools/               add_source.py / fetch_pothole.py / prepare.py / build.py / export_excel.py / tests
+data/hypotheses.json 지표–민원 가설 레지스트리 (웹·엑셀·그림의 원본)
 outputs/             export_excel.py 출력 (제출용 엑셀·CSV)
+outputs/figures/     figures.py 출력 (보고서 삽화 PNG + 근거 CSV)
 public/              배포되는 폴더. "여기 넣은 건 공개"
 docs/methodology.md  산식 근거. 공식 기준과 프로젝트 파생지표의 구분
 docs/data-guide.md   raw 원자료별 내용과 derived 에서 무엇이 되는지
 docs/how-to.md       작업별 절차 ("X 하려면 어디를 고치나")
 docs/data-survey.md  미확보 자료 조사 결과
 docs/requests/       군청 정보공개청구 초안 (미발송)
+docs/hypotheses.md   지표–민원 가설, 사분면, 지표 간 상관 읽는 법
 ```
 
 ## 지금 지도에서 보이는 것
 
 **표시됨** — 읍면 8개 코로플레스: 총인구 · 고령화율 · 노령화지수 · 인구밀도 ·
-경로당 수 · 고령인구 1천명당 경로당 · 위험지정 세천 · 상수도보급률 /
+경로당 수 · 고령인구 1천명당 경로당 · 노후 경로당 비율 · 위험지정 세천 · 상수도보급률 /
 2개 시점 전환(2025-12, 2026-08. 시설·SGIS 지표는 시점과 무관) /
 경로당 215곳·위험지정 세천 27곳·도시공원 3건 마커 /
 포트홀 민원 4건 마커(2025-01~2026-10, 표본이 적어 지표로는 쓰지 않음) /
-읍면 순위·상세 / 데이터 출처 패널
+읍면 순위·상세 / 데이터 출처 패널 /
+선택한 지표의 **민원 가설 카드**(H1~H7, 전부 미검증) /
+**사분면**(노후 경로당 비율 × 고령화율, 중앙값 분할 위치 표시 — 우선순위 아님)
 
 **비활성(원자료 미확보)** — 민원발생률 · 반복민원율 · 처리지연율 ·
 시설관리 필요도 · 종합 우선순위
 
 ## 알려진 과제
 
-1. **경계 GeoJSON 출처 미확인** — 지도 전체가 출처 기록 없는 파일 위에 있다.
-   SGIS 에서 재취득해 대조할 것. 화면에 경고 배너가 뜬다. → `CLAUDE.md`
+1. ~~경계 GeoJSON 출처 미확인~~ — **2026-10-15 해결.** SGIS 2025 2Q 원본과 8개 읍면
+   도형 일치 확인(`tools/verify_boundary.py`). → `CLAUDE.md`
 2. **민원 건별 원자료 요청 미발송** — 군청 자료요청이 아직 발송되지 않았다.
    이게 들어오면 3개 지표가 한꺼번에 풀린다. → `data/sources.json`
 3. **종합 우선순위 가중치 근거 없음** → `docs/methodology.md`

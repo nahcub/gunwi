@@ -12,6 +12,8 @@
 | 지표 산식과 근거, 계산하지 않는 이유 | `docs/methodology.md` |
 | 아직 못 구한 자료 조사 결과 | `docs/data-survey.md` |
 | 군청 정보공개청구 초안(미발송) | `docs/requests/README.md` |
+| 지표–민원 가설과 사분면 (B 역할) | `docs/hypotheses.md` |
+| B 역할이 한 일 한 장 요약 | `docs/handoff-B.md` |
 
 ## 폴더 소유권
 
@@ -22,6 +24,8 @@
 | `public/*.html,js,css` | 사람 | 자유롭게 편집 |
 | `public/data/` | `tools/build.py` | 손대지 않는다. `.gitignore` 에 있다 → **clone/pull 직후엔 비어 있다** |
 | `outputs/` | `tools/export_excel.py` | 제출용 엑셀·CSV. 손으로 고치지 않는다 |
+| `outputs/figures/` | `tools/figures.py` | 보고서 삽화 PNG·근거 CSV. 손으로 고치지 않는다 |
+| `data/hypotheses.json` | 사람 (B 역할) | 지표–민원 가설 레지스트리. 웹·엑셀·그림이 여기서 나온다 |
 
 `public/` 에 들어간 것은 **인터넷에 공개된다.** `derived/` → `public/data/` 로
 올릴 파일을 정하는 곳이 `tools/build.py` 이고, 그게 공개 여부를 결정하는 자리다.
@@ -34,7 +38,8 @@ tools/add_source.py    새 원자료를 data/raw/<새 폴더>/ 에 등록 (_meta
 tools/fetch_pothole.py 포트홀 민원 API 수집기 (인증키는 환경변수 DATA_GO_KR_KEY)
 tools/prepare.py       data/raw     -> data/derived   (assert 검증 관문)
 tools/build.py         data/derived -> public/data    (공개 결정 지점)
-tools/export_excel.py  data/derived -> outputs/       (제출용 엑셀·CSV)
+tools/export_excel.py  data/derived -> outputs/       (제출용 엑셀·CSV, '가설' 시트 포함)
+tools/figures.py       data/derived -> outputs/figures (보고서 삽화. matplotlib 필요)
 tools/tests/           pytest. 원자료 기준 "알려진 개수"를 고정해 둔 테스트가 많다
 ```
 
@@ -92,19 +97,18 @@ tools/tests/           pytest. 원자료 기준 "알려진 개수"를 고정해 
 
 보고서에 쓸 때는 "프로젝트 임시 기준"이라고 명시한다.
 
-## 미해결: 경계 GeoJSON 출처 불명
+## 해결됨: 경계 GeoJSON 출처 (2026-10-15)
 
-`data/raw/boundary-eupmyeon-2025-06-30/` 의 `provenance` 가 `UNVERIFIED` 다.
-팀 저장소 첫 커밋에 이미 있었고 다운로드 이력이 없다. `reference_date`
-2025-06-30 은 피처 속성 `BASE_DATE` 에서 읽은 값일 뿐 출처 문서로 확인된 게
-아니다. 워크북 G01 은 경계를 "원본 미확보"로 적어놨는데 파일은 존재한다 —
-문서와 실제가 모순된다.
+`data/raw/boundary-eupmyeon-2025-06-30/eupmyeon.geojson` 은 다운로드 이력 없이
+첫 커밋부터 있던 파일이라 `UNVERIFIED` 였다. 2026-10-15 SGIS 행정구역 경계
+2025 2Q 원본(`bnd_dong_00_2025_2Q.shp`, EPSG:5179)에서 군위군 8개를 직접 뽑아
+대조했더니 **도형·속성이 8개 모두 같았다**(IoU 1.000000). 파일 바이트는 그대로 두고
+`_meta.json` 의 `provenance` 만 `verified` 로 바꿨다 → 경고 배너가 사라진다.
 
-**지도 전체와 포트홀 읍면 판정, SGIS 코드 대응이 이 파일 위에 서 있다.**
-SGIS 전국 원본 zip(`sgis-admstat-2025-2q/_meta.json` 참고, 경계 shp 포함,
-EPSG:5179)에서 2025 2Q 경계를 추출·대조하고, 새 raw 폴더로 등록한 뒤
-`provenance` 를 `verified` 로 바꿀 것. 그때까지 화면 상단에 경고 배너가 뜬다
-(`renderBanner()`). 보고서에도 "경계 출처 미확인"을 적는다.
+- 재현: `python tools/verify_boundary.py --shp <bnd_dong_00_2025_2Q.shp>` (geopandas 필요,
+  전국 shp 135MB 는 저장소 밖)
+- 같은 폴더의 `boundary-alt.geojson` 은 여전히 출처 미확인. 쓰지 않는다
+- 경계를 새 시점으로 바꿀 때도 같은 스크립트로 대조하고 새 raw 폴더로 등록한다
 
 ## 종합 우선순위는 계산하지 않는다
 
@@ -121,8 +125,22 @@ EPSG:5179)에서 2025 2Q 경계를 추출·대조하고, 새 raw 폴더로 등�
 통계 비공개 셀(`N/A`)도 0 으로 바꾸지 않고 `null` 로 둔다.
 
 포트홀 민원은 군위 4건뿐이라 지표로 쓰지 않고 지점 표시만 한다.
-살피소 제보 현황(`daegu-salpiso-reports-2024-11-27`)은 군 단위 1행이라 prepare.py
-가 읽지 않는다 — 보고서 배경 수치용.
+살피소 제보 현황(`daegu-salpiso-reports-2024-11-27`)은 처리기관 단위라 읍면 비교에
+쓰지 않는다. `prepare_salpiso()` 가 `derived/salpiso.json` 으로 정리해 두지만 웹
+(`build.py`)에는 올리지 않고, 보고서 배경 수치와 그림4 에만 쓴다.
+
+## 가설은 점수가 아니다
+
+`data/hypotheses.json` 의 가설(H1~H7)은 "이 지표가 이 민원과 엮일 것이다"라는
+**미검증 주장**이다. 민원 원자료(`COMPLAINT_INTERNAL`)가 미확보인 동안 `status` 는
+`가설(미검증)` 에서 바꾸지 않는다 — `test_hypotheses.py` 가 막는다.
+
+웹·그림의 사분면(Q1: 노후 경로당 비율 × 고령화율)은 두 지표를 각각 8개 읍면
+중앙값으로 나눈 **위치 표시**다. 가중치·합산이 없고 `priority_score` 를 대신하지
+않는다. 사분면에 점수·가중치 필드를 넣으면 테스트가 실패한다.
+
+지표끼리 순위상관이 큰 쌍(고령화율–노령화지수 0.79, 노령화지수–고령인구 1천명당
+경로당 0.93)은 같은 현상을 다른 분모로 본 것이다. 한 가설의 증거로 두 번 세지 않는다.
 
 ## 비밀값
 

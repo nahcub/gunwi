@@ -17,6 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DERIVED = ROOT / "data" / "derived"
 REGISTRY = ROOT / "data" / "sources.json"
+HYPOTHESES = ROOT / "data" / "hypotheses.json"
 OUT = ROOT / "public" / "data"
 
 # 웹 화면에 내보내는 출처 필드. 여기서 뺀 필드는 화면에 안 뜬다.
@@ -43,6 +44,9 @@ INDICATORS = [
     {"id": "senior_center_per_1k_elderly", "label": "고령인구 1천명당 경로당", "unit": "개소",
      "status": "available", "higher_is_worse": False,
      "reference": "경로당 2025-12-19 / 고령인구는 선택 시점"},
+    {"id": "senior_center_old_ratio", "label": "노후 경로당 비율", "unit": "%",
+     "status": "available", "higher_is_worse": True,
+     "reference": "2025-12-19 · 2000년 이전 건립(프로젝트 임시 기준)"},
     {"id": "drainage_risk_count", "label": "위험지정 세천", "unit": "개소",
      "status": "available", "higher_is_worse": True, "reference": "2026-07-15"},
     {"id": "water_supply_rate", "label": "상수도보급률", "unit": "%",
@@ -93,6 +97,8 @@ def build_regions() -> dict:
             "density_per_km2": sgis[code]["density_per_km2"],
             "senior_center_count": seniors[code]["count"],
             "senior_center_old_count": seniors[code]["old_count"],
+            "senior_center_old_ratio": round(
+                seniors[code]["old_count"] / seniors[code]["count"] * 100, 1),
             "senior_center_per_1k_elderly": round(
                 seniors[code]["count"] / rec["elderly"] * 1000, 1),
             "drainage_risk_count": drainage[code]["count"],
@@ -139,6 +145,38 @@ def build_facilities() -> dict:
     }
 
 
+def build_hypotheses() -> dict:
+    """data/hypotheses.json -> 공개용 가설 목록.
+
+    가설은 '지표가 민원과 이렇게 엮일 것이다'라는 미검증 주장이다. 여기서
+    지표·출처 id 가 실제로 있는지 검사해, 없는 지표에 가설이 붙는 것을 막는다.
+    점수·가중치는 만들지 않는다 - views 의 사분면도 중앙값 위치 표시뿐이다.
+    """
+    hyp = json.loads(HYPOTHESES.read_text(encoding="utf-8"))
+    available = {i["id"] for i in INDICATORS if i["status"] == "available"}
+    sources = {s["id"] for s in json.loads(REGISTRY.read_text(encoding="utf-8"))["sources"]}
+    statuses = set(hyp["status_values"])
+    fields = set(hyp["complaint_fields"])
+
+    ids = [h["id"] for h in hyp["hypotheses"]]
+    assert len(ids) == len(set(ids)), "가설 id 중복"
+    for h in hyp["hypotheses"]:
+        assert h["indicator"] in available, f"{h['id']}: 화면에 없는 지표 {h['indicator']}"
+        assert h["status"] in statuses, f"{h['id']}: 허용되지 않은 상태 {h['status']}"
+        assert h["direction"] in {"+", "-", "±"}, f"{h['id']}: 방향 표기 {h['direction']}"
+        assert set(h["complaint_fields"]) <= fields, f"{h['id']}: 없는 민원 분야"
+        missing = set(h["verify_with"]) - sources
+        assert not missing, f"{h['id']}: sources.json 에 없는 검증 자료 {missing}"
+    for e in hyp["evidence"]:
+        assert e["source"] in sources, f"{e['id']}: sources.json 에 없는 자료 {e['source']}"
+    for v in hyp["views"]:
+        assert {v["x"], v["y"]} <= available, f"{v['id']}: 화면에 없는 지표"
+        assert set(v["hypotheses"]) <= set(ids), f"{v['id']}: 없는 가설 참조"
+        assert v["split"] == "median", f"{v['id']}: 사분면은 중앙값 분할만 쓴다"
+    return {k: hyp[k] for k in ("schema_version", "updated_at", "status_values",
+                                "complaint_fields", "hypotheses", "evidence", "views")}
+
+
 def build_sources() -> dict:
     reg = json.loads(REGISTRY.read_text(encoding="utf-8"))
     out = []
@@ -181,6 +219,7 @@ def main() -> None:
         "points": potholes["points"],
     })
     write("facilities.json", build_facilities())
+    write("hypotheses.json", build_hypotheses())
     write("sources.json", build_sources())
 
     if boundary.get("_provenance") != "verified":
