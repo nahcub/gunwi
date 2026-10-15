@@ -206,3 +206,28 @@ main {
   main { grid-template-columns: minmax(0, 1fr); }
   #map { height: 380px; }
 }
+
+/* ---------------------------------------------------------- 가설 카드 */
+.hyp { padding: 8px 0; border-top: 1px solid var(--line); }
+.hyp:first-child { border-top: 0; padding-top: 0; }
+.hyp-head { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.hyp-id { font-weight: 700; color: var(--accent); }
+.hyp-tag { font-size: 12px; color: var(--muted); }
+.hyp-statement { margin: 6px 0; font-weight: 600; font-size: 14px; }
+.hyp dl { margin: 0; font-size: 12px; display: grid; grid-template-columns: 64px 1fr; gap: 3px 8px; }
+.hyp dt { color: var(--muted); }
+.hyp dd { margin: 0; }
+.hyp-evidence { margin-top: 8px; font-size: 12px; color: var(--muted); }
+.hyp-evidence p { margin: 4px 0; }
+
+/* ---------------------------------------------------------- 사분면 */
+.quad { width: 100%; height: auto; display: block; }
+.quad .qhh { fill: #fdecec; }
+.quad .qmid { stroke: #9ca3af; stroke-dasharray: 4 3; }
+.quad .qlabel { font-size: 10px; fill: #9b2c2c; }
+.quad .qaxis { font-size: 10px; fill: var(--muted); }
+.quad .qname { font-size: 10px; fill: var(--ink); pointer-events: none; }
+.quad .qpt { fill: #8fb9dc; stroke: #2f6fb0; cursor: pointer; }
+.quad .qpt-hh { fill: #e57373; stroke: #9b2c2c; }
+.qcap { margin: 6px 0 0; font-size: 11px; color: var(--muted); line-height: 1.5; }
+.hyp .st { font-size: 11px; padding: 1px 6px; border-radius: 999px; background: #fff4e5; color: #8a5a11; }

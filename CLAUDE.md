@@ -12,6 +12,7 @@
 | 지표 산식과 근거, 계산하지 않는 이유 | `docs/methodology.md` |
 | 아직 못 구한 자료 조사 결과 | `docs/data-survey.md` |
 | 군청 정보공개청구 초안(미발송) | `docs/requests/README.md` |
+| 지표–민원 가설과 사분면 (B 역할) | `docs/hypotheses.md` |
 
 ## 폴더 소유권
 
@@ -22,6 +23,8 @@
 | `public/*.html,js,css` | 사람 | 자유롭게 편집 |
 | `public/data/` | `tools/build.py` | 손대지 않는다. `.gitignore` 에 있다 → **clone/pull 직후엔 비어 있다** |
 | `outputs/` | `tools/export_excel.py` | 제출용 엑셀·CSV. 손으로 고치지 않는다 |
+| `outputs/figures/` | `tools/figures.py` | 보고서 삽화 PNG·근거 CSV. 손으로 고치지 않는다 |
+| `data/hypotheses.json` | 사람 (B 역할) | 지표–민원 가설 레지스트리. 웹·엑셀·그림이 여기서 나온다 |
 
 `public/` 에 들어간 것은 **인터넷에 공개된다.** `derived/` → `public/data/` 로
 올릴 파일을 정하는 곳이 `tools/build.py` 이고, 그게 공개 여부를 결정하는 자리다.
@@ -34,7 +37,8 @@ tools/add_source.py    새 원자료를 data/raw/<새 폴더>/ 에 등록 (_meta
 tools/fetch_pothole.py 포트홀 민원 API 수집기 (인증키는 환경변수 DATA_GO_KR_KEY)
 tools/prepare.py       data/raw     -> data/derived   (assert 검증 관문)
 tools/build.py         data/derived -> public/data    (공개 결정 지점)
-tools/export_excel.py  data/derived -> outputs/       (제출용 엑셀·CSV)
+tools/export_excel.py  data/derived -> outputs/       (제출용 엑셀·CSV, '가설' 시트 포함)
+tools/figures.py       data/derived -> outputs/figures (보고서 삽화. matplotlib 필요)
 tools/tests/           pytest. 원자료 기준 "알려진 개수"를 고정해 둔 테스트가 많다
 ```
 
@@ -121,8 +125,22 @@ EPSG:5179)에서 2025 2Q 경계를 추출·대조하고, 새 raw 폴더로 등�
 통계 비공개 셀(`N/A`)도 0 으로 바꾸지 않고 `null` 로 둔다.
 
 포트홀 민원은 군위 4건뿐이라 지표로 쓰지 않고 지점 표시만 한다.
-살피소 제보 현황(`daegu-salpiso-reports-2024-11-27`)은 군 단위 1행이라 prepare.py
-가 읽지 않는다 — 보고서 배경 수치용.
+살피소 제보 현황(`daegu-salpiso-reports-2024-11-27`)은 처리기관 단위라 읍면 비교에
+쓰지 않는다. `prepare_salpiso()` 가 `derived/salpiso.json` 으로 정리해 두지만 웹
+(`build.py`)에는 올리지 않고, 보고서 배경 수치와 그림4 에만 쓴다.
+
+## 가설은 점수가 아니다
+
+`data/hypotheses.json` 의 가설(H1~H7)은 "이 지표가 이 민원과 엮일 것이다"라는
+**미검증 주장**이다. 민원 원자료(`COMPLAINT_INTERNAL`)가 미확보인 동안 `status` 는
+`가설(미검증)` 에서 바꾸지 않는다 — `test_hypotheses.py` 가 막는다.
+
+웹·그림의 사분면(Q1: 노후 경로당 비율 × 고령화율)은 두 지표를 각각 8개 읍면
+중앙값으로 나눈 **위치 표시**다. 가중치·합산이 없고 `priority_score` 를 대신하지
+않는다. 사분면에 점수·가중치 필드를 넣으면 테스트가 실패한다.
+
+지표끼리 순위상관이 큰 쌍(고령화율–노령화지수 0.79, 노령화지수–고령인구 1천명당
+경로당 0.93)은 같은 현상을 다른 분모로 본 것이다. 한 가설의 증거로 두 번 세지 않는다.
 
 ## 비밀값
 

@@ -1,0 +1,127 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-10-15",
+  "_note": "지표와 생활불편 민원 사이의 '가설' 레지스트리. 유일한 진실. 웹(public/data/hypotheses.json)·엑셀 '가설' 시트·그림이 모두 여기서 생성된다. 민원 원자료가 없어 전부 미검증이다. 검증 전에는 status 를 바꾸지 않는다. 설명은 docs/hypotheses.md.",
+  "status_values": ["가설(미검증)", "검증 중", "지지", "기각"],
+  "complaint_fields": ["교통·주차", "도로·보행", "조명·안전", "폐기물·환경", "상·하수도", "생활시설"],
+  "hypotheses": [
+    {
+      "id": "H1",
+      "indicator": "elderly_ratio",
+      "type": "수요형",
+      "direction": "+",
+      "complaint_fields": ["생활시설", "도로·보행"],
+      "statement": "고령화율이 높은 읍면일수록 보행·이동·생활시설 관련 불편이 많을 것이다.",
+      "mechanism": "고령층은 보행 안전, 의료·복지시설 접근, 대중교통 의존도가 높아 같은 시설 조건에서도 불편을 더 크게 겪는다.",
+      "caveat": "고령층은 온라인 신고 채널 이용이 적어 '접수된 민원 건수'는 오히려 적게 잡힐 수 있다(과소신고). 실제 불편과 접수 건수를 구분해 해석한다.",
+      "verify_with": ["COMPLAINT_INTERNAL"],
+      "verify_method": "읍면별 인구 1천명당 민원건수와 고령화율의 순위상관(Spearman). 읍면 8개라 |ρ| ≥ 0.74 일 때만 우연과 구분된다. 음의 상관이면 과소신고 신호로 본다.",
+      "status": "가설(미검증)"
+    },
+    {
+      "id": "H2",
+      "indicator": "aging_index",
+      "type": "수요형",
+      "direction": "+",
+      "complaint_fields": ["생활시설"],
+      "statement": "노령화지수가 높은 읍면일수록 생활시설 관련 불편이 많을 것이다 (H1 보조).",
+      "mechanism": "유소년 대비 고령인구가 많을수록 마을 단위 돌봄·쉼터·이동 지원 수요가 커진다.",
+      "caveat": "고령화율과 같은 현상을 다른 분모로 본 지표다. H1 과 함께 증거로 두 번 세지 않는다. SGIS 2024 기준이라 주민등록 인구 지표와 한 산식에서 섞지 않는다.",
+      "verify_with": ["COMPLAINT_INTERNAL"],
+      "verify_method": "H1 과 같다. H1 과 결과가 갈리면 분모(유소년 인구) 효과를 먼저 확인한다.",
+      "status": "가설(미검증)"
+    },
+    {
+      "id": "H3",
+      "indicator": "density_per_km2",
+      "type": "수요형",
+      "direction": "±",
+      "complaint_fields": ["교통·주차", "폐기물·환경"],
+      "statement": "인구밀도가 높은 읍면(군위읍)은 교통·주차·환경청소 민원 '건수'가 많고, 밀도가 낮은 면 지역은 시설까지의 거리에서 오는 불편이 클 것이다.",
+      "mechanism": "사람과 차량이 몰린 곳에서 주차·교통·쓰레기 문제가 생긴다. 대구 살피소 제보에서도 도시 지역 처리기관은 현수막·교통·환경청소 비중이 높다(E1).",
+      "caveat": "방향이 민원 유형마다 반대라 하나의 부호로 정할 수 없다. 건수 기준과 인구 1천명당 기준의 결과가 다를 수 있다. SGIS 인구 기준 지표다.",
+      "verify_with": ["COMPLAINT_INTERNAL"],
+      "verify_method": "민원을 분야별로 나눠 분야마다 따로 순위상관을 본다. 분야를 합친 총건수로는 검증하지 않는다.",
+      "status": "가설(미검증)"
+    },
+    {
+      "id": "H4",
+      "indicator": "senior_center_per_1k_elderly",
+      "type": "부족형",
+      "direction": "-",
+      "complaint_fields": ["생활시설"],
+      "statement": "고령인구 1천명당 경로당이 적은 읍면일수록 복지·쉼터 시설 확충을 요구하는 민원이 많을 것이다.",
+      "mechanism": "시설이 낡아서 생기는 민원(노후형)과 달리, 시설이 모자라서 생기는 설치·확충 요구 민원이다.",
+      "caveat": "경로당은 마을마다 하나씩 두는 경우가 많아 인구가 적은 면일수록 1천명당 값이 높게 나온다(분모 효과). 값이 높다고 서비스가 충분하다는 뜻은 아니다.",
+      "verify_with": ["COMPLAINT_INTERNAL"],
+      "verify_method": "생활시설 분야 중 '설치·확충 요구' 민원만 골라 순위상관을 본다. 고장·보수 민원은 H5 로 보낸다.",
+      "status": "가설(미검증)"
+    },
+    {
+      "id": "H5",
+      "indicator": "senior_center_old_ratio",
+      "type": "노후형",
+      "direction": "+",
+      "complaint_fields": ["생활시설", "조명·안전"],
+      "statement": "2000년 이전 건립 경로당 비율이 높은 읍면일수록 보수·안전 관련 민원이 많을 것이다.",
+      "mechanism": "건물이 오래될수록 누수·설비 고장·안전 문제가 생기고, 이용자 대부분이 고령층이라 불편이 바로 민원으로 이어진다.",
+      "caveat": "2000년 기준은 공식 기준이 아닌 프로젝트 임시값이다(SENIOR_OLD_BEFORE_YEAR). 건립연도만 있고 리모델링·보수 이력이 없어 실제 노후도와 다를 수 있다.",
+      "verify_with": ["FACILITY_MAINT_HISTORY", "COMPLAINT_INTERNAL"],
+      "verify_method": "보수 이력이 들어오면 노후 판정을 '건립연도'에서 '마지막 보수연도'로 바꿔 다시 센다. 그 뒤 생활시설 고장·보수 민원과 순위상관을 본다.",
+      "status": "가설(미검증)"
+    },
+    {
+      "id": "H6",
+      "indicator": "drainage_risk_count",
+      "type": "노후형",
+      "direction": "+",
+      "complaint_fields": ["상·하수도", "도로·보행"],
+      "statement": "위험지정 세천이 많은 읍면일수록 침수·배수·세천 정비 관련 민원이 많을 것이다.",
+      "mechanism": "군이 관리가 필요하다고 지정한 세천은 집중호우 때 범람·도로 침수로 이어질 수 있다.",
+      "caveat": "군이 위험시설로 지정한 세천 목록일 뿐 배수시설(빗물받이·맨홀) 전수가 아니다. 지정사유가 원본에서 전부 공란이라 위험 정도를 구분할 수 없다.",
+      "verify_with": ["COMPLAINT_INTERNAL"],
+      "verify_method": "배수·침수 분야 민원을 장마철(6~9월)과 나머지로 나눠, 장마철 건수와의 순위상관을 본다.",
+      "status": "가설(미검증)"
+    },
+    {
+      "id": "H7",
+      "indicator": "water_supply_rate",
+      "type": "부족형",
+      "direction": "-",
+      "complaint_fields": ["상·하수도"],
+      "statement": "상수도보급률이 낮은 읍면일수록 급수·수질·단수 관련 민원이 많을 것이다.",
+      "mechanism": "상수도가 닿지 않는 지역은 지하수·소규모 급수시설에 의존해 수질·수량 문제가 생기기 쉽다. 삼국유사면(65%)이 다른 읍면(86~99%)보다 눈에 띄게 낮다.",
+      "caveat": "읍면 값만 있다. 군 전체 보급률을 읍면 평균으로 구하지 않는다(인구 가중 아님). 관망 노후도는 이 지표에 없다.",
+      "verify_with": ["COMPLAINT_INTERNAL", "WATER_SEWER_ASSET_INTERNAL"],
+      "verify_method": "상·하수도 분야 민원과 순위상관을 본다. 관망 자료가 들어오면 보급률(부족형)과 관로 경년(노후형)을 나눠 본다.",
+      "status": "가설(미검증)"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E1",
+      "source": "DAEGU_SALPISO_REPORTS",
+      "kind": "사실(군 단위)",
+      "text": "군위군 살피소 제보 87건 중 현수막 37건(43%), 도로시설 13건·교통시설 13건(합 30%). 읍면 구분이 없어 읍면 가설의 검증 자료는 아니고, 군위군 민원 구성의 배경 근거로만 쓴다."
+    },
+    {
+      "id": "E2",
+      "source": "MINWON_POTHOLE_LATLON",
+      "kind": "사실(표본 부족)",
+      "text": "2025-01~2026-10 포트홀 민원 중 군위군 경계 안은 4건(우보면 2, 효령면 2)뿐이다. 읍면 비교나 상관 계산에 쓰지 않는다."
+    }
+  ],
+  "views": [
+    {
+      "id": "Q1",
+      "kind": "quadrant",
+      "x": "senior_center_old_ratio",
+      "y": "elderly_ratio",
+      "split": "median",
+      "title": "시설 노후 × 인구 고령화",
+      "hypotheses": ["H1", "H5"],
+      "high_high_label": "가설 검증 우선 후보",
+      "_note": "종합 우선순위가 아니다. 두 지표를 각각 8개 읍면의 중앙값으로 나눠 위치만 보여 준다. 가중치·합산 없음."
+    }
+  ]
+}
