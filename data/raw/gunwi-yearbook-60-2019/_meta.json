@@ -1,0 +1,38 @@
+{
+  "source_id": "GUNWI_YEARBOOK_60",
+  "name": "제60회 군위통계연보",
+  "provider": "군위군청 (2023-07 이전 경상북도 군위군)",
+  "url": "https://www.gunwi.go.kr/ko/page.do?mnu_uid=195&bod_uid=74726&cmd=2",
+  "reference_date": "2019-12-31",
+  "retrieved_at": "2026-11-02",
+  "retrieved_by": "Claude Code (사용자 요청 수집)",
+  "license": "공공누리(군위군청 게시판 표시)",
+  "provenance": "verified",
+  "notes": "기준연도 2019 는 회차-41 규칙(제58·62·63·64회에서 확인)으로 추정. 표 자체로는 아직 확인하지 않음. 첨부 zip(30,210,096 bytes, sha256 899a4518a6b208e7a00ec2ad081e796b47f277f9ed2dd4bba40c79ba9bda3932)이 커서 저장소에는 장 0·2·3·8·12 PDF 만 압축에서 그대로 꺼내 넣었다. zip 원본은 ~/Downloads/gunwi-dl/제60회_군위통계연보.zip 에 보관(SGIS 원본 zip 과 같은 방식). PDF 는 글자가 곡선으로 변환된 이미지형이라 텍스트 추출이 안 된다 — 값은 사람이 읽어 옮겨야 한다. 쓸 만한 표: 2장 행정구역(읍면별 리 수), 3장 읍면별 세대·인구, 리별 세대·인구(행정리→읍면 대응), 8장 상수도 보급현황(읍면별 급수인구·보급률), 12장 노인여가복지시설(읍면별 경로당 수). 각 표는 그해 읍면별 값 + 최근 5년 군 합계만 싣는다. prepare.py 미반영.",
+  "files": {
+    "0 - 목차.pdf": {
+      "sha256": "d7b890e1f42b6d34a42737715af3e0a3be5ff3d5dec639941e0c9602a1509589",
+      "bytes": 1143756
+    },
+    "12 - 보건 및 사회보장.pdf": {
+      "sha256": "8b6888c71c276b7fa6ca4f9f0f2fde1b54edf699594a16558e02800dfd59274e",
+      "bytes": 4898280
+    },
+    "2 - 토지 및 기후.pdf": {
+      "sha256": "ff9236df11117eee889d28c80086e1eaf7ac6f7a8763a7c360ba1aa7cbdd0a1c",
+      "bytes": 1018378
+    },
+    "3 - 인구(수정).pdf": {
+      "sha256": "a33f0622a2b6573729151f7c4c2bc53f76001291fa75b569787a58b834a5324e",
+      "bytes": 3539288
+    },
+    "8 - 전기, 가스, 수도.pdf": {
+      "sha256": "64c5ddf5339a211a5b0b4e513a5d7848ae54f4818cd13010e5864a444fe76318",
+      "bytes": 1178026
+    },
+    "capture.html": {
+      "sha256": "baa5d577c229bc871758af69e64f7124223bf9c2293ad398c9dd4ce8aa8bb9e3",
+      "bytes": 209042
+    }
+  }
+}

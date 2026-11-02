@@ -1,0 +1,22 @@
+{
+  "source_id": "GUNWI_YEARBOOK_64",
+  "name": "제64회 군위통계연보",
+  "provider": "군위군청 (2023-07 이전 경상북도 군위군)",
+  "url": "https://www.gunwi.go.kr/ko/page.do?mnu_uid=195&bod_uid=137652&cmd=2",
+  "reference_date": "2023-12-31",
+  "retrieved_at": "2026-11-02",
+  "retrieved_by": "Claude Code (사용자 요청 수집)",
+  "license": "공공누리(군위군청 게시판 표시)",
+  "provenance": "verified",
+  "notes": "작성기준은 게시글에 2023-12-31 로 명시. 게시판 첨부 zip 원본 그대로(장별 xlsx + 부록 hwp). 쓸 만한 표: 2장 행정구역(읍면별 리 수), 3장 읍면별 세대·인구, 리별 세대·인구(행정리→읍면 대응), 8장 상수도 보급현황(읍면별 급수인구·보급률), 12장 노인여가복지시설(읍면별 경로당 수). 각 표는 그해 읍면별 값 + 최근 5년 군 합계만 싣는다. prepare.py 미반영.",
+  "files": {
+    "capture.html": {
+      "sha256": "5d58a0ef79e876550c8d840f37d7e9e0a237bddf52d139abe7895bb735c26b6a",
+      "bytes": 209539
+    },
+    "제64회_군위통계연보.zip": {
+      "sha256": "2c714099a67b38199a2787e2a015630acc3b09b5e78b067241761602c6f342e5",
+      "bytes": 4513987
+    }
+  }
+}

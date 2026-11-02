@@ -1,0 +1,22 @@
+{
+  "source_id": "GUNWI_YEARBOOK_62",
+  "name": "제62회 군위통계연보",
+  "provider": "군위군청 (2023-07 이전 경상북도 군위군)",
+  "url": "https://www.gunwi.go.kr/ko/page.do?mnu_uid=195&bod_uid=126494&cmd=2",
+  "reference_date": "2021-12-31",
+  "retrieved_at": "2026-11-02",
+  "retrieved_by": "Claude Code (사용자 요청 수집)",
+  "license": "공공누리(군위군청 게시판 표시)",
+  "provenance": "verified",
+  "notes": "기준연도 2021: 노인여가복지시설 표의 마지막 연도로 확인. 게시판 첨부 zip 원본 그대로(장별 xlsx + 부록 hwp). 쓸 만한 표: 2장 행정구역(읍면별 리 수), 3장 읍면별 세대·인구, 리별 세대·인구(행정리→읍면 대응), 8장 상수도 보급현황(읍면별 급수인구·보급률), 12장 노인여가복지시설(읍면별 경로당 수). 각 표는 그해 읍면별 값 + 최근 5년 군 합계만 싣는다. prepare.py 미반영.",
+  "files": {
+    "capture.html": {
+      "sha256": "9ff91f90896e02028c03e5abb5b800929503eb0c6cdb90e6a754fe2f794c9c05",
+      "bytes": 209186
+    },
+    "제62회_군위통계연보.zip": {
+      "sha256": "afb53f447425ad50ffb6c3097950e6a2127db7e1e7e88e991de340f6558094a0",
+      "bytes": 4534056
+    }
+  }
+}

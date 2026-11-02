@@ -1,0 +1,34 @@
+{
+  "source_id": "GUNWI_YEARBOOK_58",
+  "name": "제58회 군위통계연보",
+  "provider": "군위군청 (2023-07 이전 경상북도 군위군)",
+  "url": "https://www.gunwi.go.kr/ko/page.do?mnu_uid=195&bod_uid=58531&cmd=2",
+  "reference_date": "2017-12-31",
+  "retrieved_at": "2026-11-02",
+  "retrieved_by": "Claude Code (사용자 요청 수집)",
+  "license": "공공누리(군위군청 게시판 표시)",
+  "provenance": "verified",
+  "notes": "기준연도 2017: 노인여가복지시설 표의 마지막 연도로 확인. 게시판에 장별 PDF 로 올라와 있어 장 2(토지·행정구역)·3(인구)·8(수도)·12(보건·사회보장)만 받았다(파일명은 저장 시 정리). PDF 는 글자가 곡선으로 변환된 이미지형이라 텍스트 추출이 안 된다 — 값은 사람이 읽어 옮겨야 한다. 쓸 만한 표: 2장 행정구역(읍면별 리 수), 3장 읍면별 세대·인구, 리별 세대·인구(행정리→읍면 대응), 8장 상수도 보급현황(읍면별 급수인구·보급률), 12장 노인여가복지시설(읍면별 경로당 수). 각 표는 그해 읍면별 값 + 최근 5년 군 합계만 싣는다. prepare.py 미반영.",
+  "files": {
+    "capture.html": {
+      "sha256": "afe274aa2300498289bb075c333bc3610e0c4b06225eb03001692b5df648f3a6",
+      "bytes": 215774
+    },
+    "yb58_02_토지및기후.pdf": {
+      "sha256": "c7c777a4acfa176ce8fa8c31fc69159bdecce22806e0d91d28ddc9ac096495ca",
+      "bytes": 995571
+    },
+    "yb58_03_인구.pdf": {
+      "sha256": "acfe1e5804fb7d0e0b7bfbc54c6f58b82ce8fb4c734ab13ccd2ba1da396e68e6",
+      "bytes": 3591894
+    },
+    "yb58_08_전기가스수도.pdf": {
+      "sha256": "72bdec342400a07d280e3d9db48c772cc592c3dc50ea5c43c3edc705126e06cd",
+      "bytes": 1061038
+    },
+    "yb58_12_보건및사회보장.pdf": {
+      "sha256": "467a0110518959315b416faf5c267e38a441c0913b1f9dc2c46a99d716a54b01",
+      "bytes": 4813780
+    }
+  }
+}

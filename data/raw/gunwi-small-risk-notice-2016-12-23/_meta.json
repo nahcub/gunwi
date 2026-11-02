@@ -1,0 +1,22 @@
+{
+  "source_id": "GUNWI_SMALL_RISK_NOTICE_2016_12_23",
+  "name": "군위군 고시 제2016-76호 소규모 위험시설 지정·고시(세천 14곳)",
+  "provider": "군위군청 고시공고 게시판",
+  "url": "https://www.gunwi.go.kr/ko/page.do?mnu_uid=666&not_ancmt_mgt_no=14552&cmd=2",
+  "reference_date": "2016-12-23",
+  "retrieved_at": "2026-11-02",
+  "retrieved_by": "Claude Code (사용자 요청 수집)",
+  "license": "공공누리(군위군청 게시판 표시)",
+  "provenance": "verified",
+  "notes": "게시글 페이지를 capture.html 로, 첨부 고시문(eminwon.gunwi.go.kr 경유)을 그대로 저장. 고시문은 한글(HWP/HWPX) 파일이며 시설명·읍면·리·지번·연장·폭이 표로 들어 있다. prepare.py 미반영.",
+  "files": {
+    "capture.html": {
+      "sha256": "45e00b04e0d88775995c97b844c99b136ed833081afa4d384741df7896e18913",
+      "bytes": 207532
+    },
+    "고시문.hwp": {
+      "sha256": "ca353d95de243751a59407fd803cb24bccdc129d8869a31994974f4fcc9364f6",
+      "bytes": 35328
+    }
+  }
+}

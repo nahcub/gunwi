@@ -1,0 +1,22 @@
+{
+  "source_id": "GUNWI_SMALL_RISK_NOTICE_2026_08_31",
+  "name": "군위군 고시 제2026-107호 소규모 위험시설 지정해제(37개소 중 26개소)",
+  "provider": "군위군청 고시공고 게시판",
+  "url": "https://www.gunwi.go.kr/ko/page.do?mnu_uid=666&not_ancmt_mgt_no=26293&cmd=2",
+  "reference_date": "2026-08-31",
+  "retrieved_at": "2026-11-02",
+  "retrieved_by": "Claude Code (사용자 요청 수집)",
+  "license": "공공누리(군위군청 게시판 표시)",
+  "provenance": "verified",
+  "notes": "게시글 페이지를 capture.html 로, 첨부 고시문(eminwon.gunwi.go.kr 경유)을 그대로 저장. 고시문은 한글(HWP/HWPX) 파일이며 시설명·읍면·리·지번·연장·폭이 표로 들어 있다. ⚠️ 현행 지정 데이터(datagokr-gunwi-small-facility-risk-2026-07-15)보다 뒤의 변경이다 — 그 파일의 38건 중 상당수가 이미 해제됐다. prepare.py 미반영.",
+  "files": {
+    "capture.html": {
+      "sha256": "5661473b5c9e124408922a3230d3ebed3e74f8e582e77656768cfb01d9b53bb9",
+      "bytes": 207509
+    },
+    "고시문.hwpx": {
+      "sha256": "82d14d9d009e1aee9c2add21e4f7536645a9869977a4c76c4958b6afb1b6d6f2",
+      "bytes": 132282
+    }
+  }
+}
