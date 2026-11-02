@@ -27,6 +27,9 @@
 | `outputs/figures/` | `tools/figures.py` | 보고서 삽화 PNG·근거 CSV. 손으로 고치지 않는다 |
 | `data/hypotheses.json` | 사람 (B 역할) | 지표–민원 가설 레지스트리. 웹·엑셀·그림이 여기서 나온다 |
 
+`data/raw/` 의 원자료 1건 = `_meta.json` 이 있는 폴더 1개. 여러 시점이 있는 자료는 묶음 폴더
+아래에 둔다(`mois-age/2025-12/`, `gunwi-yearbook/64-2023/` 등).
+
 `public/` 에 들어간 것은 **인터넷에 공개된다.** `derived/` → `public/data/` 로
 올릴 파일을 정하는 곳이 `tools/build.py` 이고, 그게 공개 여부를 결정하는 자리다.
 비공개 자료의 파생물은 `derived/` 에서 멈춘다.

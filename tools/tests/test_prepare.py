@@ -44,19 +44,37 @@ def test_boundary_carries_population_region_code():
         assert f["properties"]["source_adm_cd"] != f["properties"]["region_code"]
 
 
-def test_every_raw_folder_has_provenance():
+def _source_folders():
+    """원자료 1건 = _meta.json 이 있는 폴더. 시계열은 묶음 폴더 한 단계 아래에 있다
+    (예: raw/mois-age/2025-12/). 묶음 폴더에는 원자료 폴더 말고 아무것도 두지 않는다."""
     for folder in sorted((ROOT / "data" / "raw").iterdir()):
         if not folder.is_dir():
             continue
+        if (folder / "_meta.json").exists():
+            yield folder
+            continue
+        children = sorted(folder.iterdir())
+        assert children, f"{folder.name}: 빈 묶음 폴더"
+        for child in children:
+            assert child.is_dir() and (child / "_meta.json").exists(), (
+                f"{folder.name}/{child.name}: 묶음 폴더 안에는 _meta.json 이 있는 원자료 폴더만 둔다")
+            yield child
+
+
+def test_every_raw_folder_has_provenance():
+    folders = list(_source_folders())
+    assert len(folders) == 101, f"원자료 폴더 {len(folders)}개"
+    for folder in folders:
+        name = folder.relative_to(ROOT / "data" / "raw").as_posix()
         meta = json.loads((folder / "_meta.json").read_text(encoding="utf-8"))
-        assert meta.get("provenance"), f"{folder.name}: provenance 없음"
-        assert meta.get("files"), f"{folder.name}: files 해시 없음"
+        assert meta.get("provenance"), f"{name}: provenance 없음"
+        assert meta.get("files"), f"{name}: files 해시 없음"
 
 
 # ------------------------------------------------------------ 검증이 터지나
 
 def _age_rows(period="2025-12"):
-    path = ROOT / "data" / "raw" / f"mois-age-{period}" / "age.json"
+    path = ROOT / "data" / "raw" / "mois-age" / period / "age.json"
     return json.loads(path.read_text(encoding="utf-8"))
 
 
@@ -113,8 +131,8 @@ def _patch_age(tmp_path, monkeypatch, corrupt):
     """age.json 한 시점만 망가뜨린 raw 트리를 만들어 RAW 를 가리키게 한다."""
     raw = tmp_path / "data" / "raw"
     for period in prepare.MOIS_PERIODS:
-        src = ROOT / "data" / "raw" / f"mois-age-{period}"
-        dst = raw / f"mois-age-{period}"
+        src = ROOT / "data" / "raw" / "mois-age" / period
+        dst = raw / "mois-age" / period
         dst.mkdir(parents=True)
         (dst / "_meta.json").write_bytes((src / "_meta.json").read_bytes())
         rows = json.loads((src / "age.json").read_text(encoding="utf-8"))

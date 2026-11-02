@@ -5,12 +5,15 @@
 실제로 벌어진 최대 구멍이었다(경계 GeoJSON 출처 불명).
 
   # 파일을 이미 받아둔 경우
-  python tools/add_source.py --id MOIS_AGE_2026_12 --dir mois-age-2026-12 \
+  python tools/add_source.py --id MOIS_AGE_2026_12 --dir mois-age/2026-12 \
       --name "행정동별 연령별 주민등록인구" \
       --provider "행정안전부 주민등록 인구통계" \
       --url "https://jumin.mois.go.kr/ageStatMonth.do" \
       --reference-date 2026-12-31 --license "공식 통계 출처표시" \
       --file ~/Downloads/age.json
+
+시계열 자료는 묶음 폴더 아래에 기준시점 이름으로 둔다(--dir mois-age/2026-12).
+1건짜리 자료는 data/raw 바로 아래에 출처-이름-기준일 로 둔다.
 
 여러 --file 을 줄 수 있다. sha256 과 크기는 자동으로 기록된다.
 """
