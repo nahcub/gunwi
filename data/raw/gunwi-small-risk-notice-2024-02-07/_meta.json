@@ -1,0 +1,22 @@
+{
+  "source_id": "GUNWI_SMALL_RISK_NOTICE_2024_02_07",
+  "name": "대구광역시 군위군 고시 제2024-9호 소규모 위험시설 지정·고시",
+  "provider": "군위군청 고시공고 게시판",
+  "url": "https://www.gunwi.go.kr/ko/page.do?mnu_uid=666&not_ancmt_mgt_no=22748&cmd=2",
+  "reference_date": "2024-02-07",
+  "retrieved_at": "2026-11-02",
+  "retrieved_by": "Claude Code (사용자 요청 수집)",
+  "license": "공공누리(군위군청 게시판 표시)",
+  "provenance": "verified",
+  "notes": "게시글 페이지를 capture.html 로, 첨부 고시문(eminwon.gunwi.go.kr 경유)을 그대로 저장. 고시문은 한글(HWP/HWPX) 파일이며 시설명·읍면·리·지번·연장·폭이 표로 들어 있다. prepare.py 미반영.",
+  "files": {
+    "capture.html": {
+      "sha256": "3aab5cc55b42b42c50f3986ab05e97fab92b16c3b11afc7c058a867894193c2f",
+      "bytes": 207499
+    },
+    "고시문.hwp": {
+      "sha256": "112dc37a416da1b1495ad0c0c56d34ac867e9b92d70460382cc8c31c0b2785a1",
+      "bytes": 69632
+    }
+  }
+}

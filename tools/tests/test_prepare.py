@@ -22,7 +22,7 @@ import prepare  # noqa: E402
 
 def test_pipeline_runs_and_reproduces_known_counts():
     population, name_by_code = prepare.prepare_population()
-    assert len(population) == 18          # 2시점 x (군 합계 + 읍면 8)
+    assert len(population) == 36          # 4시점 x (군 합계 + 읍면 8)
     assert len(name_by_code) == 8
     assert prepare.GUNWI_CODE not in name_by_code
 

@@ -1,0 +1,22 @@
+{
+  "source_id": "GUNWI_SMALL_RISK_NOTICE_2018_06_07",
+  "name": "군위군 고시 제2018-47호 소규모 위험시설 지정 해제(심원천·내량천·중구천)",
+  "provider": "군위군청 고시공고 게시판",
+  "url": "https://www.gunwi.go.kr/ko/page.do?mnu_uid=666&not_ancmt_mgt_no=15942&cmd=2",
+  "reference_date": "2018-06-07",
+  "retrieved_at": "2026-11-02",
+  "retrieved_by": "Claude Code (사용자 요청 수집)",
+  "license": "공공누리(군위군청 게시판 표시)",
+  "provenance": "verified",
+  "notes": "게시글 페이지를 capture.html 로, 첨부 고시문(eminwon.gunwi.go.kr 경유)을 그대로 저장. 고시문은 한글(HWP/HWPX) 파일이며 시설명·읍면·리·지번·연장·폭이 표로 들어 있다. prepare.py 미반영.",
+  "files": {
+    "capture.html": {
+      "sha256": "74f7d5577254bb993b6bd7d742e300442c75d2fbec37db9db219a2187907f6a3",
+      "bytes": 207511
+    },
+    "고시문.hwp": {
+      "sha256": "2eb947b0848a6811efd5a8899431e76ed6d9c9dbe72c60430c5df8d188014abb",
+      "bytes": 13824
+    }
+  }
+}

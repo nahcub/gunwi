@@ -1,0 +1,6685 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+		
+		
+		
+	
+
+	
+		
+		
+		
+	
+
+	
+		
+		
+		
+	
+
+	
+		
+		
+		
+	
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=yes">
+<meta name="format-detection" content="telephone=no">
+<meta name="robots" content="all">
+<meta name="title" content="군위군청, 군위군, 군위, 군청, Gunwi">
+<meta name="subject" content="Gunwi, Gunwi Gun">
+<meta name="Keywords" content="군위군청, 군위군, 군위, 군청, 전자민원, 군정소식, 소통참여, 정보공개, 내사랑 군위, 분야별 정보">
+<meta name="description" content="삼국유사의 고장 군위">
+<meta name="author" content="군위군청, 군위군, 군위, 군청, Gunwi">
+<meta property="og:type" content="website">
+<meta property="og:title" id="ogtitle" content="군위군청, 군위군, 군위, 군청, Gunwi">
+<meta property="og:description" content="삼국유사의 고장 군위">
+<meta property="og:image" content="">
+<meta property="og:url" content="">
+<!--공통-->
+<link rel="stylesheet" href="/design2023/common/css/common_rem.css">
+<link rel="stylesheet" href="/design2023/common/css/custom.css?v=202611021554">
+<link rel="stylesheet" href="/design2023/ko/css/layout.css?v=202611021554">
+<link rel="stylesheet" href="/design2023/ko/css/accessible.css">
+<script src="/design2023/common/js/jquery-3.5.1.min.js"></script>
+<script src="/design2023/common/js/jquery-ui.min.js"></script>
+<script src="/design2023/common/js/custom.js"></script>
+<script src="/design2023/ko/js/layout.js"></script>
+
+<!--[if lt IE 9]>
+  <script src="common/js/html5shiv.min.js"></script>
+  <![endif]-->
+<!--[if lte IE 8]>
+  <script>
+  alert('IE 8이하 버젼을 사용하고 있습니다. IE9이상으로 Upgrade 하셔야 정상적인 화면을 보실수있습니다.');
+  </script>
+  <![endif]-->
+<script type="application/ld+json">
+{
+ "@context": "http://schema.org",
+ "@type": "Person",
+ "name": "군위군청",
+ "url": "https://gunwi.go.kr",
+ "sameAs": [
+   "https://www.facebook.com/gunwigun",
+   "https://www.instagram.com/gunwigun/",
+   "https://blog.naver.com/gunwigun_official"
+ ]
+}
+</script>
+<script>
+$(function(){
+    $( ".datepicker" ).datepicker({
+        dateFormat: 'yy-mm-dd'
+        , monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+        , monthNamesShort : ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+        , dayNamesMin: ['일','월','화','수','목','금','토']
+        , showMonthAfterYear: true
+        , yearSuffix: "년"
+        , changeYear : true
+        , changeMonth : true
+    });
+});
+
+function checkMain(mainVal){
+
+	$("#checkMain1").removeClass(). removeAttr('title');
+	$("#checkMain2").removeClass(). removeAttr('title');
+
+	$("#checkMain"+mainVal).attr('class','on').attr('title','선택됨');
+	$("#set").val(mainVal);
+}
+
+function setMain(){
+	if($("#set").val() == "2"){
+		var date = new Date();
+		date.setTime(date.getTime() + 7*24*60*60*1000);
+		document.cookie = "main_check=main2;expires="+date.toUTCString()+";path=/";
+		location.reload(true);
+	}else{
+		var date = new Date();
+		date.setTime(date.getTime() + 7*24*60*60*1000);
+		document.cookie = "main_check=null;expires="+date.toUTCString()+";path=/";
+		location.reload(true);
+	}
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="_csrf" content="57f7f58a-dd70-480c-8f3e-305a34e8f39e" />
+<meta name="_csrf_parameter" content="csrfToken" />
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const csrfToken = document.querySelector('meta[name="_csrf"]')?.content;
+    const csrfParam = document.querySelector('meta[name="_csrf_parameter"]')?.content;
+
+    if (!csrfToken || !csrfParam) return;
+
+    function appendToken(form) {
+        if (!form || form.tagName !== "FORM") return;
+
+        const method = (form.getAttribute("method") || "get").toLowerCase();
+        if (method !== "post") return;
+
+        if (form.querySelector('input[name="' + csrfParam + '"]')) return;
+
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = csrfParam;
+        input.value = csrfToken;
+        form.appendChild(input);
+    }
+
+    document.querySelectorAll("form").forEach(appendToken);
+
+    document.addEventListener("submit", function (e) {
+        appendToken(e.target);
+    }, true);
+});
+</script>
+	<title>
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	  
+	  
+    
+    	
+      
+        고시공고 |
+      
+    
+    	
+      
+        군정소식 |
+      
+    
+    	
+      
+    
+    	
+      
+    
+	
+
+	군위군청
+	</title>
+	<link rel="stylesheet" href="/design2023/common/css/swiper-bundle.min.css" />
+	<link rel="stylesheet" href="/design2023/common/css/board_rem.css?v=202611021554">
+	<link rel="stylesheet" href="/design2023/ko/css/sub.css?v=202611021554">
+	<link rel="stylesheet" href="/design2023/ko/css/content.css?v=202611021554">
+	
+	<script src="/design2023/common/js/swiper-bundle.min.js"></script>
+	<script src="/design2023/common/js/util.js"></script>
+	<script src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
+	<script src="/design2023/common/js/map.js"></script>
+	<script src="/design2023/ko/js/sub.js?v=202611021554"></script>
+	<script src="/design2023/ko/js/content.js?v=202611021554"></script>
+	<link rel="stylesheet" href="/design2023/common/css/accessible-slick.min.css">
+	<script src="/design2023/common/js/accessible-slick.min.js"></script>
+</head>
+<body>
+	<div id="skipBtn">
+	  <a href="#content">본문 바로가기</a>
+	</div>
+	
+		
+		
+		
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header id="header">
+	<div class="left">
+		<h1 class="logo"><a href="/ko/main.do">삼국유사의 고장 군위</a></h1>
+		<div class="govinfo">
+			<p><img src="/design2023/ko/img/main/eg_logo.gif" alt="정부공식 웹사이트">이 누리집은 대한민국 공식 전자정부 누리집입니다.</p>
+		</div>
+		<nav id="pc_nav" class="">
+			<h2 class="hidden">주메뉴</h2>
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul class="depth1">
+	 
+	
+    
+    
+
+    <li>
+    	<a href="page.do?mnu_uid=23&amp;" class="off" target="_self" >
+    		<span>민원정보</span>
+    	</a>
+			
+    	<div class="gnb">
+    		 <div class="item">
+    		 	<div class="tit icon1">
+    		 	 	<strong>민원정보</strong>
+    		 		<p>아름다운 변화 행복한 군위</p>
+    		 	</div>
+    		 	
+					<ul class="depth2">
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=24&amp;" class="off" target="_self" >
+			                 		<span>민원안내</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=25&amp;" class="off" target="_self" >
+					                        		<span>민원실 배치도</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=53&amp;" class="off" target="_self" >
+					                        		<span>무인민원 발급기</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=54&amp;" class="off" target="_self" >
+					                        		<span>어디서나 민원</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=55&amp;" class="off" target="_self" >
+					                        		<span>사전심사 청구제도</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=56&amp;" class="off" target="_self" >
+					                        		<span>아름다운 배려창구 운영</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=57&amp;" class="off" target="_self" >
+					                        		<span>민원 사무 서식</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=929&amp;" class="off" target="_self" >
+					                        		<span>민원후견인제 운영</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=1055&amp;" class="off" target="_self" >
+					                        		<span>통합폐업신고 서비스</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=945&amp;" class="off" target="_self" >
+					                        		<span>민원서비스 종합평가 결과</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=59&amp;" class="off" target="_self" >
+			                 		<span>민원정보</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=60&amp;" class="off" target="_self" >
+					                        		<span>국민신문고</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=61&amp;" class="off" target="_self" >
+					                        		<span>나의 민원보기</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://www.110.go.kr/consult/chat.do" class="off" target="_blank" title="새창">
+					                        		<span>국민콜 110</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=63&amp;" class="off" target="_self" >
+			                 		<span>신고민원</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=64&amp;" class="off" target="_self" >
+					                        		<span>민원 부조리 신고</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=65&amp;" class="off" target="_self" >
+					                        		<span>환경신문고</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=66&amp;" class="off" target="_self" >
+					                        		<span>예산낭비신고센터</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://www.foodsafetykorea.go.kr/minwon/consumerNotify/customerNotifyStep1.do?rcptDvs=I" class="off" target="_blank" title="새창">
+					                        		<span>불량식품 소비자고발</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://www.safetyreport.go.kr/#main" class="off" target="_blank" title="새창">
+					                        		<span>안전신문고</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=75&amp;" class="off" target="_self" >
+					                        		<span>부동산 불법거래 신고</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=76&amp;" class="off" target="_self" >
+					                        		<span>갑질신고</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=72&amp;" class="off" target="_self" >
+			                 		<span>생활민원</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=77&amp;" class="off" target="_self" >
+					                        		<span>주민등록증 재발급</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=78&amp;" class="off" target="_self" >
+					                        		<span>자동차 등록</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=81&amp;" class="off" target="_self" >
+					                        		<span>부동산</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://www.eais.go.kr/gunwi" class="off" target="_blank" title="새창">
+					                        		<span>인터넷건축행정시스템</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=863&amp;" class="off" target="_self" >
+					                        		<span>공유재산</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=89&amp;" class="off" target="_self" >
+			                 		<span>여권발급 안내</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=90&amp;" class="off" target="_self" >
+			                 		<span>지방세</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=91&amp;" class="off" target="_self" >
+					                        		<span>지방세란</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=95&amp;" class="off" target="_self" >
+					                        		<span>납세자 보호관</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=96&amp;" class="off" target="_self" >
+					                        		<span>지방세 구제제도</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=97&amp;" class="off" target="_self" >
+					                        		<span>마을 세무사</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://chatbot.wetax.go.kr/" class="off" target="_blank" title="새창">
+					                        		<span>지방세 챗봇상담</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=936&amp;" class="off" target="_self" >
+			                 		<span>행정서비스헌장</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=937&amp;" class="off" target="_self" >
+					                        		<span>헌장전문</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=939&amp;" class="off" target="_self" >
+					                        		<span>분야별이행기준</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=1032&amp;" class="off" target="_self" >
+					                        		<span>고객만족도 조사 결과</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+					</ul>
+    		 </div>
+    	</div>
+			
+    </li>
+  
+    
+    
+
+    <li>
+    	<a href="page.do?mnu_uid=111&amp;" class="off" target="_self" >
+    		<span>소통참여</span>
+    	</a>
+			
+    	<div class="gnb">
+    		 <div class="item">
+    		 	<div class="tit icon2">
+    		 	 	<strong>소통참여</strong>
+    		 		<p>아름다운 변화 행복한 군위</p>
+    		 	</div>
+    		 	
+					<ul class="depth2">
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=112&amp;" class="off" target="_self" >
+			                 		<span>자유게시판</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=113&amp;" class="off" target="_self" >
+			                 		<span>칭찬합시다</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=114&amp;" class="off" target="_self" >
+			                 		<span>군위사진첩</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=115&amp;" class="off" target="_self" >
+			                 		<span>구인구직</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=116&amp;" class="off" target="_self" >
+					                        		<span>구인정보</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=117&amp;" class="off" target="_self" >
+					                        		<span>구직정보</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=118&amp;" class="off" target="_self" >
+			                 		<span>아이디어제안방</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=119&amp;" class="off" target="_self" >
+					                        		<span>아이디어제안</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=120&amp;" class="off" target="_self" >
+					                        		<span>제안자료실</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=121&amp;" class="off" target="_self" >
+			                 		<span>국민제안</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=122&amp;" class="off" target="_self" >
+					                        		<span>국민제안신청</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=123&amp;" class="off" target="_self" >
+					                        		<span>나의제안보기</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=124&amp;" class="off" target="_self" >
+			                 		<span>정책포럼</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=125&amp;" class="off" target="_self" >
+			                 		<span>주민참여예산</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=126&amp;" class="off" target="_self" >
+					                        		<span>주민참여예산제 소개</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=952&amp;" class="off" target="_self" >
+					                        		<span>주민참여예산 교육</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=953&amp;" class="off" target="_self" >
+					                        		<span>주민제안사업 신청</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=828&amp;" class="off" target="_self" >
+					                        		<span>주민참여예산제 운영</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=962&amp;survey_cate=budget" class="off" target="_self" >
+					                        		<span>예산편성 설문조사</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=128&amp;" class="off" target="_self" >
+			                 		<span>적극행정</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=129&amp;" class="off" target="_self" >
+					                        		<span>적극행정 제도소개</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=130&amp;" class="off" target="_self" >
+					                        		<span>적극행정 국민추천</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=131&amp;" class="off" target="_self" >
+					                        		<span>소식/알림</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=132&amp;" class="off" target="_self" >
+			                 		<span>행정규제개혁</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=133&amp;" class="off" target="_self" >
+					                        		<span>행정규제란?</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=134&amp;" class="off" target="_self" >
+					                        		<span>규제입증요청</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://www.osmb.go.kr/proposal/proposalForm" class="off" target="_blank" title="새창">
+					                        		<span>지방기업 규제애로 신고센터</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=670&amp;" class="off" target="_self" >
+			                 		<span>맞춤정보</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=671&amp;" class="off" target="_self" >
+			                 		<span>설문조사</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=905&amp;" class="off" target="_self" >
+			                 		<span>토크군위</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=908&amp;" class="off" target="_self" >
+					                        		<span>토론</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=909&amp;" class="off" target="_self" >
+					                        		<span>투표</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=910&amp;" class="off" target="_self" >
+					                        		<span>설문</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=1031&amp;" class="off" target="_self" >
+			                 		<span>지방보조금 부정수급 신고</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+					</ul>
+    		 </div>
+    	</div>
+			
+    </li>
+  
+    
+    
+
+    <li>
+    	<a href="page.do?mnu_uid=99&amp;" class="on" target="_self" >
+    		<span>군정소식</span>
+    	</a>
+			
+    	<div class="gnb">
+    		 <div class="item">
+    		 	<div class="tit icon3">
+    		 	 	<strong>군정소식</strong>
+    		 		<p>아름다운 변화 행복한 군위</p>
+    		 	</div>
+    		 	
+					<ul class="depth2">
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=100&amp;" class="off" target="_self" >
+			                 		<span>군정새소식</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=101&amp;" class="off" target="_self" >
+			                 		<span>알립니다</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=787&amp;" class="off" target="_self" >
+			                 		<span>맞춤정보</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=796&amp;" class="off" target="_self" >
+					                        		<span>기관채용</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=788&amp;" class="off" target="_self" >
+					                        		<span>교육</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=789&amp;" class="off" target="_self" >
+					                        		<span>결혼/임신/출산</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=790&amp;" class="off" target="_self" >
+					                        		<span>육아/돌봄</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=791&amp;" class="off" target="_self" >
+					                        		<span>청년</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=792&amp;" class="off" target="_self" >
+					                        		<span>노인/장애인</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=793&amp;" class="off" target="_self" >
+					                        		<span>주거</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=794&amp;" class="off" target="_self" >
+					                        		<span>건강</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=795&amp;" class="off" target="_self" >
+					                        		<span>환경/농업</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=102&amp;boardType=notice&amp;board_code=02" class="off" target="_self" >
+			                 		<span>입찰정보</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=666&amp;boardType=notice" class="on" target="_self" >
+			                 		<span>고시공고</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=103&amp;boardType=notice&amp;board_code=03" class="off" target="_self" >
+			                 		<span>입법예고</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=104&amp;" class="off" target="_self" >
+			                 		<span>반회보</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=105&amp;" class="off" target="_self" >
+			                 		<span>공보</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=106&amp;" class="off" target="_self" >
+			                 		<span>보도/해명</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=107&amp;" class="off" target="_self" >
+			                 		<span>행사계획</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=108&amp;" class="off" target="_self" >
+			                 		<span>행사/일정</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=109&amp;" class="off" target="_self" >
+			                 		<span>실과소 새소식</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=110&amp;" class="off" target="_self" >
+			                 		<span>실과소 정보공개</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=944&amp;" class="off" target="_self" >
+			                 		<span>공영장례 부고알림</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=966&amp;" class="off" target="_self" >
+			                 		<span>포토갤러리</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+					</ul>
+    		 </div>
+    	</div>
+			
+    </li>
+  
+    
+    
+
+    <li>
+    	<a href="page.do?mnu_uid=137&amp;" class="off" target="_self" >
+    		<span>정보공개</span>
+    	</a>
+			
+    	<div class="gnb">
+    		 <div class="item">
+    		 	<div class="tit icon4">
+    		 	 	<strong>정보공개</strong>
+    		 		<p>아름다운 변화 행복한 군위</p>
+    		 	</div>
+    		 	
+					<ul class="depth2">
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=138&amp;" class="off" target="_self" >
+			                 		<span>행정정보공개</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=139&amp;" class="off" target="_self" >
+					                        		<span>정보공개제도안내</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://www.open.go.kr/com/main/mainView.do" class="off" target="_blank" title="새창">
+					                        		<span>정보공개 포털</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=145&amp;" class="off" target="_self" >
+					                        		<span>사전정보공표</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://www.open.go.kr/othicInfo/infoList/infoList.do" class="off" target="_blank" title="새창">
+					                        		<span>정보목록</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=149&amp;" class="off" target="_self" >
+					                        		<span>정보목록(2014년 이전)</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=150&amp;" class="off" target="_self" >
+					                        		<span>비공개대상정보</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=159&amp;" class="off" target="_self" >
+					                        		<span>정책실명제</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=160&amp;" class="off" target="_self" >
+					                        		<span>업무추진비</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=901&amp;srchOrder=2" class="off" target="_self" >
+					                        		<span>감사행정</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=934&amp;" class="off" target="_self" >
+					                        		<span>민간위탁 사무감사 결과</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=855&amp;" class="off" target="_self" >
+					                        		<span>정보공개 수요 분석</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=843&amp;" class="off" target="_self" >
+					                        		<span>법령정보</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                   
+			                 
+			                 <li>
+			                 	<a href="http://ecios.gunwi.go.kr/" class="off" target="_blank" title="새창">
+			                 		<span>계약정보 공개시스템</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=162&amp;" class="off" target="_self" >
+			                 		<span>예산정보</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=163&amp;" class="off" target="_self" >
+					                        		<span>예산자료실</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=164&amp;code_uid=24" class="off" target="_self" >
+					                        		<span>세입세출예산서</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=165&amp;code_uid=25" class="off" target="_self" >
+					                        		<span>기금운용계획</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=166&amp;" class="off" target="_self" >
+					                        		<span>연도별 재정공시</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=832&amp;code_uid=265" class="off" target="_self" >
+					                        		<span>결산서</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=169&amp;" class="off" target="_self" >
+			                 		<span>조직정보</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=933&amp;" class="off" target="_self" >
+					                        		<span>조직운영 핵심지표</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=171&amp;" class="off" target="_self" >
+					                        		<span>인사운영</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=902&amp;" class="off" target="_self" >
+					                        		<span>지방공기업</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=172&amp;" class="off" target="_self" >
+			                 		<span>공공데이터 개방</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=173&amp;" class="off" target="_self" >
+					                        		<span>공공데이터 개방</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=174&amp;" class="off" target="_self" >
+					                        		<span>통계지리정보서비스(SGIS)</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=850&amp;" class="off" target="_self" >
+					                        		<span>행정정보 공표방</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=925&amp;" class="off" target="_self" >
+					                        		<span>공공데이터 수요조사</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=175&amp;" class="off" target="_self" >
+			                 		<span>공공저작물</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+					</ul>
+    		 </div>
+    	</div>
+			
+    </li>
+  
+    
+    
+
+    <li>
+    	<a href="page.do?mnu_uid=176&amp;" class="off" target="_self" >
+    		<span>내사랑 군위</span>
+    	</a>
+			
+    	<div class="gnb">
+    		 <div class="item">
+    		 	<div class="tit icon5">
+    		 	 	<strong>내사랑 군위</strong>
+    		 		<p>아름다운 변화 행복한 군위</p>
+    		 	</div>
+    		 	
+					<ul class="depth2">
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=177&amp;" class="off" target="_self" >
+			                 		<span>군청안내</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=178&amp;" class="off" target="_self" >
+					                        		<span>행정조직도</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=181&amp;" class="off" target="_self" >
+					                        		<span>전화번호 안내</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=182&amp;" class="off" target="_self" >
+					                        		<span>청사안내</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=183&amp;" class="off" target="_self" >
+					                        		<span>찾아오시는 길</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=184&amp;" class="off" target="_self" >
+			                 		<span>군위군 소개</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=185&amp;" class="off" target="_self" >
+					                        		<span>기본 현황</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=189&amp;" class="off" target="_self" >
+					                        		<span>연혁</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=190&amp;" class="off" target="_self" >
+					                        		<span>지명유래</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=191&amp;" class="off" target="_self" >
+					                        		<span>군위의 상징물</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=195&amp;" class="off" target="_self" >
+					                        		<span>통계연보</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=196&amp;" class="off" target="_self" >
+					                        		<span>통계자료</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=200&amp;" class="off" target="_self" >
+					                        		<span>군정백서</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=923&amp;" class="off" target="_self" >
+					                        		<span>부패방지방침</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=201&amp;" class="off" target="_self" >
+			                 		<span>군위군정</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=202&amp;" class="off" target="_self" >
+					                        		<span>주요업무계획</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=930&amp;" class="off" target="_self" >
+					                        		<span>월별업무계획</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=203&amp;" class="off" target="_self" >
+					                        		<span>하늘에서 본 군위</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=204&amp;" class="off" target="_self" >
+					                        		<span>대구경북신공항</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=1021&amp;" class="off" target="_self" >
+					                        		<span>대구시 군부대 통합 이전</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=911&amp;" class="off" target="_self" >
+			                 		<span>고향사랑기부제</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=912&amp;" class="off" target="_self" >
+					                        		<span>고향사랑기부제란?</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=913&amp;" class="off" target="_self" >
+					                        		<span>고향사랑기부 명예의 전당</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=926&amp;" class="off" target="_self" >
+					                        		<span>군위군 답례품 현황</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=927&amp;" class="off" target="_self" >
+					                        		<span>고향사랑소식</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+					</ul>
+    		 </div>
+    	</div>
+			
+    </li>
+  
+    
+    
+
+    <li>
+    	<a href="page.do?mnu_uid=206&amp;" class="off" target="_self" >
+    		<span>분야별 정보</span>
+    	</a>
+			
+    	<div class="gnb">
+    		 <div class="item">
+    		 	<div class="tit icon6">
+    		 	 	<strong>분야별 정보</strong>
+    		 		<p>아름다운 변화 행복한 군위</p>
+    		 	</div>
+    		 	
+					<ul class="depth2">
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=217&amp;" class="off" target="_self" >
+			                 		<span>주민복지</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=226&amp;" class="off" target="_self" >
+					                        		<span>통합서비스</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=227&amp;" class="off" target="_self" >
+					                        		<span>기초생활보장</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=228&amp;" class="off" target="_self" >
+					                        		<span>자활사업</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=229&amp;" class="off" target="_self" >
+					                        		<span>의료급여</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=230&amp;" class="off" target="_self" >
+					                        		<span>사회복지시설 정보공개</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=218&amp;" class="off" target="_self" >
+			                 		<span>어르신</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=241&amp;" class="off" target="_self" >
+					                        		<span>기초연금</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=242&amp;" class="off" target="_self" >
+					                        		<span>노인일자리사업</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=243&amp;" class="off" target="_self" >
+					                        		<span>노인맞춤돌봄서비스</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=244&amp;" class="off" target="_self" >
+					                        		<span>노인복지시설</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=250&amp;" class="off" target="_self" >
+					                        		<span>장사제도</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=251&amp;" class="off" target="_self" >
+					                        		<span>분묘개장공고</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=252&amp;" class="off" target="_self" >
+					                        		<span>노인여가복지시설</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=219&amp;" class="off" target="_self" >
+			                 		<span>장애인</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=253&amp;" class="off" target="_self" >
+					                        		<span>장애인 등록절차</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=254&amp;" class="off" target="_self" >
+					                        		<span>장애인 소득보장</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=255&amp;" class="off" target="_self" >
+					                        		<span>장애인 일자리사업</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=256&amp;" class="off" target="_self" >
+					                        		<span>기타 장애인 복지시책</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=1056&amp;" class="off" target="_self" >
+					                        		<span>전동휠체어 급속충전기 설치장소</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=220&amp;" class="off" target="_self" >
+			                 		<span>여성/아동/청소년/다문화</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=257&amp;" class="off" target="_self" >
+					                        		<span>여성</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=259&amp;" class="off" target="_self" >
+					                        		<span>아동</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=260&amp;" class="off" target="_self" >
+					                        		<span>청소년</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=258&amp;" class="off" target="_self" >
+					                        		<span>다문화</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=221&amp;" class="off" target="_self" >
+			                 		<span>지역경제</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=270&amp;" class="off" target="_self" >
+					                        		<span>지역산업</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=271&amp;" class="off" target="_self" >
+					                        		<span>일자리</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=272&amp;" class="off" target="_self" >
+					                        		<span>소비자 생활</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=273&amp;" class="off" target="_self" >
+					                        		<span>지역 특산품</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=903&amp;" class="off" target="_self" >
+					                        		<span>착한가격업소</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=222&amp;" class="off" target="_self" >
+			                 		<span>교통</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=286&amp;" class="off" target="_self" >
+					                        		<span>시외버스 및 군위역 열차시간</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=786&amp;" class="off" target="_self" >
+					                        		<span>급행버스</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=287&amp;" class="off" target="_self" >
+					                        		<span>마을버스 및 행복버스</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=288&amp;" class="off" target="_self" >
+					                        		<span>행복나드리 콜택시</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=289&amp;" class="off" target="_self" >
+					                        		<span>군위군 행복택시</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=834&amp;" class="off" target="_self" >
+					                        		<span>주,정차위반 단속</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=856&amp;" class="off" target="_self" >
+					                        		<span>어르신통합무임교통카드</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=223&amp;" class="off" target="_self" >
+			                 		<span>환경/위생</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=296&amp;" class="off" target="_self" >
+					                        		<span>청소행정</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://eminwon.gunwi.go.kr/emwp/gov/mogaha/ntis/web/caf/mwwd/action/CafMwWdOpenAction.do?method=selectListAdmm&amp;menu_id=CAFOPNWebAdmmOpenL&amp;jndinm=CafMwWdOpenEJB&amp;methodnm=selectListAdmm&amp;context=NTIS" class="off" target="_blank" title="새창">
+					                        		<span>행정처분공개</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=918&amp;" class="off" target="_self" >
+					                        		<span>탄소중립</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=837&amp;" class="off" target="_self" >
+			                 		<span>재난/안전</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=838&amp;" class="off" target="_self" >
+					                        		<span>군위군민 자전거보험</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://www.daegu.go.kr/safety/index.do?menu_id=00935933" class="off" target="_blank" title="새창">
+					                        		<span>시민안전보험</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=839&amp;" class="off" target="_self" >
+					                        		<span>비상대피/급수시설</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://www.nssc.go.kr/" class="off" target="_blank" title="새창">
+					                        		<span>원자력 안전 정보</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=904&amp;" class="off" target="_self" >
+					                        		<span>지진 옥외 대피장소</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=949&amp;" class="off" target="_self" >
+					                        		<span>안전·보건 자유제안</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=964&amp;" class="off" target="_self" >
+					                        		<span>안전·보건 정보공유</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=869&amp;" class="off" target="_self" >
+			                 		<span>건축</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=1024&amp;" class="off" target="_self" >
+			                 		<span>정보통신</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=1025&amp;" class="off" target="_self" >
+					                        		<span>정보통신공사 사용전검사</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=1026&amp;" class="off" target="_self" >
+					                        		<span>정보통신공사 감리결과보고서 제출</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=1027&amp;" class="off" target="_self" >
+					                        		<span>정보통신설비 유지보수·관리 제도</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=947&amp;" class="off" target="_self" >
+			                 		<span>동물보호·복지</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=948&amp;" class="off" target="_self" >
+					                        		<span>유기·유실동물 신고방법</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+					</ul>
+    		 </div>
+    	</div>
+			
+    </li>
+  
+    
+    
+
+    <li>
+    	<a href="page.do?mnu_uid=797&amp;" class="off" target="_self" >
+    		<span>패밀리 사이트</span>
+    	</a>
+			
+    	<div class="gnb">
+    		 <div class="item">
+    		 	<div class="tit icon7">
+    		 	 	<strong>패밀리 사이트</strong>
+    		 		<p>아름다운 변화 행복한 군위</p>
+    		 	</div>
+    		 	
+					<ul class="depth2">
+						
+							
+							 
+			                   
+			                 
+			                 <li>
+			                 	<a href="/village/main.do" class="off" target="_blank" title="새창">
+			                 		<span>읍면사이트</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                   
+			                 
+			                 <li>
+			                 	<a href="/tour/main.do" class="off" target="_blank" title="새창">
+			                 		<span>문화관광</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                   
+			                 
+			                 <li>
+			                 	<a href="/samguk/index.do" class="off" target="_blank" title="새창">
+			                 		<span>삼국유사ㆍ퀴즈대회</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                   
+			                 
+			                 <li>
+			                 	<a href="https://gwcouncil.kr/" class="off" target="_blank" title="새창">
+			                 		<span>의회</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                   
+			                 
+			                 <li>
+			                 	<a href="https://www.gib.go.kr/" class="off" target="_blank" title="새창">
+			                 		<span>인터넷방송</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                   
+			                 
+			                 <li>
+			                 	<a href="https://igunwi.gunwi.go.kr/" class="off" target="_blank" title="새창">
+			                 		<span>아이군위</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+					</ul>
+    		 </div>
+    	</div>
+			
+    </li>
+  
+    
+    
+
+    <li>
+    	<a href="page.do?mnu_uid=207&amp;" class="off" target="_self" >
+    		<span>누리집 이용안내</span>
+    	</a>
+			
+    	<div class="gnb">
+    		 <div class="item">
+    		 	<div class="tit icon8">
+    		 	 	<strong>누리집 이용안내</strong>
+    		 		<p>아름다운 변화 행복한 군위</p>
+    		 	</div>
+    		 	
+					<ul class="depth2">
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=209&amp;" class="off" target="_self" >
+			                 		<span>개인정보 처리방침</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=210&amp;" class="off" target="_self" >
+			                 		<span>영상정보처리기기 운영·관리 방침</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=853&amp;" class="off" target="_self" >
+			                 		<span>개인정보제3자제공</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=975&amp;" class="off" target="_self" >
+			                 		<span>정보주체의 동의를 받지않고 처리하는 주요 개인정보 항목</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=854&amp;" class="off" target="_self" >
+			                 		<span>개인정보위탁</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=211&amp;" class="off" target="_self" >
+			                 		<span>이메일무단수집거부</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=212&amp;" class="off" target="_self" >
+			                 		<span>저작권정책</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=215&amp;" class="off" target="_self" >
+			                 		<span>누리집 지도</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=216&amp;" class="off" target="_self" >
+			                 		<span>배너모음</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=774&amp;" class="off" target="_self" >
+			                 		<span>RSS 서비스</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+					</ul>
+    		 </div>
+    	</div>
+			
+    </li>
+  
+</ul>
+
+		</nav>
+	</div>
+	<div class="right">
+		
+			
+			
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="people">
+
+  
+      <a href="/ko/page.do?mnu_uid=196&amp;" class="total" target="_blank" title="월별 주민등록 인구통계 새창열림">
+        군위군 인구 <strong>22,432</strong>명<span class="date">(2026.9.30. 기준)</span>
+      </a>
+  
+
+</div>
+
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+	function getSky(sky){
+
+		var rtnVal= new Array();
+		switch(sky){
+			case "0" :
+			case "1" :
+
+						rtnVal.push("맑음");
+						rtnVal.push(1);
+						break;
+			case "2" :
+						rtnVal.push("구름조금");
+						rtnVal.push(2);
+						break;
+			case "3" :
+						rtnVal.push("구름많음");
+						rtnVal.push(3);
+						break;
+			case "4" :
+						rtnVal.push("흐림");
+						rtnVal.push(4);
+						break;
+			case "5" :
+						rtnVal.push("비");
+						rtnVal.push(5);
+						break;
+			case "6" :
+						rtnVal.push("비·눈");
+						rtnVal.push(6);
+						break;
+			case "7" :
+						rtnVal.push("눈");
+						rtnVal.push(7);
+						break;
+		}
+		return rtnVal;
+	}
+
+	function getPty(pty){
+		var rtnVal= new Array();
+		/*switch(pty)
+		{
+			case "0" :
+			case "1" :
+
+						rtnVal.push("맑음");
+						rtnVal.push(1);
+						break;
+			case "2" :
+						rtnVal.push("구름조금");
+						rtnVal.push(2);
+						break;
+			case "3" :
+						rtnVal.push("구름많음");
+						rtnVal.push(3);
+						break;
+			case "4" :
+						rtnVal.push("흐림");
+						rtnVal.push(4);
+						break;
+			case "5" :
+						rtnVal.push("비");
+						rtnVal.push(5);
+						break;
+			case "6" :
+						rtnVal.push("비·눈");
+						rtnVal.push(6);
+						break;
+			case "7" :
+						rtnVal.push("눈");
+						rtnVal.push(7);
+						break;
+		}*/
+
+		switch(pty)
+		{
+			case "1" :
+						rtnVal.push("비");
+						rtnVal.push(5);
+						break;
+			case "2" :
+						rtnVal.push("비·눈");
+						rtnVal.push(6);
+						break;
+			case "3" :
+						rtnVal.push("눈");
+						rtnVal.push(7);
+						break;
+		}
+		return rtnVal;
+	}
+
+	function getWeather()
+	{
+		$.ajax({
+			type:"post"
+			, url:"/upload/weather/gunwi.json"
+			, dataType:"json"
+			, success:function(data){
+				if(data != null){
+					//실시간 날씨정보
+					var t1h = data.today.t1h;
+					var sky = data.today.sky;
+					var pty = data.today.pty;
+					var vec = data.today.vec;
+					var wsd = data.today.wsd;
+					var reh = data.today.reh;
+
+					var todaySky = getSky(sky);
+
+					var skyString = todaySky[0];
+					var weatherIcon = todaySky[1];
+					//console.log(pty);
+
+					if(pty != 0)
+					{
+						todaySky = getPty(pty);
+						if(todaySky.length > 0)
+						{
+							skyString = todaySky[0];
+							weatherIcon = todaySky[1];
+						}
+					}
+
+					$(".t1h").text(t1h);
+					$(".skyText").html(skyString);
+					$(".temp").addClass("icon"+weatherIcon);
+					//$(".weather_img_"+location).html("<img src='/design/ko/img/layout/weather0"+weatherIcon+".png' alt='"+skyString+"' />");
+				}
+			}, error:function(jqXHR, textStatus, errorThrown){
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(errorThrown);
+			}
+		});
+	}
+
+	function getPm10()
+	{
+		$.ajax({
+			type:"post"
+			, url:"/upload/weather/gunwi_suseong.json"
+			, dataType:"json"
+			, success:function(data){
+				if(data != null){
+					var pm25Value = data.air.pm25Value;
+					var khaiGrade = data.air.khaiGrade;
+
+					var khaiGradeStr = "";
+					switch(khaiGrade){
+						case "1" : khaiGradeStr = "좋음"; break;
+						case "2" : khaiGradeStr = "보통"; break;
+						case "3" : khaiGradeStr = "나쁨"; break;
+						case "4" : khaiGradeStr = "매우나쁨"; break;
+					}
+
+
+
+					//$(".pm10").text("미세먼지 "+pm25Value+"㎍/㎥");
+					$(".pm10").text(""+pm25Value+"㎍/㎥");
+					$(".pm10_Text").html(khaiGradeStr);
+				}
+			}, error:function(jqXHR, textStatus, errorThrown){
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(errorThrown);
+			}
+		});
+	}
+
+$(function(){
+	getWeather();
+	getPm10();
+
+});
+</script>
+<div class="weather">
+  <div class="temp">
+	<b class="skyText hidden"></b>
+    <b class="t1h"></b><sup>℃</sup>,
+  </div>
+  <div class="dust">
+		<span>미세먼지</span>
+    <span class="pm10"></span>
+    <b class="pm10_Text"></b>
+  </div>
+</div>
+
+		
+		<div class="lang toggle">
+			<a href="" class="" title="열기">언어선택</a>
+			<div>
+				<a href="/eng/main.do" target="_blank" title="새창열림">en</a>
+				<a href="/cha/main.do" target="_blank" title="새창열림">中</a>
+				<a href="/jpn/main.do" target="_blank" title="새창열림">日</a>
+			</div>
+		</div>
+		<div class="search toggle mar_t10">
+			<a href="" class="" title="열기">검색</a><p>통합검색</p>
+			
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    function searchKwd(qt)
+    {
+        if(qt != null) $("#searchStr").val(qt);
+        if($("#searchStr").val() == '') {
+            alert("검색어를 입력하십시요.");
+
+            $("#searchStr").select();
+
+            return false;
+        }
+        var kwds = $("#searchStr").val();
+        $("#preKwds").val(kwds);
+
+        //$("#searchFrm").submit();
+		location.href="https://gunwi.go.kr/search/search?kwd="+$("#searchStr").val();
+    }
+	
+	function check_press(e){
+		if(e.keyCode == 13){
+			searchKwd();
+		}
+	}
+</script>
+<div class="srch_area">
+  
+    <fieldset>
+      <legend class="hidden">통합검색</legend>
+      <div class="bar">
+        <div>
+          <label for="searchStr" class="hidden">검색어 입력</label>
+          <input type="text" id="searchStr" name="kwd" value="" placeholder="검색어를 입력하세요."  onkeypress="check_press(event)"/>
+
+          <a href="#self" class="submit" onclick="searchKwd()" title="새창열림">검색</a>
+        </div>
+      </div>
+	  
+    </fieldset>
+  
+  <a href="" class="close black hide">닫기</a>
+</div>
+
+			
+		</div>
+		<div class="toggle pc mar_t10"><a href="/ko/page.do?mnu_uid=215" class="sitemap pc"><span>사이트맵1</span></a><p>사이트맵</p></div>
+		<div class="toggle mb mar_t10"><a href="" class="sitemap mobile" title="열기"><span>메뉴</span></a><p>전체메뉴</p></div>
+	</div>
+	<div id="m_nav">
+		<nav>
+			<h2 class="hidden">주메뉴</h2>
+			<div class="top">
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+	function getSky(sky){
+
+		var rtnVal= new Array();
+		switch(sky){
+			case "0" :
+			case "1" :
+
+						rtnVal.push("맑음");
+						rtnVal.push(1);
+						break;
+			case "2" :
+						rtnVal.push("구름조금");
+						rtnVal.push(2);
+						break;
+			case "3" :
+						rtnVal.push("구름많음");
+						rtnVal.push(3);
+						break;
+			case "4" :
+						rtnVal.push("흐림");
+						rtnVal.push(4);
+						break;
+			case "5" :
+						rtnVal.push("비");
+						rtnVal.push(5);
+						break;
+			case "6" :
+						rtnVal.push("비·눈");
+						rtnVal.push(6);
+						break;
+			case "7" :
+						rtnVal.push("눈");
+						rtnVal.push(7);
+						break;
+		}
+		return rtnVal;
+	}
+
+	function getPty(pty){
+		var rtnVal= new Array();
+		/*switch(pty)
+		{
+			case "0" :
+			case "1" :
+
+						rtnVal.push("맑음");
+						rtnVal.push(1);
+						break;
+			case "2" :
+						rtnVal.push("구름조금");
+						rtnVal.push(2);
+						break;
+			case "3" :
+						rtnVal.push("구름많음");
+						rtnVal.push(3);
+						break;
+			case "4" :
+						rtnVal.push("흐림");
+						rtnVal.push(4);
+						break;
+			case "5" :
+						rtnVal.push("비");
+						rtnVal.push(5);
+						break;
+			case "6" :
+						rtnVal.push("비·눈");
+						rtnVal.push(6);
+						break;
+			case "7" :
+						rtnVal.push("눈");
+						rtnVal.push(7);
+						break;
+		}*/
+
+		switch(pty)
+		{
+			case "1" :
+						rtnVal.push("비");
+						rtnVal.push(5);
+						break;
+			case "2" :
+						rtnVal.push("비·눈");
+						rtnVal.push(6);
+						break;
+			case "3" :
+						rtnVal.push("눈");
+						rtnVal.push(7);
+						break;
+		}
+		return rtnVal;
+	}
+
+	function getWeather()
+	{
+		$.ajax({
+			type:"post"
+			, url:"/upload/weather/gunwi.json"
+			, dataType:"json"
+			, success:function(data){
+				if(data != null){
+					//실시간 날씨정보
+					var t1h = data.today.t1h;
+					var sky = data.today.sky;
+					var pty = data.today.pty;
+					var vec = data.today.vec;
+					var wsd = data.today.wsd;
+					var reh = data.today.reh;
+
+					var todaySky = getSky(sky);
+
+					var skyString = todaySky[0];
+					var weatherIcon = todaySky[1];
+					//console.log(pty);
+
+					if(pty != 0)
+					{
+						todaySky = getPty(pty);
+						if(todaySky.length > 0)
+						{
+							skyString = todaySky[0];
+							weatherIcon = todaySky[1];
+						}
+					}
+
+					$(".t1h").text(t1h);
+					$(".skyText").html(skyString);
+					$(".temp").addClass("icon"+weatherIcon);
+					//$(".weather_img_"+location).html("<img src='/design/ko/img/layout/weather0"+weatherIcon+".png' alt='"+skyString+"' />");
+				}
+			}, error:function(jqXHR, textStatus, errorThrown){
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(errorThrown);
+			}
+		});
+	}
+
+	function getPm10()
+	{
+		$.ajax({
+			type:"post"
+			, url:"/upload/weather/gunwi_suseong.json"
+			, dataType:"json"
+			, success:function(data){
+				if(data != null){
+					var pm25Value = data.air.pm25Value;
+					var khaiGrade = data.air.khaiGrade;
+
+					var khaiGradeStr = "";
+					switch(khaiGrade){
+						case "1" : khaiGradeStr = "좋음"; break;
+						case "2" : khaiGradeStr = "보통"; break;
+						case "3" : khaiGradeStr = "나쁨"; break;
+						case "4" : khaiGradeStr = "매우나쁨"; break;
+					}
+
+
+
+					//$(".pm10").text("미세먼지 "+pm25Value+"㎍/㎥");
+					$(".pm10").text(""+pm25Value+"㎍/㎥");
+					$(".pm10_Text").html(khaiGradeStr);
+				}
+			}, error:function(jqXHR, textStatus, errorThrown){
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(errorThrown);
+			}
+		});
+	}
+
+$(function(){
+	getWeather();
+	getPm10();
+
+});
+</script>
+<div class="weather">
+  <div class="temp">
+	<b class="skyText hidden"></b>
+    <b class="t1h"></b><sup>℃</sup>,
+  </div>
+  <div class="dust">
+		<span>미세먼지</span>
+    <span class="pm10"></span>
+    <b class="pm10_Text"></b>
+  </div>
+</div>
+
+				<div class="lang">
+					<div>
+						<a href="/eng/main.do" target="_blank" title="새창열림">english</a>
+						<a href="/cha/main.do" target="_blank" title="새창열림">中文</a>
+						<a href="/jpn/main.do" target="_blank" title="새창열림">日本語</a>
+					</div>
+				</div>
+				
+			</div>
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul class="depth1">
+	 
+	
+    
+    
+
+    <li>
+    	<a href="page.do?mnu_uid=23&amp;" class="off" target="_self" >
+    		<span>민원정보</span>
+    	</a>
+			
+    	<div class="gnb">
+    		 <div class="item">
+    		 	<div class="tit icon1">
+    		 	 	<strong>민원정보</strong>
+    		 		<p>아름다운 변화 행복한 군위</p>
+    		 	</div>
+    		 	
+					<ul class="depth2">
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=24&amp;" class="off" target="_self" >
+			                 		<span>민원안내</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=25&amp;" class="off" target="_self" >
+					                        		<span>민원실 배치도</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=53&amp;" class="off" target="_self" >
+					                        		<span>무인민원 발급기</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=54&amp;" class="off" target="_self" >
+					                        		<span>어디서나 민원</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=55&amp;" class="off" target="_self" >
+					                        		<span>사전심사 청구제도</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=56&amp;" class="off" target="_self" >
+					                        		<span>아름다운 배려창구 운영</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=57&amp;" class="off" target="_self" >
+					                        		<span>민원 사무 서식</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=929&amp;" class="off" target="_self" >
+					                        		<span>민원후견인제 운영</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=1055&amp;" class="off" target="_self" >
+					                        		<span>통합폐업신고 서비스</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=945&amp;" class="off" target="_self" >
+					                        		<span>민원서비스 종합평가 결과</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=59&amp;" class="off" target="_self" >
+			                 		<span>민원정보</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=60&amp;" class="off" target="_self" >
+					                        		<span>국민신문고</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=61&amp;" class="off" target="_self" >
+					                        		<span>나의 민원보기</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://www.110.go.kr/consult/chat.do" class="off" target="_blank" title="새창">
+					                        		<span>국민콜 110</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=63&amp;" class="off" target="_self" >
+			                 		<span>신고민원</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=64&amp;" class="off" target="_self" >
+					                        		<span>민원 부조리 신고</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=65&amp;" class="off" target="_self" >
+					                        		<span>환경신문고</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=66&amp;" class="off" target="_self" >
+					                        		<span>예산낭비신고센터</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://www.foodsafetykorea.go.kr/minwon/consumerNotify/customerNotifyStep1.do?rcptDvs=I" class="off" target="_blank" title="새창">
+					                        		<span>불량식품 소비자고발</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://www.safetyreport.go.kr/#main" class="off" target="_blank" title="새창">
+					                        		<span>안전신문고</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=75&amp;" class="off" target="_self" >
+					                        		<span>부동산 불법거래 신고</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=76&amp;" class="off" target="_self" >
+					                        		<span>갑질신고</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=72&amp;" class="off" target="_self" >
+			                 		<span>생활민원</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=77&amp;" class="off" target="_self" >
+					                        		<span>주민등록증 재발급</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=78&amp;" class="off" target="_self" >
+					                        		<span>자동차 등록</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=81&amp;" class="off" target="_self" >
+					                        		<span>부동산</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://www.eais.go.kr/gunwi" class="off" target="_blank" title="새창">
+					                        		<span>인터넷건축행정시스템</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=863&amp;" class="off" target="_self" >
+					                        		<span>공유재산</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=89&amp;" class="off" target="_self" >
+			                 		<span>여권발급 안내</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=90&amp;" class="off" target="_self" >
+			                 		<span>지방세</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=91&amp;" class="off" target="_self" >
+					                        		<span>지방세란</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=95&amp;" class="off" target="_self" >
+					                        		<span>납세자 보호관</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=96&amp;" class="off" target="_self" >
+					                        		<span>지방세 구제제도</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=97&amp;" class="off" target="_self" >
+					                        		<span>마을 세무사</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://chatbot.wetax.go.kr/" class="off" target="_blank" title="새창">
+					                        		<span>지방세 챗봇상담</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=936&amp;" class="off" target="_self" >
+			                 		<span>행정서비스헌장</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=937&amp;" class="off" target="_self" >
+					                        		<span>헌장전문</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=939&amp;" class="off" target="_self" >
+					                        		<span>분야별이행기준</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=1032&amp;" class="off" target="_self" >
+					                        		<span>고객만족도 조사 결과</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+					</ul>
+    		 </div>
+    	</div>
+			
+    </li>
+  
+    
+    
+
+    <li>
+    	<a href="page.do?mnu_uid=111&amp;" class="off" target="_self" >
+    		<span>소통참여</span>
+    	</a>
+			
+    	<div class="gnb">
+    		 <div class="item">
+    		 	<div class="tit icon2">
+    		 	 	<strong>소통참여</strong>
+    		 		<p>아름다운 변화 행복한 군위</p>
+    		 	</div>
+    		 	
+					<ul class="depth2">
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=112&amp;" class="off" target="_self" >
+			                 		<span>자유게시판</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=113&amp;" class="off" target="_self" >
+			                 		<span>칭찬합시다</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=114&amp;" class="off" target="_self" >
+			                 		<span>군위사진첩</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=115&amp;" class="off" target="_self" >
+			                 		<span>구인구직</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=116&amp;" class="off" target="_self" >
+					                        		<span>구인정보</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=117&amp;" class="off" target="_self" >
+					                        		<span>구직정보</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=118&amp;" class="off" target="_self" >
+			                 		<span>아이디어제안방</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=119&amp;" class="off" target="_self" >
+					                        		<span>아이디어제안</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=120&amp;" class="off" target="_self" >
+					                        		<span>제안자료실</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=121&amp;" class="off" target="_self" >
+			                 		<span>국민제안</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=122&amp;" class="off" target="_self" >
+					                        		<span>국민제안신청</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=123&amp;" class="off" target="_self" >
+					                        		<span>나의제안보기</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=124&amp;" class="off" target="_self" >
+			                 		<span>정책포럼</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=125&amp;" class="off" target="_self" >
+			                 		<span>주민참여예산</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=126&amp;" class="off" target="_self" >
+					                        		<span>주민참여예산제 소개</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=952&amp;" class="off" target="_self" >
+					                        		<span>주민참여예산 교육</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=953&amp;" class="off" target="_self" >
+					                        		<span>주민제안사업 신청</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=828&amp;" class="off" target="_self" >
+					                        		<span>주민참여예산제 운영</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=962&amp;survey_cate=budget" class="off" target="_self" >
+					                        		<span>예산편성 설문조사</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=128&amp;" class="off" target="_self" >
+			                 		<span>적극행정</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=129&amp;" class="off" target="_self" >
+					                        		<span>적극행정 제도소개</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=130&amp;" class="off" target="_self" >
+					                        		<span>적극행정 국민추천</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=131&amp;" class="off" target="_self" >
+					                        		<span>소식/알림</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=132&amp;" class="off" target="_self" >
+			                 		<span>행정규제개혁</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=133&amp;" class="off" target="_self" >
+					                        		<span>행정규제란?</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=134&amp;" class="off" target="_self" >
+					                        		<span>규제입증요청</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://www.osmb.go.kr/proposal/proposalForm" class="off" target="_blank" title="새창">
+					                        		<span>지방기업 규제애로 신고센터</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=670&amp;" class="off" target="_self" >
+			                 		<span>맞춤정보</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=671&amp;" class="off" target="_self" >
+			                 		<span>설문조사</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=905&amp;" class="off" target="_self" >
+			                 		<span>토크군위</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=908&amp;" class="off" target="_self" >
+					                        		<span>토론</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=909&amp;" class="off" target="_self" >
+					                        		<span>투표</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=910&amp;" class="off" target="_self" >
+					                        		<span>설문</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=1031&amp;" class="off" target="_self" >
+			                 		<span>지방보조금 부정수급 신고</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+					</ul>
+    		 </div>
+    	</div>
+			
+    </li>
+  
+    
+    
+
+    <li>
+    	<a href="page.do?mnu_uid=99&amp;" class="on" target="_self" >
+    		<span>군정소식</span>
+    	</a>
+			
+    	<div class="gnb">
+    		 <div class="item">
+    		 	<div class="tit icon3">
+    		 	 	<strong>군정소식</strong>
+    		 		<p>아름다운 변화 행복한 군위</p>
+    		 	</div>
+    		 	
+					<ul class="depth2">
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=100&amp;" class="off" target="_self" >
+			                 		<span>군정새소식</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=101&amp;" class="off" target="_self" >
+			                 		<span>알립니다</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=787&amp;" class="off" target="_self" >
+			                 		<span>맞춤정보</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=796&amp;" class="off" target="_self" >
+					                        		<span>기관채용</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=788&amp;" class="off" target="_self" >
+					                        		<span>교육</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=789&amp;" class="off" target="_self" >
+					                        		<span>결혼/임신/출산</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=790&amp;" class="off" target="_self" >
+					                        		<span>육아/돌봄</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=791&amp;" class="off" target="_self" >
+					                        		<span>청년</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=792&amp;" class="off" target="_self" >
+					                        		<span>노인/장애인</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=793&amp;" class="off" target="_self" >
+					                        		<span>주거</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=794&amp;" class="off" target="_self" >
+					                        		<span>건강</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=795&amp;" class="off" target="_self" >
+					                        		<span>환경/농업</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=102&amp;boardType=notice&amp;board_code=02" class="off" target="_self" >
+			                 		<span>입찰정보</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=666&amp;boardType=notice" class="on" target="_self" >
+			                 		<span>고시공고</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=103&amp;boardType=notice&amp;board_code=03" class="off" target="_self" >
+			                 		<span>입법예고</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=104&amp;" class="off" target="_self" >
+			                 		<span>반회보</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=105&amp;" class="off" target="_self" >
+			                 		<span>공보</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=106&amp;" class="off" target="_self" >
+			                 		<span>보도/해명</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=107&amp;" class="off" target="_self" >
+			                 		<span>행사계획</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=108&amp;" class="off" target="_self" >
+			                 		<span>행사/일정</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=109&amp;" class="off" target="_self" >
+			                 		<span>실과소 새소식</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=110&amp;" class="off" target="_self" >
+			                 		<span>실과소 정보공개</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=944&amp;" class="off" target="_self" >
+			                 		<span>공영장례 부고알림</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=966&amp;" class="off" target="_self" >
+			                 		<span>포토갤러리</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+					</ul>
+    		 </div>
+    	</div>
+			
+    </li>
+  
+    
+    
+
+    <li>
+    	<a href="page.do?mnu_uid=137&amp;" class="off" target="_self" >
+    		<span>정보공개</span>
+    	</a>
+			
+    	<div class="gnb">
+    		 <div class="item">
+    		 	<div class="tit icon4">
+    		 	 	<strong>정보공개</strong>
+    		 		<p>아름다운 변화 행복한 군위</p>
+    		 	</div>
+    		 	
+					<ul class="depth2">
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=138&amp;" class="off" target="_self" >
+			                 		<span>행정정보공개</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=139&amp;" class="off" target="_self" >
+					                        		<span>정보공개제도안내</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://www.open.go.kr/com/main/mainView.do" class="off" target="_blank" title="새창">
+					                        		<span>정보공개 포털</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=145&amp;" class="off" target="_self" >
+					                        		<span>사전정보공표</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://www.open.go.kr/othicInfo/infoList/infoList.do" class="off" target="_blank" title="새창">
+					                        		<span>정보목록</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=149&amp;" class="off" target="_self" >
+					                        		<span>정보목록(2014년 이전)</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=150&amp;" class="off" target="_self" >
+					                        		<span>비공개대상정보</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=159&amp;" class="off" target="_self" >
+					                        		<span>정책실명제</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=160&amp;" class="off" target="_self" >
+					                        		<span>업무추진비</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=901&amp;srchOrder=2" class="off" target="_self" >
+					                        		<span>감사행정</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=934&amp;" class="off" target="_self" >
+					                        		<span>민간위탁 사무감사 결과</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=855&amp;" class="off" target="_self" >
+					                        		<span>정보공개 수요 분석</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=843&amp;" class="off" target="_self" >
+					                        		<span>법령정보</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                   
+			                 
+			                 <li>
+			                 	<a href="http://ecios.gunwi.go.kr/" class="off" target="_blank" title="새창">
+			                 		<span>계약정보 공개시스템</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=162&amp;" class="off" target="_self" >
+			                 		<span>예산정보</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=163&amp;" class="off" target="_self" >
+					                        		<span>예산자료실</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=164&amp;code_uid=24" class="off" target="_self" >
+					                        		<span>세입세출예산서</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=165&amp;code_uid=25" class="off" target="_self" >
+					                        		<span>기금운용계획</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=166&amp;" class="off" target="_self" >
+					                        		<span>연도별 재정공시</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=832&amp;code_uid=265" class="off" target="_self" >
+					                        		<span>결산서</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=169&amp;" class="off" target="_self" >
+			                 		<span>조직정보</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=933&amp;" class="off" target="_self" >
+					                        		<span>조직운영 핵심지표</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=171&amp;" class="off" target="_self" >
+					                        		<span>인사운영</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=902&amp;" class="off" target="_self" >
+					                        		<span>지방공기업</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=172&amp;" class="off" target="_self" >
+			                 		<span>공공데이터 개방</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=173&amp;" class="off" target="_self" >
+					                        		<span>공공데이터 개방</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=174&amp;" class="off" target="_self" >
+					                        		<span>통계지리정보서비스(SGIS)</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=850&amp;" class="off" target="_self" >
+					                        		<span>행정정보 공표방</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=925&amp;" class="off" target="_self" >
+					                        		<span>공공데이터 수요조사</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=175&amp;" class="off" target="_self" >
+			                 		<span>공공저작물</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+					</ul>
+    		 </div>
+    	</div>
+			
+    </li>
+  
+    
+    
+
+    <li>
+    	<a href="page.do?mnu_uid=176&amp;" class="off" target="_self" >
+    		<span>내사랑 군위</span>
+    	</a>
+			
+    	<div class="gnb">
+    		 <div class="item">
+    		 	<div class="tit icon5">
+    		 	 	<strong>내사랑 군위</strong>
+    		 		<p>아름다운 변화 행복한 군위</p>
+    		 	</div>
+    		 	
+					<ul class="depth2">
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=177&amp;" class="off" target="_self" >
+			                 		<span>군청안내</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=178&amp;" class="off" target="_self" >
+					                        		<span>행정조직도</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=181&amp;" class="off" target="_self" >
+					                        		<span>전화번호 안내</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=182&amp;" class="off" target="_self" >
+					                        		<span>청사안내</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=183&amp;" class="off" target="_self" >
+					                        		<span>찾아오시는 길</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=184&amp;" class="off" target="_self" >
+			                 		<span>군위군 소개</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=185&amp;" class="off" target="_self" >
+					                        		<span>기본 현황</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=189&amp;" class="off" target="_self" >
+					                        		<span>연혁</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=190&amp;" class="off" target="_self" >
+					                        		<span>지명유래</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=191&amp;" class="off" target="_self" >
+					                        		<span>군위의 상징물</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=195&amp;" class="off" target="_self" >
+					                        		<span>통계연보</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=196&amp;" class="off" target="_self" >
+					                        		<span>통계자료</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=200&amp;" class="off" target="_self" >
+					                        		<span>군정백서</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=923&amp;" class="off" target="_self" >
+					                        		<span>부패방지방침</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=201&amp;" class="off" target="_self" >
+			                 		<span>군위군정</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=202&amp;" class="off" target="_self" >
+					                        		<span>주요업무계획</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=930&amp;" class="off" target="_self" >
+					                        		<span>월별업무계획</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=203&amp;" class="off" target="_self" >
+					                        		<span>하늘에서 본 군위</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=204&amp;" class="off" target="_self" >
+					                        		<span>대구경북신공항</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=1021&amp;" class="off" target="_self" >
+					                        		<span>대구시 군부대 통합 이전</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=911&amp;" class="off" target="_self" >
+			                 		<span>고향사랑기부제</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=912&amp;" class="off" target="_self" >
+					                        		<span>고향사랑기부제란?</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=913&amp;" class="off" target="_self" >
+					                        		<span>고향사랑기부 명예의 전당</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=926&amp;" class="off" target="_self" >
+					                        		<span>군위군 답례품 현황</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=927&amp;" class="off" target="_self" >
+					                        		<span>고향사랑소식</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+					</ul>
+    		 </div>
+    	</div>
+			
+    </li>
+  
+    
+    
+
+    <li>
+    	<a href="page.do?mnu_uid=206&amp;" class="off" target="_self" >
+    		<span>분야별 정보</span>
+    	</a>
+			
+    	<div class="gnb">
+    		 <div class="item">
+    		 	<div class="tit icon6">
+    		 	 	<strong>분야별 정보</strong>
+    		 		<p>아름다운 변화 행복한 군위</p>
+    		 	</div>
+    		 	
+					<ul class="depth2">
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=217&amp;" class="off" target="_self" >
+			                 		<span>주민복지</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=226&amp;" class="off" target="_self" >
+					                        		<span>통합서비스</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=227&amp;" class="off" target="_self" >
+					                        		<span>기초생활보장</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=228&amp;" class="off" target="_self" >
+					                        		<span>자활사업</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=229&amp;" class="off" target="_self" >
+					                        		<span>의료급여</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=230&amp;" class="off" target="_self" >
+					                        		<span>사회복지시설 정보공개</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=218&amp;" class="off" target="_self" >
+			                 		<span>어르신</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=241&amp;" class="off" target="_self" >
+					                        		<span>기초연금</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=242&amp;" class="off" target="_self" >
+					                        		<span>노인일자리사업</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=243&amp;" class="off" target="_self" >
+					                        		<span>노인맞춤돌봄서비스</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=244&amp;" class="off" target="_self" >
+					                        		<span>노인복지시설</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=250&amp;" class="off" target="_self" >
+					                        		<span>장사제도</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=251&amp;" class="off" target="_self" >
+					                        		<span>분묘개장공고</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=252&amp;" class="off" target="_self" >
+					                        		<span>노인여가복지시설</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=219&amp;" class="off" target="_self" >
+			                 		<span>장애인</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=253&amp;" class="off" target="_self" >
+					                        		<span>장애인 등록절차</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=254&amp;" class="off" target="_self" >
+					                        		<span>장애인 소득보장</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=255&amp;" class="off" target="_self" >
+					                        		<span>장애인 일자리사업</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=256&amp;" class="off" target="_self" >
+					                        		<span>기타 장애인 복지시책</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=1056&amp;" class="off" target="_self" >
+					                        		<span>전동휠체어 급속충전기 설치장소</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=220&amp;" class="off" target="_self" >
+			                 		<span>여성/아동/청소년/다문화</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=257&amp;" class="off" target="_self" >
+					                        		<span>여성</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=259&amp;" class="off" target="_self" >
+					                        		<span>아동</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=260&amp;" class="off" target="_self" >
+					                        		<span>청소년</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=258&amp;" class="off" target="_self" >
+					                        		<span>다문화</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=221&amp;" class="off" target="_self" >
+			                 		<span>지역경제</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=270&amp;" class="off" target="_self" >
+					                        		<span>지역산업</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=271&amp;" class="off" target="_self" >
+					                        		<span>일자리</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=272&amp;" class="off" target="_self" >
+					                        		<span>소비자 생활</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=273&amp;" class="off" target="_self" >
+					                        		<span>지역 특산품</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=903&amp;" class="off" target="_self" >
+					                        		<span>착한가격업소</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=222&amp;" class="off" target="_self" >
+			                 		<span>교통</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=286&amp;" class="off" target="_self" >
+					                        		<span>시외버스 및 군위역 열차시간</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=786&amp;" class="off" target="_self" >
+					                        		<span>급행버스</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=287&amp;" class="off" target="_self" >
+					                        		<span>마을버스 및 행복버스</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=288&amp;" class="off" target="_self" >
+					                        		<span>행복나드리 콜택시</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=289&amp;" class="off" target="_self" >
+					                        		<span>군위군 행복택시</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=834&amp;" class="off" target="_self" >
+					                        		<span>주,정차위반 단속</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=856&amp;" class="off" target="_self" >
+					                        		<span>어르신통합무임교통카드</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=223&amp;" class="off" target="_self" >
+			                 		<span>환경/위생</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=296&amp;" class="off" target="_self" >
+					                        		<span>청소행정</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://eminwon.gunwi.go.kr/emwp/gov/mogaha/ntis/web/caf/mwwd/action/CafMwWdOpenAction.do?method=selectListAdmm&amp;menu_id=CAFOPNWebAdmmOpenL&amp;jndinm=CafMwWdOpenEJB&amp;methodnm=selectListAdmm&amp;context=NTIS" class="off" target="_blank" title="새창">
+					                        		<span>행정처분공개</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=918&amp;" class="off" target="_self" >
+					                        		<span>탄소중립</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=837&amp;" class="off" target="_self" >
+			                 		<span>재난/안전</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=838&amp;" class="off" target="_self" >
+					                        		<span>군위군민 자전거보험</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://www.daegu.go.kr/safety/index.do?menu_id=00935933" class="off" target="_blank" title="새창">
+					                        		<span>시민안전보험</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=839&amp;" class="off" target="_self" >
+					                        		<span>비상대피/급수시설</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                          
+					                        
+					                        <li>
+					                        	<a href="https://www.nssc.go.kr/" class="off" target="_blank" title="새창">
+					                        		<span>원자력 안전 정보</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=904&amp;" class="off" target="_self" >
+					                        		<span>지진 옥외 대피장소</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=949&amp;" class="off" target="_self" >
+					                        		<span>안전·보건 자유제안</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=964&amp;" class="off" target="_self" >
+					                        		<span>안전·보건 정보공유</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=869&amp;" class="off" target="_self" >
+			                 		<span>건축</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=1024&amp;" class="off" target="_self" >
+			                 		<span>정보통신</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=1025&amp;" class="off" target="_self" >
+					                        		<span>정보통신공사 사용전검사</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=1026&amp;" class="off" target="_self" >
+					                        		<span>정보통신공사 감리결과보고서 제출</span>
+					                        	</a>
+					                        </li>
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=1027&amp;" class="off" target="_self" >
+					                        		<span>정보통신설비 유지보수·관리 제도</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=947&amp;" class="off" target="_self" >
+			                 		<span>동물보호·복지</span>
+			                 	</a>
+			                 	
+                  				
+                  					<ul class="depth3">
+                  						
+                  							
+					                        
+					                        <li>
+					                        	<a href="page.do?mnu_uid=948&amp;" class="off" target="_self" >
+					                        		<span>유기·유실동물 신고방법</span>
+					                        	</a>
+					                        </li>
+                  						
+                  					</ul>
+                  				
+                  			</li>
+						
+					</ul>
+    		 </div>
+    	</div>
+			
+    </li>
+  
+    
+    
+
+    <li>
+    	<a href="page.do?mnu_uid=797&amp;" class="off" target="_self" >
+    		<span>패밀리 사이트</span>
+    	</a>
+			
+    	<div class="gnb">
+    		 <div class="item">
+    		 	<div class="tit icon7">
+    		 	 	<strong>패밀리 사이트</strong>
+    		 		<p>아름다운 변화 행복한 군위</p>
+    		 	</div>
+    		 	
+					<ul class="depth2">
+						
+							
+							 
+			                   
+			                 
+			                 <li>
+			                 	<a href="/village/main.do" class="off" target="_blank" title="새창">
+			                 		<span>읍면사이트</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                   
+			                 
+			                 <li>
+			                 	<a href="/tour/main.do" class="off" target="_blank" title="새창">
+			                 		<span>문화관광</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                   
+			                 
+			                 <li>
+			                 	<a href="/samguk/index.do" class="off" target="_blank" title="새창">
+			                 		<span>삼국유사ㆍ퀴즈대회</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                   
+			                 
+			                 <li>
+			                 	<a href="https://gwcouncil.kr/" class="off" target="_blank" title="새창">
+			                 		<span>의회</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                   
+			                 
+			                 <li>
+			                 	<a href="https://www.gib.go.kr/" class="off" target="_blank" title="새창">
+			                 		<span>인터넷방송</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                   
+			                 
+			                 <li>
+			                 	<a href="https://igunwi.gunwi.go.kr/" class="off" target="_blank" title="새창">
+			                 		<span>아이군위</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+					</ul>
+    		 </div>
+    	</div>
+			
+    </li>
+  
+    
+    
+
+    <li>
+    	<a href="page.do?mnu_uid=207&amp;" class="off" target="_self" >
+    		<span>누리집 이용안내</span>
+    	</a>
+			
+    	<div class="gnb">
+    		 <div class="item">
+    		 	<div class="tit icon8">
+    		 	 	<strong>누리집 이용안내</strong>
+    		 		<p>아름다운 변화 행복한 군위</p>
+    		 	</div>
+    		 	
+					<ul class="depth2">
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=209&amp;" class="off" target="_self" >
+			                 		<span>개인정보 처리방침</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=210&amp;" class="off" target="_self" >
+			                 		<span>영상정보처리기기 운영·관리 방침</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=853&amp;" class="off" target="_self" >
+			                 		<span>개인정보제3자제공</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=975&amp;" class="off" target="_self" >
+			                 		<span>정보주체의 동의를 받지않고 처리하는 주요 개인정보 항목</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=854&amp;" class="off" target="_self" >
+			                 		<span>개인정보위탁</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=211&amp;" class="off" target="_self" >
+			                 		<span>이메일무단수집거부</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=212&amp;" class="off" target="_self" >
+			                 		<span>저작권정책</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=215&amp;" class="off" target="_self" >
+			                 		<span>누리집 지도</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=216&amp;" class="off" target="_self" >
+			                 		<span>배너모음</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+							
+							 
+			                 <li>
+			                 	<a href="page.do?mnu_uid=774&amp;" class="off" target="_self" >
+			                 		<span>RSS 서비스</span>
+			                 	</a>
+			                 	
+                  				
+                  			</li>
+						
+					</ul>
+    		 </div>
+    	</div>
+			
+    </li>
+  
+</ul>
+
+			<a href="" class="close black">닫기</a>
+		</nav>
+	</div>
+</header>
+
+<script>
+
+</script>
+
+  <section id="container">
+    <h2 class="hidden">고시공고</h2>
+    <div class="inner">
+      <div class="wrap">
+        <h3>고시공고</h3>
+        <div class="loca">
+          <ul>
+            <li><a href="/ko/index.do" class="home">홈</a></li>
+            
+	          
+	        
+	          
+	        
+	          
+	            <li>
+					
+					
+					<a href="?mnu_uid=99&amp;">군정소식</a>
+				</li>
+	          
+	        
+	          
+	            <li>
+					
+					
+					<a href="?mnu_uid=666&amp;boardType=notice">고시공고</a>
+				</li>
+	          
+	        
+          </ul>
+        </div>
+        <div class="util">
+					
+					<div class="share_wrap"><a href="" class="qrcode" title="열기">QRcode</a>
+						<div class="" style="display:none;">
+							
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<img src="/imageQrcode.do?url=https://www.gunwi.go.kr/ko/page.do?mnu_uid=666" alt="고시공고 바로가기 QRcode" />
+
+							<a href="" class="u_close" title="닫기">닫기</a>
+						</div>
+					</div>
+					<a href="" onclick="clip(); return false;" class="clip">주소복사</a>
+					<a href="" onclick="printDiv('content')" class="print" title="본문 인쇄">프린터</a>
+					<div class="share_wrap"><a href="" class="share" title="열기">공유</a>
+						<div class="" style="display:none;">
+							<a href="" onclick="facebook(this.href,'고시공고');return false;" class="sns facebook" title="새창열림">페이스북</a>
+							<a href="" onclick="twitter(this.href,'고시공고');return false;" class="sns twitter" title="새창열림">X(엑스)</a>
+							<a href="" onclick="band(this.href,'고시공고');return false;" class="sns band" title="새창열림">네이버밴드</a>
+							<a href="" class="u_close" title="공유 닫기">닫기</a>
+						</div>
+	      	</div>
+        </div>
+      </div>
+    </div>
+    <div class="wrap">
+      <nav id="snb">
+        <div class="h2">
+          <p>삼국유사의 고장 군위</p>
+          <h2>군정소식<span class="hidden"> 하위메뉴</span></h2>
+        </div>
+          
+		      <ul class="depth1">
+		        
+		          
+							
+		          
+		          
+		          
+		          
+		            
+		            
+		              
+		            
+		          
+		          <li><a href="page.do?mnu_uid=100&amp;" class="off" target="_self" title=""><span>군정새소식</span></a>
+		            
+		          </li>
+		        
+		          
+							
+		          
+		          
+		          
+		          
+		            
+		            
+		              
+		            
+		          
+		          <li><a href="page.do?mnu_uid=101&amp;" class="off" target="_self" title=""><span>알립니다</span></a>
+		            
+		          </li>
+		        
+		          
+							
+		          
+		          
+		          
+		          
+		            
+		            
+		              
+		            
+		          
+		          <li><a href="page.do?mnu_uid=787&amp;" class="off" target="_self" title=""><span>맞춤정보</span></a>
+		            
+		              <ul class="depth2">
+		                
+		                  
+											
+		                  
+		                  
+						  
+		                  <li><a href="page.do?mnu_uid=796&amp;"  class="off" target="_self" title=""><span>기관채용</span></a></li>
+		                
+		                  
+											
+		                  
+		                  
+						  
+		                  <li><a href="page.do?mnu_uid=788&amp;"  class="off" target="_self" title=""><span>교육</span></a></li>
+		                
+		                  
+											
+		                  
+		                  
+						  
+		                  <li><a href="page.do?mnu_uid=789&amp;"  class="off" target="_self" title=""><span>결혼/임신/출산</span></a></li>
+		                
+		                  
+											
+		                  
+		                  
+						  
+		                  <li><a href="page.do?mnu_uid=790&amp;"  class="off" target="_self" title=""><span>육아/돌봄</span></a></li>
+		                
+		                  
+											
+		                  
+		                  
+						  
+		                  <li><a href="page.do?mnu_uid=791&amp;"  class="off" target="_self" title=""><span>청년</span></a></li>
+		                
+		                  
+											
+		                  
+		                  
+						  
+		                  <li><a href="page.do?mnu_uid=792&amp;"  class="off" target="_self" title=""><span>노인/장애인</span></a></li>
+		                
+		                  
+											
+		                  
+		                  
+						  
+		                  <li><a href="page.do?mnu_uid=793&amp;"  class="off" target="_self" title=""><span>주거</span></a></li>
+		                
+		                  
+											
+		                  
+		                  
+						  
+		                  <li><a href="page.do?mnu_uid=794&amp;"  class="off" target="_self" title=""><span>건강</span></a></li>
+		                
+		                  
+											
+		                  
+		                  
+						  
+		                  <li><a href="page.do?mnu_uid=795&amp;"  class="off" target="_self" title=""><span>환경/농업</span></a></li>
+		                
+		              </ul>
+		            
+		          </li>
+		        
+		          
+							
+		          
+		          
+		          
+		          
+		            
+		            
+		              
+		            
+		          
+		          <li><a href="page.do?mnu_uid=102&amp;boardType=notice&amp;board_code=02" class="off" target="_self" title=""><span>입찰정보</span></a>
+		            
+		          </li>
+		        
+		          
+							
+		          
+		            
+								
+		          
+		          
+		          
+		          
+		            
+		            
+		              
+		            
+		          
+		          <li><a href="page.do?mnu_uid=666&amp;boardType=notice" class="on" target="_self" title="선택됨"><span>고시공고</span></a>
+		            
+		          </li>
+		        
+		          
+							
+		          
+		          
+		          
+		          
+		            
+		            
+		              
+		            
+		          
+		          <li><a href="page.do?mnu_uid=103&amp;boardType=notice&amp;board_code=03" class="off" target="_self" title=""><span>입법예고</span></a>
+		            
+		          </li>
+		        
+		          
+							
+		          
+		          
+		          
+		          
+		            
+		            
+		              
+		            
+		          
+		          <li><a href="page.do?mnu_uid=104&amp;" class="off" target="_self" title=""><span>반회보</span></a>
+		            
+		          </li>
+		        
+		          
+							
+		          
+		          
+		          
+		          
+		            
+		            
+		              
+		            
+		          
+		          <li><a href="page.do?mnu_uid=105&amp;" class="off" target="_self" title=""><span>공보</span></a>
+		            
+		          </li>
+		        
+		          
+							
+		          
+		          
+		          
+		          
+		            
+		            
+		              
+		            
+		          
+		          <li><a href="page.do?mnu_uid=106&amp;" class="off" target="_self" title=""><span>보도/해명</span></a>
+		            
+		          </li>
+		        
+		          
+							
+		          
+		          
+		          
+		          
+		            
+		            
+		              
+		            
+		          
+		          <li><a href="page.do?mnu_uid=107&amp;" class="off" target="_self" title=""><span>행사계획</span></a>
+		            
+		          </li>
+		        
+		          
+							
+		          
+		          
+		          
+		          
+		            
+		            
+		              
+		            
+		          
+		          <li><a href="page.do?mnu_uid=108&amp;" class="off" target="_self" title=""><span>행사/일정</span></a>
+		            
+		          </li>
+		        
+		          
+							
+		          
+		          
+		          
+		          
+		            
+		            
+		              
+		            
+		          
+		          <li><a href="page.do?mnu_uid=109&amp;" class="off" target="_self" title=""><span>실과소 새소식</span></a>
+		            
+		          </li>
+		        
+		          
+							
+		          
+		          
+		          
+		          
+		            
+		            
+		              
+		            
+		          
+		          <li><a href="page.do?mnu_uid=110&amp;" class="off" target="_self" title=""><span>실과소 정보공개</span></a>
+		            
+		          </li>
+		        
+		          
+							
+		          
+		          
+		          
+		          
+		            
+		            
+		              
+		            
+		          
+		          <li><a href="page.do?mnu_uid=944&amp;" class="off" target="_self" title=""><span>공영장례 부고알림</span></a>
+		            
+		          </li>
+		        
+		          
+							
+		          
+		          
+		          
+		          
+		            
+		            
+		              
+		            
+		          
+		          <li><a href="page.do?mnu_uid=966&amp;" class="off" target="_self" title=""><span>포토갤러리</span></a>
+		            
+		          </li>
+		        
+		      </ul>
+		    
+      </nav>
+      <article class="article">
+        <h3 class="hidden">고시공고</h3>
+        <div id="content">
+          	 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+		
+
+		
+		
+
+		
+		
+			
+			
+
+			
+
+			
+
+			
+				
+					
+					
+					
+					
+					
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="boardWrap">
+
+	
+		
+		
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="boardView">
+	<div class="title">
+		<h4>소규모 위험시설 지정 및 고시</h4>
+		<div>
+			<dl class="data">
+				<dt>작성자</dt>
+				<dd>안전건설과</dd>
+
+				<dt>등록일</dt>
+				<dd>
+					
+           			2017-02-28
+				</dd>
+				<dt>조회</dt>
+				<dd>154</dd>
+			</dl>
+		</div>
+
+		
+		<div>
+			<ul>
+				<li>
+					
+						<p class="file">
+							<a title="파일 다운로드" href="/programs/board/saeol/notice/download.do?file_seq=1&amp;not_ancmt_mgt_no=14779">고시문(소규모 위험시설-군위군 추가).hwp</a>
+							
+						</p>
+					
+				</li>
+			</ul>
+		</div>
+		
+		
+	</div>
+
+	<div class="cont">
+		<div  class="board_content">
+			소규모 공공시설 안전관리 등에 관한 법률 제7조(소규모 위험시설의 지정 및 관리) 및 같은법 시행령 제5조(소규모 위험시설 지정 고시 등) 규정에 따라 아래와 같이 소규모 위험시설을 지정・고시합니다.<br/><br/>붙임  고시문 1부.  끝.
+		</div>
+	</div>
+
+	<!--이전글다음글 -->
+	<ul class="viewCont">
+		
+		
+	</ul>
+
+</div>
+
+<div class="boardBtn">
+	<a href="?pageNo=&amp;board_code=&amp;srchSDate=&amp;srchKwd=&amp;srchColumn=&amp;srchDept=&amp;srchEDate=&amp;mnu_uid=666&amp;" id="btnList" class="bt1 can">목록</a>
+</div>
+
+		
+	
+	
+</div>
+			
+
+			
+			
+		
+		
+			<!-- 공공누리-->
+			
+				
+					
+						<div class="nuri_wrap">
+							<div class="nuri">
+								<a href="http://www.kogl.or.kr/info/licenseType1.do" target="_blank" title="공공누리 제1유형 : 출처 표시 새창열림">
+									<img src="/design2023/common/img/img_opentype01.jpg" alt="공공누리 공공저작물 자유이용허락, 출처표시" />
+									<span>고시공고 저작물은<br /><strong>"공공누리"</strong>의 공공저작물 자유이용허락 표시제도에 따라 이용할 수 있습니다.</span>
+								</a>
+							</div>
+						</div>
+					
+					
+					
+					
+				
+			
+		<div class="research_box">
+			<h3 class="hidden">페이지 만족도조사</h3>
+			<div class="title">
+				<!-- 캡쳐용 -->
+				<ul class="dataOffer">
+					<li><span>담당부서</span> :  </li>
+					<li><span>전화번호</span> :  </li>
+						
+					
+				</ul>
+				<div class="btn_mgr01">
+					<a target="_blank" onclick="fnPopupAuth(location.href);return false;" id="realNameCheck_board2" href="/ko/page.do?mnu_uid=767" title="오류 및 불편신고 본인인증 새창">오류 및 불편신고</a>
+				</div>
+			</div>
+			<form action="/programs/menuGratify/menuGratify_process.do" id="frm_satisfy" name="frm_satisfy" method="post">
+				<input type="hidden" name="rtnUrl" value="/ko/page.do">
+				<input type="hidden" name="cmd" value="4">
+				<input type="hidden" name="mnu_uid" value="666">
+				<div class="radio_box">
+					<div class="rd_box01">
+						<p>현재 페이지의 정보 및 편의성에 만족하십니까?</p>
+						<ul class="radio_list">
+							<li><input type="radio" name="surveyPoint" id="researchPoint5" value="5" checked="checked"><label for="researchPoint5"> 매우만족</label></li>
+							<li><input type="radio" name="surveyPoint" id="researchPoint4" value="4"><label for="researchPoint4"> 만족</label></li>
+							<li><input type="radio" name="surveyPoint" id="researchPoint3" value="3"><label for="researchPoint3"> 보통</label></li>
+							<li><input type="radio" name="surveyPoint" id="researchPoint2" value="2"><label for="researchPoint2"> 불만족</label></li>
+							<li><input type="radio" name="surveyPoint" id="researchPoint1" value="1"><label for="researchPoint1"> 매우불만족</label></li>
+						</ul>
+					</div>
+					<div class="rd_box02">
+						<label for="surveyComment" class="hidden">의견등록</label>
+						<input type="text" id="surveyComment" name="gra_comment" placeholder="여러분의 소중한 의견을 남겨주세요.">
+						<a href="#" onclick="document.frm_satisfy.submit();">등록하기</a>
+					</div>
+				</div>
+			</form>
+		</div>
+
+
+        </div>
+      </article>
+    </div>
+  </section>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer id="footer">
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="f_site">
+    <ul class="wrap">
+      <li><a href="" title="열기">직속기관/사업소 <span>바로가기</span></a>
+        <div class="list"><a href="" title="닫기">직속기관/사업소</a>
+          <ul>
+			 
+				
+				
+			  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<li>
+	  <a href="/health/main.do" target="_blank" title="새창 열림" >
+		보건소
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="https://www.gwa.go.kr/" target="_blank" title="새창 열림" >
+		농업기술센터
+	  </a>
+	 </li>
+
+
+          </ul>
+        </div>
+      </li>
+      <li><a href="" title="열기">읍면사이트 <span>바로가기</span></a>
+        <div class="list"><a href="" title="닫기">읍면사이트</a>
+          <ul>
+			
+				
+				
+			  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<li>
+	  <a href="/village/page.do?mnu_uid=491" target="_blank" title="새창 열림" >
+		군위읍
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="/village/page.do?mnu_uid=492" target="_blank" title="새창 열림" >
+		소보면
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="/village/page.do?mnu_uid=493" target="_blank" title="새창 열림" >
+		효령면
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="/village/page.do?mnu_uid=494" target="_blank" title="새창 열림" >
+		부계면
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="/village/page.do?mnu_uid=495" target="_blank" title="새창 열림" >
+		우보면
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="/village/page.do?mnu_uid=496" target="_blank" title="새창 열림" >
+		의흥면
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="/village/page.do?mnu_uid=497" target="_blank" title="새창 열림" >
+		산성면
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="/village/page.do?mnu_uid=498" target="_blank" title="새창 열림" >
+		삼국유사면
+	  </a>
+	 </li>
+
+
+          </ul>
+        </div>
+      </li>
+      <li><a href="" title="열기">패밀리사이트 <span>바로가기</span></a>
+        <div class="list"><a href="" title="닫기">패밀리사이트</a>
+          <ul>
+			
+				
+				
+			  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<li>
+	  <a href="/samguk/index.do" target="_blank" title="새창 열림" >
+		삼국유사 퀴즈대회
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="https://www.samgukyusa.kr/archives" target="_blank" title="새창 열림" >
+		삼국유사 아카이브
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="/edu/index.do" target="_blank" title="새창 열림" >
+		군위군 교육발전위원회
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="http://rain.gunwi.go.kr/" target="_blank" title="새창 열림" >
+		군위군 강우수위 측정시스템
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="http://gunwisupporter.or.kr/" target="_blank" title="새창 열림" >
+		군위군 농촌 신활력 플러스사업
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="http://gunwi3964.org/intro.htm" target="_blank" title="새창 열림" >
+		군위군문화관광재단
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="http://gunwi3964.co.kr/gunwi/main.do" target="_blank" title="새창 열림" >
+		군위삼국유사테마파크
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="https://gwcouncil.kr/" target="_blank" title="새창 열림" >
+		군위군의회
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="https://igunwi.gunwi.go.kr/" target="_blank" title="새창 열림" >
+		아이군위
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="https://www.gib.go.kr/" target="_blank" title="새창 열림" >
+		군위인터넷방송
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="https://www.gunwiart.go.kr:6451/" target="_blank" title="새창 열림" >
+		삼국유사교육문화회관
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="https://www.foresttrip.go.kr/indvz/main.do?hmpgId=ID02030064" target="_blank" title="새창 열림" >
+		장곡자연휴양림
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="http://www.ingak.org/" target="_blank" title="새창 열림" >
+		군위군 공무원노동조합
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="http://seoksanri.kr/" target="_blank" title="새창 열림" >
+		석산리산촌생태마을
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="https://saraon.gunwi.go.kr:6450/" target="_blank" title="새창 열림" >
+		사라온이야기마을
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="https://wcpark.gunwi.go.kr/" target="_blank" title="새창 열림" >
+		위천수변테마공원
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="http://gwp.hana-pnc.co.kr/" target="_blank" title="새창 열림" >
+		군위전투전승기념공원
+	  </a>
+	 </li>
+
+
+          </ul>
+        </div>
+      </li>
+      <li><a href="" title="열기">대구시 구ㆍ군 <span>바로가기</span></a>
+        <div class="list"><a href="" title="닫기">대구시 구ㆍ군</a>
+          <ul>
+			
+				
+				
+			  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<li>
+	  <a href="https://www.daegu.go.kr/" target="_blank" title="새창 열림" >
+		대구광역시
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="https://www.dong.daegu.kr/main.do" target="_blank" title="새창 열림" >
+		동구
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="https://www.dgs.go.kr/main.do" target="_blank" title="새창 열림" >
+		서구
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="https://nam.daegu.kr/" target="_blank" title="새창 열림" >
+		남구
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="http://www.buk.daegu.kr/" target="_blank" title="새창 열림" >
+		북구
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="https://www.jung.daegu.kr/new/pages/main/" target="_blank" title="새창 열림" >
+		중구
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="https://www.suseong.kr/index.do" target="_blank" title="새창 열림" >
+		수성구
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="https://www.dalseo.daegu.kr/" target="_blank" title="새창 열림" >
+		달서구
+	  </a>
+	 </li>
+
+	<li>
+	  <a href="https://www.dalseong.daegu.kr/" target="_blank" title="새창 열림" >
+		달성군
+	  </a>
+	 </li>
+
+
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+	  <div class="wrap">
+		<a href="/ko/main.do" class="logo">군위군 GUN-WI-GUN</a>
+		<div class="f_info">
+			<p>43113 대구광역시 군위군 군위읍 군청로 200</p>
+			<div><b>대표전화</b> 054-380-6114</div>
+			<div class="small"><b>평일</b> 09:00~18:00</div>
+			<div class="small"><b>점심시간</b> <span>12:00~13:00</span></div>
+			<div class="small"><b>야간·공휴일 등 근무시간 외 당직실 전환</b></div>
+			<div><b>팩스번호</b> 054-380-6221</div>
+		</div>
+		<div class="f_link">
+		  <a href="/ko/page.do?mnu_uid=183">군청오시는 길</a>
+		  <a href="/ko/page.do?mnu_uid=209" class="privacy">개인정보처리방침</a>
+		  <a href="/ko/page.do?mnu_uid=212">저작권정책</a>
+		  <a href="/ko/page.do?mnu_uid=211">이메일무단수집거부</a>
+		</div>
+		<div class="copy">© 2023 Gunwi-gun. All Rights Reserved.</div>
+		<div class="mark">
+			<a href="https://www.wa.or.kr/board/list.asp?search=total&SearchString=%B1%BA%C0%A7%B1%BA%C3%BB&BoardID=0006" target="_blank" class="a11y" title="새창열림">과학기술정보통신부 web 접근성 한국웹접근성인증평가원 2026.10.24~2027.10.23</a>
+		</div>
+	  </div>
+  </footer>
+
+  
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+	<script src="/design2023/ko/js/content_chart.js"></script>
+</body>
+</html>

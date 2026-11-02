@@ -1,0 +1,22 @@
+{
+  "source_id": "MOIS_AGE_2025_08",
+  "name": "행정동별 연령별 주민등록인구",
+  "provider": "행정안전부 주민등록 인구통계",
+  "url": "https://jumin.mois.go.kr/ageStatMonth.do",
+  "reference_date": "2025-08-31",
+  "retrieved_at": "2026-11-02",
+  "retrieved_by": "Claude Code (사용자 요청 수집)",
+  "license": "공식 통계 출처표시",
+  "provenance": "verified",
+  "notes": "2025-08 한 달만 POST 조회한 응답을 capture.html 로, 표를 age.json(기존 시점과 같은 [코드, 이름, 숫자 69칸] 형식)으로 저장. 검증: 9행·71칸, 읍면 합=군 합계. 같은 방식으로 다시 받은 2023-12·2024-12·2025-12·2026-08 이 기존 raw 와 완전히 같음을 확인. 대구광역시 군위군(2772 계열)으로 조회. prepare.py 의 MOIS_PERIODS 에는 아직 넣지 않았다.",
+  "files": {
+    "age.json": {
+      "sha256": "c43b96e7d4bd72e47c0eb41ec1c66377194e4500e12604cef7768100d2bd0d99",
+      "bytes": 4271
+    },
+    "capture.html": {
+      "sha256": "078984d6039c4e3374faf01538036a06b29b9250e78ba189165ed1c4ff6dbb7a",
+      "bytes": 123901
+    }
+  }
+}

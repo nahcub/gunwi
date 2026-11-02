@@ -1,0 +1,22 @@
+{
+  "source_id": "MOIS_HOUSEHOLD_2024_02",
+  "name": "행정동별 주민등록 인구 및 세대현황",
+  "provider": "행정안전부 주민등록 인구통계",
+  "url": "https://jumin.mois.go.kr/statMonth.do",
+  "reference_date": "2024-02-29",
+  "retrieved_at": "2026-11-02",
+  "retrieved_by": "Claude Code (사용자 요청 수집)",
+  "license": "공식 통계 출처표시",
+  "provenance": "verified",
+  "notes": "2024-02 한 달만 POST 조회. household.json 행 = [이름, 총인구수, 세대수, 세대당인구, 남자, 여자, 남녀비율] (화면 문자열 그대로). 이 화면은 행정기관코드를 주지 않아 이름으로만 구분된다 — 같은 기준월 mois-age 폴더와 이름·순서·총인구가 모두 일치함을 확인했으니 코드는 그쪽에서 가져올 것. 검증: 9행, 읍면 세대 합=군 세대. 대구광역시 군위군(2772 계열)으로 조회. prepare.py 미반영.",
+  "files": {
+    "household.json": {
+      "sha256": "e1391871c5e41cbfd77975de61309606c7b42f4336d3c80926f725b74da7e4c0",
+      "bytes": 595
+    },
+    "capture.html": {
+      "sha256": "94608724d4348caceff8529f564843c969bd46a5320c85f142f9d6734aa7f8cb",
+      "bytes": 68630
+    }
+  }
+}

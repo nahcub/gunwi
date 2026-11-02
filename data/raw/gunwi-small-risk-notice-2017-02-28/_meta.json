@@ -1,0 +1,22 @@
+{
+  "source_id": "GUNWI_SMALL_RISK_NOTICE_2017_02_28",
+  "name": "군위군 고시 제2017-14호 소규모 위험시설 지정·고시(추가)",
+  "provider": "군위군청 고시공고 게시판",
+  "url": "https://www.gunwi.go.kr/ko/page.do?mnu_uid=666&not_ancmt_mgt_no=14779&cmd=2",
+  "reference_date": "2017-02-28",
+  "retrieved_at": "2026-11-02",
+  "retrieved_by": "Claude Code (사용자 요청 수집)",
+  "license": "공공누리(군위군청 게시판 표시)",
+  "provenance": "verified",
+  "notes": "게시글 페이지를 capture.html 로, 첨부 고시문(eminwon.gunwi.go.kr 경유)을 그대로 저장. 고시문은 한글(HWP/HWPX) 파일이며 시설명·읍면·리·지번·연장·폭이 표로 들어 있다. prepare.py 미반영.",
+  "files": {
+    "capture.html": {
+      "sha256": "b409a9c7e36af6893f26cb3cf24af086b3a78fd1863343f538594d217ffe640b",
+      "bytes": 207538
+    },
+    "고시문.hwp": {
+      "sha256": "0a44a9285d59f34ad75a94ed4e7c637a71536610725c2061ab00b0affbf6439d",
+      "bytes": 56320
+    }
+  }
+}
