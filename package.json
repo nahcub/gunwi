@@ -7,7 +7,8 @@
     "export": "python tools/export_excel.py",
     "test": "python -m pytest tools/tests -q",
     "dev": "python tools/build.py && python -m http.server 8787 --directory public",
-    "deploy": "python tools/build.py && wrangler deploy"
+    "deploy": "python tools/build.py && wrangler deploy",
+    "figures": "python tools/figures.py"
   },
   "devDependencies": {
     "wrangler": "^4.131.0"

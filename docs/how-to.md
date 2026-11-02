@@ -30,6 +30,7 @@ http://127.0.0.1:8787 접속. "데이터를 불러오지 못했습니다" 가 �
 | `facilities.json` | 경로당·위험 세천 지점 |
 | `parks.json` / `potholes.json` | 공원·포트홀 지점 |
 | `sources.json` | 출처 패널 |
+| `hypotheses.json` | 민원 가설 카드·사분면 (`data/hypotheses.json` 에서 생성) |
 
 ## 2. 이미 derived 에 있는 값을 화면에 새 지표로 올리기
 
@@ -122,3 +123,35 @@ python tools/fetch_pothole.py --start 20250101 --end YYYYMMDD --max-calls 90
 5. `data/sources.json` 의 `COMPLAINT_INTERNAL` 상태 갱신
 
 청구서 초안: `docs/requests/README.md` (아직 발송 안 됨)
+
+## 9. 민원 가설 고치기·추가하기
+
+가설 문구·방향·검증 방법은 **`data/hypotheses.json` 한 곳만** 고친다.
+웹 카드, 엑셀 '가설' 시트, 그림5 가 모두 여기서 나온다.
+
+1. `data/hypotheses.json` 의 `hypotheses` 에 항목 추가 (`id`, `indicator`, `type`,
+   `direction`, `complaint_fields`, `statement`, `mechanism`, `caveat`,
+   `verify_with`, `verify_method`, `status`)
+   - `indicator` 는 `build.py` `INDICATORS` 에서 `available` 인 id 여야 한다
+   - `verify_with` 는 `data/sources.json` 의 id 여야 한다
+   - `status` 는 `가설(미검증)` 으로 시작한다. 민원 원자료 없이 바꾸지 않는다
+2. `python tools/build.py` — 위 조건이 틀리면 assert 로 멈춘다
+3. `python -m pytest tools/tests -q`
+4. `python tools/export_excel.py` · `python tools/figures.py` 로 엑셀·그림 갱신
+
+민원 원자료가 들어와 가설을 검증하면: `status` 를 `검증 중` → `지지`/`기각` 으로
+바꾸고, 근거(순위상관 값, 기간)를 `verify_method` 아래가 아니라 `docs/hypotheses.md`
+에 기록한다. `test_no_hypothesis_is_verified_without_complaint_data` 는 그때 고친다.
+
+## 10. 보고서 그림 다시 만들기
+
+```bash
+pip install -r requirements.txt      # matplotlib 포함
+python tools/figures.py              # 또는 npm run figures
+```
+
+- 출력: `outputs/figures/그림1~5_*.png` (+ 그림3·4 근거 CSV)
+- 값은 `build.py` `build_regions()` 를 그대로 쓴다 — 웹과 같은 숫자
+- 기준 시점은 `export_excel.py` 의 `ANALYSIS_PERIOD`(2025-12)
+- 한글 글꼴(맑은 고딕·AppleGothic·나눔고딕·Noto CJK) 중 하나가 있어야 한글이 안 깨진다
+- CI 는 그림을 만들지 않는다. 그림을 바꿨으면 직접 돌려서 커밋한다

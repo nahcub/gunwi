@@ -1,11 +1,11 @@
 {
-  "_warning": "표본이 너무 적어 읍면 비교 지표로 쓰지 않는다. 지점 표시 전용. 읍면 판정은 출처 미확인 경계에 의존한다.",
+  "_warning": "표본이 너무 적어 읍면 비교 지표로 쓰지 않는다. 지점 표시 전용. 읍면 판정은 boundary_provenance 에 적힌 경계를 따른다.",
   "source_id": "MINWON_POTHOLE_LATLON",
   "period": [
     "2025-01-01",
     "2026-10-13"
   ],
-  "boundary_provenance": "UNVERIFIED",
+  "boundary_provenance": "verified",
   "national_row_count": 57060,
   "exact_duplicate_count": 653,
   "unparsable_coord_count": 2,
