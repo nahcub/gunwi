@@ -45,7 +45,7 @@ def prepare_population():
     name_by_code = {}
 
     for period in MOIS_PERIODS:
-        folder = f"mois-age-{period}"
+        folder = f"mois-age/{period}"
         meta = read_meta(folder)
         rows = json.loads((RAW / folder / "age.json").read_text(encoding="utf-8"))
 

@@ -52,6 +52,9 @@ http://127.0.0.1:8787 접속. "데이터를 불러오지 못했습니다" 가 �
    ```bash
    python tools/add_source.py --id 새_ID --dir 출처-이름-기준일 --name "..." --provider "..." --url "..." --reference-date YYYY-MM-DD --license "..." --file 받은파일.csv
    ```
+   - 같은 자료의 여러 시점(시계열)은 묶음 폴더 아래에 둔다: `--dir mois-age/2026-12`.
+     묶음 폴더(`mois-age/`, `mois-household/`, `gunwi-yearbook/`, `gunwi-small-risk-notice/`)에는
+     `_meta.json` 이 있는 원자료 폴더만 넣는다(테스트가 검사한다)
    - cp949 파일이면 `--encoding cp949`, 기준일 근거·행수·품질 문제는 `--notes "..."`
    - 원본 페이지를 `capture.html` 로 저장해 같이 `--file` 로 넣는다(URL 이 죽어도 증빙이 남는다)
 2. 생성된 `data/raw/<폴더>/_meta.json` 을 열어 빠진 내용을 채운다
@@ -68,7 +71,7 @@ http://127.0.0.1:8787 접속. "데이터를 불러오지 못했습니다" 가 �
 
 예: 2026-12 주민등록 인구.
 
-1. 기존 폴더는 그대로 두고 **새 폴더**로 등록 (§3-1)
+1. 기존 폴더는 그대로 두고 **새 폴더**로 등록 (§3-1, `--dir mois-age/2026-12`)
 2. `prepare.py` 의 `MOIS_PERIODS` 에 `"2026-12"` 추가
 3. `python tools/prepare.py`
 4. 테스트 기대값(예: 36행 = 4시점×9)이 깨지면 새 값으로 고친다
