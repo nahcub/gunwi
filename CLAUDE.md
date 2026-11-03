@@ -23,7 +23,7 @@
 | `data/derived/` | `tools/prepare.py` | 손대지 않는다. 고치려면 prepare.py 를 고친다. git 에 올라간다 |
 | `public/*.html,js,css` | 사람 | 자유롭게 편집 |
 | `public/data/` | `tools/build.py` | 손대지 않는다. `.gitignore` 에 있다 → **clone/pull 직후엔 비어 있다** |
-| `outputs/` | `tools/export_excel.py` | 제출용 엑셀·CSV. 손으로 고치지 않는다 |
+| `outputs/` | `tools/export_excel.py` · `tools/export_timeseries.py` | 제출용 엑셀·CSV. 손으로 고치지 않는다 |
 | `outputs/figures/` | `tools/figures.py` | 보고서 삽화 PNG·근거 CSV. 손으로 고치지 않는다 |
 | `data/hypotheses.json` | 사람 (B 역할) | 지표–민원 가설 레지스트리. 웹·엑셀·그림이 여기서 나온다 |
 
@@ -42,6 +42,7 @@ tools/fetch_pothole.py 포트홀 민원 API 수집기 (인증키는 환경변수
 tools/prepare.py       data/raw     -> data/derived   (assert 검증 관문)
 tools/build.py         data/derived -> public/data    (공개 결정 지점)
 tools/export_excel.py  data/derived -> outputs/       (제출용 엑셀·CSV, '가설' 시트 포함)
+tools/export_timeseries.py data/derived -> outputs/   (시계열 지표 엑셀 1개·시트 8개 + 시트별 CSV)
 tools/figures.py       data/derived -> outputs/figures (보고서 삽화. matplotlib 필요)
 tools/tests/           pytest. 원자료 기준 "알려진 개수"를 고정해 둔 테스트가 많다
 ```

@@ -361,11 +361,11 @@
       "url": "data/raw/gunwi-yearbook/55-2014 ~ 61-2020 (원본 PDF)",
       "reference_date": "2014-12-31 ~ 2020-12-31 (회차별 1년)",
       "license": "공식 통계 출처표시",
-      "status": "확보 (원본 대조 전)",
+      "status": "확보 (재판독 확인)",
       "request_status": null,
       "raw_dir": "data/raw/gunwi-yearbook-senior-transcribed-2014-2020",
       "used_for": ["읍면별 경로당 수 2014~2020 (derived/senior_centers_yearly.json)"],
-      "notes": "이미지형 PDF(텍스트 레이어 없음)를 렌더링해 읽고 옮겨 적은 표. provenance=transcribed. 행마다 원본 폴더·파일·PDF쪽·표번호. 각 권 읍면 8곳 합 = 그해 군 합계, 겹치는 해의 군 합계가 권마다 같음을 prepare.py 가 검사한다. 사람이 원본과 대조하기 전까지는 미대조 전사본 — 보고서에 쓰면 그렇게 밝힐 것. 2020년까지 지역명 고로면(= 삼국유사면)."
+      "notes": "이미지형 PDF(텍스트 레이어 없음)를 렌더링해 읽고 옮겨 적은 표. provenance=transcribed. 행마다 원본 폴더·파일·PDF쪽·표번호. 각 권 읍면 8곳 합 = 그해 군 합계, 겹치는 해의 군 합계가 권마다 같음을 prepare.py 가 검사한다. 2026-11-03 경로당 열만 잘라 고해상도로 재판독해 56칸 전부 일치 확인(같은 에이전트의 재확인이라 독립 검증은 아님). 2020년까지 지역명 고로면(= 삼국유사면)."
     },
     {
       "id": "GUNWI_SMALL_RISK_NOTICES",

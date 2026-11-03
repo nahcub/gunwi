@@ -532,7 +532,9 @@ def prepare_drainage_risk(name_by_code: dict) -> dict:
         "provenance": meta["provenance"],
         "status_as_of": notice["released_on"],
         "_note": ("현행 위험지정 세천만 포함(표준데이터 2026-07-15 에 2026-08-31 해제 고시 반영). "
-                  "빗물받이·맨홀 전수대장이 아니며 지정사유는 원본에서 전부 공란."),
+                  "빗물받이·맨홀 전수대장이 아니며 지정사유는 원본에서 전부 공란. "
+                  "새터천(2017-02-28 지정)은 2024-02-07 재지정 고시에 없고 해제 고시도 없어 "
+                  "현행 여부가 불확실하다(표준데이터를 따라 포함)."),
         "source_type_counts": dict(type_counts),
         "released_excluded": [r["시설명"] for _, r in released],
         "released_by_notice": {

@@ -88,6 +88,20 @@ python tools/export_excel.py
 - 열을 추가·변경하려면 `export_excel.py` 의 `COLUMNS`(열 정의)와 `build_rows()`(값)를 같이 고친다
 - 엑셀을 열어 둔 채로 실행하면 저장이 실패한다. 닫고 실행
 
+### 5-1. 시계열 지표 엑셀
+
+```bash
+python tools/export_timeseries.py
+```
+
+- 출력: `outputs/군위군_시계열지표.xlsx` + 시트마다 `outputs/시계열/<시트명>.csv`
+- 시트 8개: `설명` · `요약_읍면별` · `인구_연말비교` · `총인구_월별` · `고령화율_월별` ·
+  `인구세대_월별(원자료)` · `경로당_연도별` · `경로당_공급수준`
+- 읽는 derived: `population_monthly.json`, `senior_centers_yearly.json`, `senior_centers.json`, `drainage_risk.json`
+- 비교 시점은 파일 위 상수(`FIRST_MONTH`·`LAST_MONTH`·`YEAR_END`·`SUPPLY`)에서 바꾼다.
+  공급 수준은 경로당과 인구 시점이 맞는 해만 넣는다
+- 각 표 맨 아래 `군위군 합계` 행은 읍면 행과 함께 더하지 않는다
+
 ## 6. 배포
 
 - main 에 push 하면 GitHub Actions 가 검증 → Cloudflare 배포까지 자동으로 한다
