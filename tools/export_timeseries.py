@@ -223,6 +223,29 @@ def sheets() -> list[tuple[str, list[str], list[list]]]:
     ]
 
 
+def _text_width(value) -> float:
+    # 한글은 영문·숫자의 약 2배 폭
+    return sum(2 if ord(ch) > 0x2E80 else 1.1 for ch in str(value))
+
+
+def _widths(header: list[str], body: list[list]) -> list[float]:
+    """열마다 (줄바꿈한 머리글 가장 긴 줄, 값) 중 넓은 쪽에 맞춘다."""
+    out = []
+    for i, h in enumerate(header):
+        longest = max([_text_width(line) for line in h.split("_")]
+                      + [_text_width(r[i]) for r in body if r[i] is not None])
+        out.append(max(8, longest + 2))
+    return out
+
+
+def _wrap_header(ws, header: list[str]) -> None:
+    """엑셀 머리글만 '_' 자리에서 줄을 바꾼다 (CSV 머리글은 그대로)."""
+    for cell, h in zip(ws[1], header):
+        cell.value = h.replace("_", "\n")
+        cell.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+    ws.row_dimensions[1].height = 15 * max(h.count("_") + 1 for h in header) + 4
+
+
 def main() -> None:
     OUT.mkdir(exist_ok=True)
     CSV_DIR.mkdir(exist_ok=True)
@@ -237,7 +260,8 @@ def main() -> None:
                     row[0].font = SECTION_FONT
                 row[1].alignment = Alignment(wrap_text=True, vertical="top")
         else:
-            _sheet(ws, header, body, [13, 12] + [12] * (len(header) - 2))
+            _sheet(ws, header, body, _widths(header, body))
+            _wrap_header(ws, header)
             code_col = header.index("행정구역코드") + 1
             for row in ws.iter_rows(min_row=2, min_col=code_col, max_col=code_col):
                 row[0].number_format = "@"          # 코드는 문자열로 둔다
