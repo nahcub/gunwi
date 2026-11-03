@@ -452,8 +452,8 @@ elderly, households, aging_rate(%), persons_per_household`.
 | `parks.json` | `parks` 배열만 | — |
 | `potholes.json` | 지점만 공개(전국 행수·품질 집계는 derived 에 남음) | — |
 | `salpiso.json` | 공개하지 않음 | — (그림4 · 가설 E1 에만) |
-| `population_monthly.json` | 공개하지 않음 | — |
-| `senior_centers_yearly.json` | 공개하지 않음 | — |
+| `population_monthly.json` | 공개하지 않음 | `export_timeseries.py` → `군위군_시계열지표.xlsx` |
+| `senior_centers_yearly.json` | 공개하지 않음 | `export_timeseries.py` → `군위군_시계열지표.xlsx` |
 
 ## 원자료를 바꿀 때
 
