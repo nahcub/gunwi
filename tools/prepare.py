@@ -39,6 +39,54 @@ def read_meta(folder: str) -> dict:
 
 # ---------------------------------------------------------------- 인구
 
+def _read_age(folder: str) -> list[dict]:
+    """mois-age 한 시점을 검증해 9행(군 합계 1 + 읍면 8)으로 돌려준다."""
+    rows = json.loads((RAW / folder / "age.json").read_text(encoding="utf-8"))
+
+    assert len(rows) == 9, f"{folder}: 9행이어야 하는데 {len(rows)}행"
+
+    out = []
+    gunwi_total = None
+    eupmyeon_total = 0
+    for row in rows:
+        # 2023-07(편입 첫 달) 화면은 이름 앞에 '*' 가 붙어 있다
+        code, name = row[0], row[1].lstrip("*")
+        nums = [_num(v) for v in row[2:]]
+        assert len(nums) == 69, f"{folder}/{name}: 69칸이어야 하는데 {len(nums)}칸"
+
+        # 성별 블록마다 5세 구간 21개의 합이 그 블록 총계와 같아야 한다
+        block = {}
+        for label, off in SEX_BLOCKS.items():
+            buckets = nums[off + 2: off + 23]
+            assert len(buckets) == 21
+            assert nums[off] == sum(buckets), (
+                f"{folder}/{name}/{label}: 구간합 != 총계")
+            block[label] = nums[off]
+
+        assert block["total"] == block["male"] + block["female"], (
+            f"{folder}/{name}: 남+여 != 계")
+
+        out.append({
+            "region_code": code,
+            "region_name": name,
+            "level": "gun" if code == GUNWI_CODE else "eupmyeon",
+            "population": block["total"],
+            "male": block["male"],
+            "female": block["female"],
+            "elderly": sum(nums[2 + ELDERLY_FROM_BUCKET: 2 + 21]),
+        })
+
+        if code == GUNWI_CODE:
+            gunwi_total = block["total"]
+        else:
+            eupmyeon_total += block["total"]
+
+    assert gunwi_total is not None, f"{folder}: 군 합계 행이 없다"
+    assert eupmyeon_total == gunwi_total, (
+        f"{folder}: 읍면 합계 {eupmyeon_total} != 군 합계 {gunwi_total}")
+    return out
+
+
 def prepare_population():
     """행정안전부 연령별 인구. 4개 시점 x (군 합계 1 + 읍면 8) = 36행."""
     records = []
@@ -47,57 +95,91 @@ def prepare_population():
     for period in MOIS_PERIODS:
         folder = f"mois-age/{period}"
         meta = read_meta(folder)
-        rows = json.loads((RAW / folder / "age.json").read_text(encoding="utf-8"))
-
-        assert len(rows) == 9, f"{folder}: 9행이어야 하는데 {len(rows)}행"
-
-        gunwi_total = None
-        eupmyeon_total = 0
-        for row in rows:
-            code, name = row[0], row[1]
-            nums = [_num(v) for v in row[2:]]
-            assert len(nums) == 69, f"{folder}/{name}: 69칸이어야 하는데 {len(nums)}칸"
-
-            # 성별 블록마다 5세 구간 21개의 합이 그 블록 총계와 같아야 한다
-            block = {}
-            for label, off in SEX_BLOCKS.items():
-                buckets = nums[off + 2: off + 23]
-                assert len(buckets) == 21
-                assert nums[off] == sum(buckets), (
-                    f"{folder}/{name}/{label}: 구간합 != 총계")
-                block[label] = nums[off]
-
-            assert block["total"] == block["male"] + block["female"], (
-                f"{folder}/{name}: 남+여 != 계")
-
-            elderly = sum(nums[2 + ELDERLY_FROM_BUCKET: 2 + 21])
-            is_gunwi = code == GUNWI_CODE
-
-            records.append({
-                "period": period,
-                "reference_date": meta["reference_date"],
-                "region_code": code,
-                "region_name": name,
-                "level": "gun" if is_gunwi else "eupmyeon",
-                "population": block["total"],
-                "male": block["male"],
-                "female": block["female"],
-                "elderly": elderly,
-            })
-
-            if is_gunwi:
-                gunwi_total = block["total"]
-            else:
-                eupmyeon_total += block["total"]
-                name_by_code[code] = name
-
-        assert gunwi_total is not None, f"{folder}: 군 합계 행이 없다"
-        assert eupmyeon_total == gunwi_total, (
-            f"{folder}: 읍면 합계 {eupmyeon_total} != 군 합계 {gunwi_total}")
+        for row in _read_age(folder):
+            records.append({"period": period,
+                            "reference_date": meta["reference_date"], **row})
+            if row["level"] == "eupmyeon":
+                name_by_code[row["region_code"]] = row["region_name"]
 
     assert len(name_by_code) == 8, f"읍면이 8개가 아님: {len(name_by_code)}"
     assert len(records) == len(MOIS_PERIODS) * 9
     return records, name_by_code
+
+
+MONTHLY_FIRST, MONTHLY_LAST = "2023-07", "2026-09"   # 대구 편입 첫 달 ~ 수집 마지막 달
+
+
+def _months(first: str, last: str) -> list[str]:
+    y, m = map(int, first.split("-"))
+    out = []
+    while f"{y:04d}-{m:02d}" <= last:
+        out.append(f"{y:04d}-{m:02d}")
+        y, m = (y + 1, 1) if m == 12 else (y, m + 1)
+    return out
+
+
+def prepare_population_monthly(population: list, name_by_code: dict) -> dict:
+    """주민등록 연령별 인구 + 세대수, 매월. 39개월 x (군 합계 1 + 읍면 8) = 351행.
+
+    세대 화면(mois-household)에는 행정기관코드가 없어 같은 달 mois-age 의
+    이름·순서·총인구가 모두 맞을 때만 코드를 붙인다.
+    """
+    periods = _months(MONTHLY_FIRST, MONTHLY_LAST)
+    for group in ("mois-age", "mois-household"):
+        found = sorted(p.name for p in (RAW / group).iterdir() if p.is_dir())
+        assert found == periods, f"{group}: 월 폴더가 {MONTHLY_FIRST}~{MONTHLY_LAST} 와 다르다"
+
+    records = []
+    for period in periods:
+        age_meta = read_meta(f"mois-age/{period}")
+        hh_meta = read_meta(f"mois-household/{period}")
+        assert age_meta["reference_date"] == hh_meta["reference_date"], (
+            f"{period}: 연령·세대 기준일이 다르다")
+        ages = _read_age(f"mois-age/{period}")
+        hh_rows = json.loads((RAW / "mois-household" / period / "household.json")
+                             .read_text(encoding="utf-8"))
+        assert len(hh_rows) == 9, f"mois-household/{period}: 9행이어야 하는데 {len(hh_rows)}행"
+
+        hh_total = 0
+        for age, hh in zip(ages, hh_rows):
+            # 세대 화면 열: 이름, 총인구, 세대수, 세대당인구, 남, 여, 남여비율
+            name = hh[0].lstrip("*")
+            where = f"mois-household/{period}/{name}"
+            assert name == age["region_name"], f"{where}: 연령 화면과 순서·이름이 다르다"
+            if age["level"] == "eupmyeon":
+                assert name == name_by_code[age["region_code"]], f"{where}: 코드-이름 대응이 다르다"
+            pop, households, male, female = (_num(hh[i]) for i in (1, 2, 4, 5))
+            assert (pop, male, female) == (age["population"], age["male"], age["female"]), (
+                f"{where}: 연령 화면과 인구가 다르다")
+            assert households > 0
+            # 화면 값은 끝자리 0 을 뺀다(1.50 -> "1.5")
+            assert round(pop / households, 2) == float(hh[3]), f"{where}: 세대당 인구 불일치"
+            if age["level"] == "eupmyeon":
+                hh_total += households
+            else:
+                gun_households = households
+
+            records.append({
+                "period": period,
+                "reference_date": age_meta["reference_date"],
+                **age,
+                "households": households,
+                "aging_rate": round(age["elderly"] / age["population"] * 100, 2),
+                "persons_per_household": round(pop / households, 2),
+            })
+        assert hh_total == gun_households, (
+            f"mois-household/{period}: 읍면 세대 합 {hh_total} != 군 {gun_households}")
+
+    # 4개 분석 시점은 population.json 과 값이 같아야 한다 (같은 원자료)
+    keys = ("population", "male", "female", "elderly")
+    monthly = {(r["period"], r["region_code"]): r for r in records}
+    for r in population:
+        m = monthly[(r["period"], r["region_code"])]
+        assert all(m[k] == r[k] for k in keys), (
+            f"{r['period']}/{r['region_name']}: population.json 과 월별 값이 다르다")
+
+    assert len(records) == len(periods) * 9
+    return {"periods": periods, "records": records}
 
 
 # ---------------------------------------------------------------- 공원
@@ -571,6 +653,7 @@ def main() -> None:
     DERIVED.mkdir(parents=True, exist_ok=True)
 
     population, name_by_code = prepare_population()
+    monthly = prepare_population_monthly(population, name_by_code)
     parks, park_labels = prepare_parks()
     boundary = prepare_boundary(name_by_code)
     potholes = prepare_potholes(boundary)
@@ -595,6 +678,7 @@ def main() -> None:
         "periods": MOIS_PERIODS,
         "records": population,
     })
+    write("population_monthly.json", monthly)
     write("parks.json", {"column_labels": park_labels, "parks": parks})
     write("eupmyeon.geojson", boundary)
     write("potholes.json", potholes)
@@ -604,7 +688,8 @@ def main() -> None:
     write("sgis_stats.json", sgis)
     write("salpiso.json", salpiso)
 
-    print(f"\n  인구 {len(population)}행 / 공원 {len(parks)}건")
+    print(f"\n  인구 {len(population)}행 / 월별 인구·세대 {len(monthly['records'])}행 "
+          f"({monthly['periods'][0]}~{monthly['periods'][-1]}) / 공원 {len(parks)}건")
     print(f"  포트홀 전국 {potholes['national_row_count']}행 중 군위 "
           f"{len(potholes['points'])}건 "
           f"(완전중복 {potholes['exact_duplicate_count']}행, "

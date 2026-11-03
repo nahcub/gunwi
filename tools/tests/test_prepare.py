@@ -143,6 +143,39 @@ def _patch_age(tmp_path, monkeypatch, corrupt):
     monkeypatch.setattr(prepare, "RAW", raw)
 
 
+# ---------------------------------------------------------------- 월별 인구·세대
+
+def test_population_monthly_known_counts():
+    population, name_by_code = prepare.prepare_population()
+    monthly = prepare.prepare_population_monthly(population, name_by_code)
+    assert monthly["periods"][0] == "2023-07" and monthly["periods"][-1] == "2026-09"
+    assert len(monthly["records"]) == 351     # 39개월 x (군 합계 + 읍면 8)
+    first = [r for r in monthly["records"] if r["period"] == "2023-07"]
+    assert not any(r["region_name"].startswith("*") for r in first)
+    gun = next(r for r in first if r["level"] == "gun")
+    assert (gun["population"], gun["households"]) == (23165, 13686)
+
+
+def test_population_monthly_household_mismatch_guard(tmp_path, monkeypatch):
+    """세대 화면 인구가 연령 화면과 다르면 멈춰야 한다."""
+    population, name_by_code = prepare.prepare_population()
+    raw = tmp_path / "data" / "raw"
+    for group in ("mois-age", "mois-household"):
+        for src in (ROOT / "data" / "raw" / group).iterdir():
+            dst = raw / group / src.name
+            dst.mkdir(parents=True)
+            for f in src.iterdir():
+                if f.name != "capture.html":
+                    (dst / f.name).write_bytes(f.read_bytes())
+    path = raw / "mois-household" / "2024-12" / "household.json"
+    rows = json.loads(path.read_text(encoding="utf-8"))
+    rows[1][1] = "1"
+    path.write_text(json.dumps(rows, ensure_ascii=False), encoding="utf-8")
+    monkeypatch.setattr(prepare, "RAW", raw)
+    with pytest.raises(AssertionError, match="연령 화면과 인구가 다르다"):
+        prepare.prepare_population_monthly(population, name_by_code)
+
+
 # ---------------------------------------------------------------- 포트홀
 
 def _boundary():
