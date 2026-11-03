@@ -546,6 +546,124 @@ def prepare_drainage_risk(name_by_code: dict) -> dict:
     }
 
 
+# ---------------------------------------------------------------- 연도별 경로당 (통계연보)
+
+YEARBOOK_XLSX_EDITIONS = ["62-2021", "63-2022", "64-2023"]   # zip 안 xlsx 로 받은 회차
+YEARBOOK_SENIOR_SHEET = "25.노인여가복지시설"
+YEARBOOK_SENIOR_COL = 6          # 표의 '경로당 시설수' 열 (0부터)
+
+
+def _zip_name(info: zipfile.ZipInfo) -> str:
+    # 한글 파일명이 UTF-8 플래그 없이 cp949 로 들어 있는 zip 이 섞여 있다
+    return info.filename if info.flag_bits & 0x800 else info.filename.encode("cp437").decode("cp949")
+
+
+def _read_yearbook_senior(edition: str, code_by_name: dict) -> tuple[int, dict, dict]:
+    """연보 한 권의 12장 표 25 에서 (기준연도, 읍면별 경로당 수, 연도별 군 합계)."""
+    import openpyxl
+
+    folder = f"gunwi-yearbook/{edition}"
+    meta = read_meta(folder)
+    year = int(edition.split("-")[1])
+    zip_file = next(n for n in meta["files"] if n.endswith(".zip"))
+    with zipfile.ZipFile(RAW / folder / zip_file) as z:
+        info = next(i for i in z.infolist()
+                    if _zip_name(i).startswith("12") and "(19~" in _zip_name(i))
+        wb = openpyxl.load_workbook(io.BytesIO(z.read(info)), read_only=True, data_only=True)
+        rows = [r for r in wb[YEARBOOK_SENIOR_SHEET].iter_rows(values_only=True)]
+
+    header = " ".join(str(c) for r in rows[:6] for c in r if c)
+    assert "경로당" in header, f"{folder}: 표 25 머리글에 경로당이 없다"
+    gun_totals, by_region = {}, {}
+    for r in rows[6:]:                                  # 0~5행은 제목·머리글
+        label = r[0]
+        if isinstance(label, int):                      # 최근 5년 군 합계 행
+            gun_totals[label] = int(r[YEARBOOK_SENIOR_COL])
+        elif isinstance(label, str) and "\n" in label:  # 읍면 행: '군 위 읍\nGunwi-eup'
+            name = label.split("\n")[0].replace(" ", "")
+            assert name in code_by_name, f"{folder}: 모르는 읍면 {name}"
+            by_region[code_by_name[name]] = int(r[YEARBOOK_SENIOR_COL])
+
+    assert len(by_region) == 8, f"{folder}: 읍면 {len(by_region)}개"
+    assert max(gun_totals) == year, f"{folder}: 마지막 군 합계 연도 {max(gun_totals)} != {year}"
+    assert sum(by_region.values()) == gun_totals[year], (
+        f"{folder}: 읍면 합 {sum(by_region.values())} != 군 합계 {gun_totals[year]}")
+    return year, by_region, gun_totals
+
+
+YEARBOOK_SENIOR_TRANSCRIBED = "gunwi-yearbook-senior-transcribed-2014-2020"
+OLD_EUPMYEON_NAMES = {"고로면": "삼국유사면"}   # 2021-01 개칭. 경계는 같은 것으로 본다
+
+
+def _read_transcribed_senior(code_by_name: dict) -> list[tuple]:
+    """이미지형 PDF(제55~61회)에서 옮겨 적은 표 -> 회차별 (출처, True, 연도, 읍면값, 군합계)."""
+    folder = YEARBOOK_SENIOR_TRANSCRIBED
+    meta = read_meta(folder)
+    assert meta["provenance"] == "transcribed", f"{folder}: 전사본 표시가 없다"
+    by_edition = {}
+    for r in _read_csv(folder, meta):
+        source = r["원본폴더"]
+        assert (RAW / source / r["원본파일"]).is_file(), f"{folder}: 원본 {source}/{r['원본파일']} 없음"
+        year = int(r["기준연도"])
+        ed = by_edition.setdefault(source, (year, {}, {}))
+        assert ed[0] == year, f"{folder}: {source} 기준연도가 섞여 있다"
+        value = int(r["경로당시설수"])
+        if r["행구분"] == "군합계":
+            ed[2][int(r["연도"])] = value
+        else:
+            assert r["행구분"] == "읍면" and int(r["연도"]) == year
+            name = OLD_EUPMYEON_NAMES.get(r["지역명"], r["지역명"])
+            assert name in code_by_name, f"{folder}: 모르는 읍면 {r['지역명']}"
+            ed[1][code_by_name[name]] = value
+
+    out = []
+    for source, (year, by_region, totals) in sorted(by_edition.items()):
+        assert len(by_region) == 8, f"{folder}/{source}: 읍면 {len(by_region)}개"
+        assert max(totals) == year
+        assert sum(by_region.values()) == totals[year], (
+            f"{folder}/{source}: 읍면 합 {sum(by_region.values())} != 군 합계 {totals[year]}")
+        out.append((source, True, year, by_region, totals))
+    return out
+
+
+def prepare_senior_centers_yearly(name_by_code: dict) -> dict:
+    """군위통계연보 '노인여가복지시설' 표의 경로당 수, 읍면 x 연도.
+
+    한 권에 그해 읍면별 값 + 최근 5년 군 합계가 실린다. 군 합계는 여러 권에
+    겹쳐 나오므로 겹치는 해의 값이 같은지 검사한다. 2014~2020 판(이미지형 PDF)은
+    사람이 옮겨 적은 표(YEARBOOK_SENIOR_TRANSCRIBED)로 읽는다.
+    """
+    code_by_name = {v: k for k, v in name_by_code.items()}
+    records, gun = [], {}
+    editions = _read_transcribed_senior(code_by_name) + [
+        (f"gunwi-yearbook/{e}", False, *_read_yearbook_senior(e, code_by_name))
+        for e in YEARBOOK_XLSX_EDITIONS]
+    for source, transcribed, year, by_region, totals in editions:
+        edition = source
+        for code in name_by_code:
+            records.append({"year": year, "region_code": code,
+                            "region_name": name_by_code[code],
+                            "senior_centers": by_region[code],
+                            "source": source, "transcribed": transcribed})
+        for y, v in totals.items():
+            if y in gun:
+                assert gun[y]["senior_centers"] == v, (
+                    f"{edition}: {y}년 군 합계 {v} 가 앞 회차 {gun[y]['senior_centers']} 와 다르다")
+            gun[y] = {"year": y, "senior_centers": v, "source": source}
+
+    years = sorted({r["year"] for r in records})
+    assert years == list(range(years[0], years[-1] + 1)), f"연도가 비어 있다: {years}"
+
+    return {
+        "_note": ("군위통계연보 12장 노인여가복지시설 표의 경로당 시설수. 표준데이터 "
+                  "(senior_centers.json, 2025-12-19)와 출처가 달라 한 추이로 잇기 전 확인할 것."),
+        "transcribed_years": sorted({r["year"] for r in records if r["transcribed"]}),
+        "years": years,
+        "records": records,
+        "gun_totals": [gun[y] for y in sorted(gun)],
+    }
+
+
 # ---------------------------------------------------------------- 상수도
 
 def prepare_water_supply(name_by_code: dict) -> dict:
@@ -723,6 +841,7 @@ def main() -> None:
     boundary = prepare_boundary(name_by_code)
     potholes = prepare_potholes(boundary)
     seniors = prepare_senior_centers(name_by_code)
+    seniors_yearly = prepare_senior_centers_yearly(name_by_code)
     drainage = prepare_drainage_risk(name_by_code)
     water = prepare_water_supply(name_by_code)
     sgis = prepare_sgis_stats(boundary, population)
@@ -748,6 +867,7 @@ def main() -> None:
     write("eupmyeon.geojson", boundary)
     write("potholes.json", potholes)
     write("senior_centers.json", seniors)
+    write("senior_centers_yearly.json", seniors_yearly)
     write("drainage_risk.json", drainage)
     write("water_supply.json", water)
     write("sgis_stats.json", sgis)

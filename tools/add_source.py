@@ -52,10 +52,11 @@ def main() -> None:
     ap.add_argument("--retrieved-by", default="")
     ap.add_argument("--encoding", default=None, help="csv 등 비 utf-8 인 경우")
     ap.add_argument("--notes", default="")
-    ap.add_argument("--provenance", choices=["verified", "verified_import"],
+    ap.add_argument("--provenance", choices=["verified", "verified_import", "transcribed"],
                     default="verified",
                     help="verified: 공식 원본 그대로 / verified_import: 출처는 확인됐지만 "
-                         "팀원 등에게서 받은 가공본")
+                         "팀원 등에게서 받은 가공본 / transcribed: raw 에 있는 이미지형 "
+                         "원본을 사람이 옮겨 적은 표(행마다 원본 폴더·쪽을 적는다)")
     ap.add_argument("--file", action="append", default=[], required=True,
                     help="복사해 넣을 파일 (여러 번 지정 가능)")
     args = ap.parse_args()

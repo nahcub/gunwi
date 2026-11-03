@@ -1,0 +1,738 @@
+{
+  "_note": "군위통계연보 12장 노인여가복지시설 표의 경로당 시설수. 표준데이터 (senior_centers.json, 2025-12-19)와 출처가 달라 한 추이로 잇기 전 확인할 것.",
+  "transcribed_years": [
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020
+  ],
+  "years": [
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023
+  ],
+  "records": [
+    {
+      "year": 2014,
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "senior_centers": 37,
+      "source": "gunwi-yearbook/55-2014",
+      "transcribed": true
+    },
+    {
+      "year": 2014,
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "senior_centers": 33,
+      "source": "gunwi-yearbook/55-2014",
+      "transcribed": true
+    },
+    {
+      "year": 2014,
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "senior_centers": 32,
+      "source": "gunwi-yearbook/55-2014",
+      "transcribed": true
+    },
+    {
+      "year": 2014,
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "senior_centers": 17,
+      "source": "gunwi-yearbook/55-2014",
+      "transcribed": true
+    },
+    {
+      "year": 2014,
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "senior_centers": 23,
+      "source": "gunwi-yearbook/55-2014",
+      "transcribed": true
+    },
+    {
+      "year": 2014,
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "senior_centers": 28,
+      "source": "gunwi-yearbook/55-2014",
+      "transcribed": true
+    },
+    {
+      "year": 2014,
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "senior_centers": 15,
+      "source": "gunwi-yearbook/55-2014",
+      "transcribed": true
+    },
+    {
+      "year": 2014,
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "senior_centers": 18,
+      "source": "gunwi-yearbook/55-2014",
+      "transcribed": true
+    },
+    {
+      "year": 2015,
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "senior_centers": 38,
+      "source": "gunwi-yearbook/56-2015",
+      "transcribed": true
+    },
+    {
+      "year": 2015,
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "senior_centers": 33,
+      "source": "gunwi-yearbook/56-2015",
+      "transcribed": true
+    },
+    {
+      "year": 2015,
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "senior_centers": 32,
+      "source": "gunwi-yearbook/56-2015",
+      "transcribed": true
+    },
+    {
+      "year": 2015,
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "senior_centers": 17,
+      "source": "gunwi-yearbook/56-2015",
+      "transcribed": true
+    },
+    {
+      "year": 2015,
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "senior_centers": 24,
+      "source": "gunwi-yearbook/56-2015",
+      "transcribed": true
+    },
+    {
+      "year": 2015,
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "senior_centers": 28,
+      "source": "gunwi-yearbook/56-2015",
+      "transcribed": true
+    },
+    {
+      "year": 2015,
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "senior_centers": 15,
+      "source": "gunwi-yearbook/56-2015",
+      "transcribed": true
+    },
+    {
+      "year": 2015,
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "senior_centers": 19,
+      "source": "gunwi-yearbook/56-2015",
+      "transcribed": true
+    },
+    {
+      "year": 2016,
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "senior_centers": 38,
+      "source": "gunwi-yearbook/57-2016",
+      "transcribed": true
+    },
+    {
+      "year": 2016,
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "senior_centers": 33,
+      "source": "gunwi-yearbook/57-2016",
+      "transcribed": true
+    },
+    {
+      "year": 2016,
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "senior_centers": 33,
+      "source": "gunwi-yearbook/57-2016",
+      "transcribed": true
+    },
+    {
+      "year": 2016,
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "senior_centers": 17,
+      "source": "gunwi-yearbook/57-2016",
+      "transcribed": true
+    },
+    {
+      "year": 2016,
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "senior_centers": 25,
+      "source": "gunwi-yearbook/57-2016",
+      "transcribed": true
+    },
+    {
+      "year": 2016,
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "senior_centers": 28,
+      "source": "gunwi-yearbook/57-2016",
+      "transcribed": true
+    },
+    {
+      "year": 2016,
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "senior_centers": 15,
+      "source": "gunwi-yearbook/57-2016",
+      "transcribed": true
+    },
+    {
+      "year": 2016,
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "senior_centers": 19,
+      "source": "gunwi-yearbook/57-2016",
+      "transcribed": true
+    },
+    {
+      "year": 2017,
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "senior_centers": 38,
+      "source": "gunwi-yearbook/58-2017",
+      "transcribed": true
+    },
+    {
+      "year": 2017,
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "senior_centers": 33,
+      "source": "gunwi-yearbook/58-2017",
+      "transcribed": true
+    },
+    {
+      "year": 2017,
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "senior_centers": 33,
+      "source": "gunwi-yearbook/58-2017",
+      "transcribed": true
+    },
+    {
+      "year": 2017,
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "senior_centers": 17,
+      "source": "gunwi-yearbook/58-2017",
+      "transcribed": true
+    },
+    {
+      "year": 2017,
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "senior_centers": 26,
+      "source": "gunwi-yearbook/58-2017",
+      "transcribed": true
+    },
+    {
+      "year": 2017,
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "senior_centers": 28,
+      "source": "gunwi-yearbook/58-2017",
+      "transcribed": true
+    },
+    {
+      "year": 2017,
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "senior_centers": 15,
+      "source": "gunwi-yearbook/58-2017",
+      "transcribed": true
+    },
+    {
+      "year": 2017,
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "senior_centers": 19,
+      "source": "gunwi-yearbook/58-2017",
+      "transcribed": true
+    },
+    {
+      "year": 2018,
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "senior_centers": 38,
+      "source": "gunwi-yearbook/59-2018",
+      "transcribed": true
+    },
+    {
+      "year": 2018,
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "senior_centers": 33,
+      "source": "gunwi-yearbook/59-2018",
+      "transcribed": true
+    },
+    {
+      "year": 2018,
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "senior_centers": 33,
+      "source": "gunwi-yearbook/59-2018",
+      "transcribed": true
+    },
+    {
+      "year": 2018,
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "senior_centers": 17,
+      "source": "gunwi-yearbook/59-2018",
+      "transcribed": true
+    },
+    {
+      "year": 2018,
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "senior_centers": 26,
+      "source": "gunwi-yearbook/59-2018",
+      "transcribed": true
+    },
+    {
+      "year": 2018,
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "senior_centers": 28,
+      "source": "gunwi-yearbook/59-2018",
+      "transcribed": true
+    },
+    {
+      "year": 2018,
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "senior_centers": 15,
+      "source": "gunwi-yearbook/59-2018",
+      "transcribed": true
+    },
+    {
+      "year": 2018,
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "senior_centers": 19,
+      "source": "gunwi-yearbook/59-2018",
+      "transcribed": true
+    },
+    {
+      "year": 2019,
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "senior_centers": 38,
+      "source": "gunwi-yearbook/60-2019",
+      "transcribed": true
+    },
+    {
+      "year": 2019,
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "senior_centers": 33,
+      "source": "gunwi-yearbook/60-2019",
+      "transcribed": true
+    },
+    {
+      "year": 2019,
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "senior_centers": 35,
+      "source": "gunwi-yearbook/60-2019",
+      "transcribed": true
+    },
+    {
+      "year": 2019,
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "senior_centers": 17,
+      "source": "gunwi-yearbook/60-2019",
+      "transcribed": true
+    },
+    {
+      "year": 2019,
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "senior_centers": 26,
+      "source": "gunwi-yearbook/60-2019",
+      "transcribed": true
+    },
+    {
+      "year": 2019,
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "senior_centers": 28,
+      "source": "gunwi-yearbook/60-2019",
+      "transcribed": true
+    },
+    {
+      "year": 2019,
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "senior_centers": 15,
+      "source": "gunwi-yearbook/60-2019",
+      "transcribed": true
+    },
+    {
+      "year": 2019,
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "senior_centers": 19,
+      "source": "gunwi-yearbook/60-2019",
+      "transcribed": true
+    },
+    {
+      "year": 2020,
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "senior_centers": 38,
+      "source": "gunwi-yearbook/61-2020",
+      "transcribed": true
+    },
+    {
+      "year": 2020,
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "senior_centers": 33,
+      "source": "gunwi-yearbook/61-2020",
+      "transcribed": true
+    },
+    {
+      "year": 2020,
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "senior_centers": 35,
+      "source": "gunwi-yearbook/61-2020",
+      "transcribed": true
+    },
+    {
+      "year": 2020,
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "senior_centers": 17,
+      "source": "gunwi-yearbook/61-2020",
+      "transcribed": true
+    },
+    {
+      "year": 2020,
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "senior_centers": 26,
+      "source": "gunwi-yearbook/61-2020",
+      "transcribed": true
+    },
+    {
+      "year": 2020,
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "senior_centers": 28,
+      "source": "gunwi-yearbook/61-2020",
+      "transcribed": true
+    },
+    {
+      "year": 2020,
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "senior_centers": 15,
+      "source": "gunwi-yearbook/61-2020",
+      "transcribed": true
+    },
+    {
+      "year": 2020,
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "senior_centers": 19,
+      "source": "gunwi-yearbook/61-2020",
+      "transcribed": true
+    },
+    {
+      "year": 2021,
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "senior_centers": 38,
+      "source": "gunwi-yearbook/62-2021",
+      "transcribed": false
+    },
+    {
+      "year": 2021,
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "senior_centers": 33,
+      "source": "gunwi-yearbook/62-2021",
+      "transcribed": false
+    },
+    {
+      "year": 2021,
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "senior_centers": 35,
+      "source": "gunwi-yearbook/62-2021",
+      "transcribed": false
+    },
+    {
+      "year": 2021,
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "senior_centers": 17,
+      "source": "gunwi-yearbook/62-2021",
+      "transcribed": false
+    },
+    {
+      "year": 2021,
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "senior_centers": 26,
+      "source": "gunwi-yearbook/62-2021",
+      "transcribed": false
+    },
+    {
+      "year": 2021,
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "senior_centers": 28,
+      "source": "gunwi-yearbook/62-2021",
+      "transcribed": false
+    },
+    {
+      "year": 2021,
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "senior_centers": 15,
+      "source": "gunwi-yearbook/62-2021",
+      "transcribed": false
+    },
+    {
+      "year": 2021,
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "senior_centers": 19,
+      "source": "gunwi-yearbook/62-2021",
+      "transcribed": false
+    },
+    {
+      "year": 2022,
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "senior_centers": 38,
+      "source": "gunwi-yearbook/63-2022",
+      "transcribed": false
+    },
+    {
+      "year": 2022,
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "senior_centers": 33,
+      "source": "gunwi-yearbook/63-2022",
+      "transcribed": false
+    },
+    {
+      "year": 2022,
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "senior_centers": 35,
+      "source": "gunwi-yearbook/63-2022",
+      "transcribed": false
+    },
+    {
+      "year": 2022,
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "senior_centers": 17,
+      "source": "gunwi-yearbook/63-2022",
+      "transcribed": false
+    },
+    {
+      "year": 2022,
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "senior_centers": 26,
+      "source": "gunwi-yearbook/63-2022",
+      "transcribed": false
+    },
+    {
+      "year": 2022,
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "senior_centers": 28,
+      "source": "gunwi-yearbook/63-2022",
+      "transcribed": false
+    },
+    {
+      "year": 2022,
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "senior_centers": 15,
+      "source": "gunwi-yearbook/63-2022",
+      "transcribed": false
+    },
+    {
+      "year": 2022,
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "senior_centers": 20,
+      "source": "gunwi-yearbook/63-2022",
+      "transcribed": false
+    },
+    {
+      "year": 2023,
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "senior_centers": 38,
+      "source": "gunwi-yearbook/64-2023",
+      "transcribed": false
+    },
+    {
+      "year": 2023,
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "senior_centers": 33,
+      "source": "gunwi-yearbook/64-2023",
+      "transcribed": false
+    },
+    {
+      "year": 2023,
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "senior_centers": 35,
+      "source": "gunwi-yearbook/64-2023",
+      "transcribed": false
+    },
+    {
+      "year": 2023,
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "senior_centers": 17,
+      "source": "gunwi-yearbook/64-2023",
+      "transcribed": false
+    },
+    {
+      "year": 2023,
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "senior_centers": 27,
+      "source": "gunwi-yearbook/64-2023",
+      "transcribed": false
+    },
+    {
+      "year": 2023,
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "senior_centers": 28,
+      "source": "gunwi-yearbook/64-2023",
+      "transcribed": false
+    },
+    {
+      "year": 2023,
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "senior_centers": 15,
+      "source": "gunwi-yearbook/64-2023",
+      "transcribed": false
+    },
+    {
+      "year": 2023,
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "senior_centers": 20,
+      "source": "gunwi-yearbook/64-2023",
+      "transcribed": false
+    }
+  ],
+  "gun_totals": [
+    {
+      "year": 2010,
+      "senior_centers": 183,
+      "source": "gunwi-yearbook/55-2014"
+    },
+    {
+      "year": 2011,
+      "senior_centers": 189,
+      "source": "gunwi-yearbook/56-2015"
+    },
+    {
+      "year": 2012,
+      "senior_centers": 195,
+      "source": "gunwi-yearbook/57-2016"
+    },
+    {
+      "year": 2013,
+      "senior_centers": 199,
+      "source": "gunwi-yearbook/58-2017"
+    },
+    {
+      "year": 2014,
+      "senior_centers": 203,
+      "source": "gunwi-yearbook/59-2018"
+    },
+    {
+      "year": 2015,
+      "senior_centers": 206,
+      "source": "gunwi-yearbook/60-2019"
+    },
+    {
+      "year": 2016,
+      "senior_centers": 208,
+      "source": "gunwi-yearbook/61-2020"
+    },
+    {
+      "year": 2017,
+      "senior_centers": 209,
+      "source": "gunwi-yearbook/62-2021"
+    },
+    {
+      "year": 2018,
+      "senior_centers": 209,
+      "source": "gunwi-yearbook/63-2022"
+    },
+    {
+      "year": 2019,
+      "senior_centers": 211,
+      "source": "gunwi-yearbook/64-2023"
+    },
+    {
+      "year": 2020,
+      "senior_centers": 211,
+      "source": "gunwi-yearbook/64-2023"
+    },
+    {
+      "year": 2021,
+      "senior_centers": 211,
+      "source": "gunwi-yearbook/64-2023"
+    },
+    {
+      "year": 2022,
+      "senior_centers": 212,
+      "source": "gunwi-yearbook/64-2023"
+    },
+    {
+      "year": 2023,
+      "senior_centers": 213,
+      "source": "gunwi-yearbook/64-2023"
+    }
+  ]
+}

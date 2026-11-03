@@ -63,7 +63,7 @@ def _source_folders():
 
 def test_every_raw_folder_has_provenance():
     folders = list(_source_folders())
-    assert len(folders) == 101, f"원자료 폴더 {len(folders)}개"
+    assert len(folders) == 102, f"원자료 폴더 {len(folders)}개"
     for folder in folders:
         name = folder.relative_to(ROOT / "data" / "raw").as_posix()
         meta = json.loads((folder / "_meta.json").read_text(encoding="utf-8"))
@@ -174,6 +174,44 @@ def test_population_monthly_household_mismatch_guard(tmp_path, monkeypatch):
     monkeypatch.setattr(prepare, "RAW", raw)
     with pytest.raises(AssertionError, match="연령 화면과 인구가 다르다"):
         prepare.prepare_population_monthly(population, name_by_code)
+
+
+# ---------------------------------------------------------------- 연도별 경로당 (통계연보)
+
+def test_senior_centers_yearly_known_values():
+    _, name_by_code = prepare.prepare_population()
+    out = prepare.prepare_senior_centers_yearly(name_by_code)
+    assert out["years"] == list(range(2014, 2024))
+    assert out["transcribed_years"] == list(range(2014, 2021))   # 이미지형 PDF 전사분
+    assert len(out["records"]) == 80                 # 10년 x 읍면 8
+    gun = {g["year"]: g["senior_centers"] for g in out["gun_totals"]}
+    assert gun == {2010: 183, 2011: 189, 2012: 195, 2013: 199, 2014: 203,
+                   2015: 206, 2016: 208, 2017: 209, 2018: 209, 2019: 211,
+                   2020: 211, 2021: 211, 2022: 212, 2023: 213}
+    by = {(r["year"], r["region_name"]): r["senior_centers"] for r in out["records"]}
+    assert by[(2014, "우보면")] == 23 and by[(2023, "우보면")] == 27
+    assert by[(2014, "삼국유사면")] == 18           # 원문은 고로면
+
+
+def test_senior_centers_transcribed_sum_guard(tmp_path, monkeypatch):
+    """옮겨 적은 표에서 읍면 하나를 잘못 적으면 군 합계 검사에 걸려야 한다."""
+    _, name_by_code = prepare.prepare_population()
+    folder = prepare.YEARBOOK_SENIOR_TRANSCRIBED
+    raw = tmp_path / "data" / "raw"
+    src = ROOT / "data" / "raw" / folder
+    (raw / folder).mkdir(parents=True)
+    (raw / folder / "_meta.json").write_bytes((src / "_meta.json").read_bytes())
+    name = next(p.name for p in src.iterdir() if p.suffix == ".csv")
+    text = (src / name).read_text(encoding="utf-8").replace(
+        "55,2014,읍면,2014,부계면,17,", "55,2014,읍면,2014,부계면,71,")
+    (raw / folder / name).write_text(text, encoding="utf-8")
+    for p in (ROOT / "data" / "raw" / "gunwi-yearbook").iterdir():   # 원본 존재 검사용
+        (raw / "gunwi-yearbook" / p.name).mkdir(parents=True)
+        for f in p.iterdir():
+            (raw / "gunwi-yearbook" / p.name / f.name).touch()
+    monkeypatch.setattr(prepare, "RAW", raw)
+    with pytest.raises(AssertionError, match="읍면 합"):
+        prepare._read_transcribed_senior({v: k for k, v in name_by_code.items()})
 
 
 # ---------------------------------------------------------------- 포트홀
