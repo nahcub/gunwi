@@ -10,6 +10,8 @@ from __future__ import annotations
 import csv
 import io
 import json
+import re
+import zipfile
 from collections import Counter
 from pathlib import Path
 
@@ -39,6 +41,54 @@ def read_meta(folder: str) -> dict:
 
 # ---------------------------------------------------------------- 인구
 
+def _read_age(folder: str) -> list[dict]:
+    """mois-age 한 시점을 검증해 9행(군 합계 1 + 읍면 8)으로 돌려준다."""
+    rows = json.loads((RAW / folder / "age.json").read_text(encoding="utf-8"))
+
+    assert len(rows) == 9, f"{folder}: 9행이어야 하는데 {len(rows)}행"
+
+    out = []
+    gunwi_total = None
+    eupmyeon_total = 0
+    for row in rows:
+        # 2023-07(편입 첫 달) 화면은 이름 앞에 '*' 가 붙어 있다
+        code, name = row[0], row[1].lstrip("*")
+        nums = [_num(v) for v in row[2:]]
+        assert len(nums) == 69, f"{folder}/{name}: 69칸이어야 하는데 {len(nums)}칸"
+
+        # 성별 블록마다 5세 구간 21개의 합이 그 블록 총계와 같아야 한다
+        block = {}
+        for label, off in SEX_BLOCKS.items():
+            buckets = nums[off + 2: off + 23]
+            assert len(buckets) == 21
+            assert nums[off] == sum(buckets), (
+                f"{folder}/{name}/{label}: 구간합 != 총계")
+            block[label] = nums[off]
+
+        assert block["total"] == block["male"] + block["female"], (
+            f"{folder}/{name}: 남+여 != 계")
+
+        out.append({
+            "region_code": code,
+            "region_name": name,
+            "level": "gun" if code == GUNWI_CODE else "eupmyeon",
+            "population": block["total"],
+            "male": block["male"],
+            "female": block["female"],
+            "elderly": sum(nums[2 + ELDERLY_FROM_BUCKET: 2 + 21]),
+        })
+
+        if code == GUNWI_CODE:
+            gunwi_total = block["total"]
+        else:
+            eupmyeon_total += block["total"]
+
+    assert gunwi_total is not None, f"{folder}: 군 합계 행이 없다"
+    assert eupmyeon_total == gunwi_total, (
+        f"{folder}: 읍면 합계 {eupmyeon_total} != 군 합계 {gunwi_total}")
+    return out
+
+
 def prepare_population():
     """행정안전부 연령별 인구. 4개 시점 x (군 합계 1 + 읍면 8) = 36행."""
     records = []
@@ -47,57 +97,91 @@ def prepare_population():
     for period in MOIS_PERIODS:
         folder = f"mois-age/{period}"
         meta = read_meta(folder)
-        rows = json.loads((RAW / folder / "age.json").read_text(encoding="utf-8"))
-
-        assert len(rows) == 9, f"{folder}: 9행이어야 하는데 {len(rows)}행"
-
-        gunwi_total = None
-        eupmyeon_total = 0
-        for row in rows:
-            code, name = row[0], row[1]
-            nums = [_num(v) for v in row[2:]]
-            assert len(nums) == 69, f"{folder}/{name}: 69칸이어야 하는데 {len(nums)}칸"
-
-            # 성별 블록마다 5세 구간 21개의 합이 그 블록 총계와 같아야 한다
-            block = {}
-            for label, off in SEX_BLOCKS.items():
-                buckets = nums[off + 2: off + 23]
-                assert len(buckets) == 21
-                assert nums[off] == sum(buckets), (
-                    f"{folder}/{name}/{label}: 구간합 != 총계")
-                block[label] = nums[off]
-
-            assert block["total"] == block["male"] + block["female"], (
-                f"{folder}/{name}: 남+여 != 계")
-
-            elderly = sum(nums[2 + ELDERLY_FROM_BUCKET: 2 + 21])
-            is_gunwi = code == GUNWI_CODE
-
-            records.append({
-                "period": period,
-                "reference_date": meta["reference_date"],
-                "region_code": code,
-                "region_name": name,
-                "level": "gun" if is_gunwi else "eupmyeon",
-                "population": block["total"],
-                "male": block["male"],
-                "female": block["female"],
-                "elderly": elderly,
-            })
-
-            if is_gunwi:
-                gunwi_total = block["total"]
-            else:
-                eupmyeon_total += block["total"]
-                name_by_code[code] = name
-
-        assert gunwi_total is not None, f"{folder}: 군 합계 행이 없다"
-        assert eupmyeon_total == gunwi_total, (
-            f"{folder}: 읍면 합계 {eupmyeon_total} != 군 합계 {gunwi_total}")
+        for row in _read_age(folder):
+            records.append({"period": period,
+                            "reference_date": meta["reference_date"], **row})
+            if row["level"] == "eupmyeon":
+                name_by_code[row["region_code"]] = row["region_name"]
 
     assert len(name_by_code) == 8, f"읍면이 8개가 아님: {len(name_by_code)}"
     assert len(records) == len(MOIS_PERIODS) * 9
     return records, name_by_code
+
+
+MONTHLY_FIRST, MONTHLY_LAST = "2023-07", "2026-09"   # 대구 편입 첫 달 ~ 수집 마지막 달
+
+
+def _months(first: str, last: str) -> list[str]:
+    y, m = map(int, first.split("-"))
+    out = []
+    while f"{y:04d}-{m:02d}" <= last:
+        out.append(f"{y:04d}-{m:02d}")
+        y, m = (y + 1, 1) if m == 12 else (y, m + 1)
+    return out
+
+
+def prepare_population_monthly(population: list, name_by_code: dict) -> dict:
+    """주민등록 연령별 인구 + 세대수, 매월. 39개월 x (군 합계 1 + 읍면 8) = 351행.
+
+    세대 화면(mois-household)에는 행정기관코드가 없어 같은 달 mois-age 의
+    이름·순서·총인구가 모두 맞을 때만 코드를 붙인다.
+    """
+    periods = _months(MONTHLY_FIRST, MONTHLY_LAST)
+    for group in ("mois-age", "mois-household"):
+        found = sorted(p.name for p in (RAW / group).iterdir() if p.is_dir())
+        assert found == periods, f"{group}: 월 폴더가 {MONTHLY_FIRST}~{MONTHLY_LAST} 와 다르다"
+
+    records = []
+    for period in periods:
+        age_meta = read_meta(f"mois-age/{period}")
+        hh_meta = read_meta(f"mois-household/{period}")
+        assert age_meta["reference_date"] == hh_meta["reference_date"], (
+            f"{period}: 연령·세대 기준일이 다르다")
+        ages = _read_age(f"mois-age/{period}")
+        hh_rows = json.loads((RAW / "mois-household" / period / "household.json")
+                             .read_text(encoding="utf-8"))
+        assert len(hh_rows) == 9, f"mois-household/{period}: 9행이어야 하는데 {len(hh_rows)}행"
+
+        hh_total = 0
+        for age, hh in zip(ages, hh_rows):
+            # 세대 화면 열: 이름, 총인구, 세대수, 세대당인구, 남, 여, 남여비율
+            name = hh[0].lstrip("*")
+            where = f"mois-household/{period}/{name}"
+            assert name == age["region_name"], f"{where}: 연령 화면과 순서·이름이 다르다"
+            if age["level"] == "eupmyeon":
+                assert name == name_by_code[age["region_code"]], f"{where}: 코드-이름 대응이 다르다"
+            pop, households, male, female = (_num(hh[i]) for i in (1, 2, 4, 5))
+            assert (pop, male, female) == (age["population"], age["male"], age["female"]), (
+                f"{where}: 연령 화면과 인구가 다르다")
+            assert households > 0
+            # 화면 값은 끝자리 0 을 뺀다(1.50 -> "1.5")
+            assert round(pop / households, 2) == float(hh[3]), f"{where}: 세대당 인구 불일치"
+            if age["level"] == "eupmyeon":
+                hh_total += households
+            else:
+                gun_households = households
+
+            records.append({
+                "period": period,
+                "reference_date": age_meta["reference_date"],
+                **age,
+                "households": households,
+                "aging_rate": round(age["elderly"] / age["population"] * 100, 2),
+                "persons_per_household": round(pop / households, 2),
+            })
+        assert hh_total == gun_households, (
+            f"mois-household/{period}: 읍면 세대 합 {hh_total} != 군 {gun_households}")
+
+    # 4개 분석 시점은 population.json 과 값이 같아야 한다 (같은 원자료)
+    keys = ("population", "male", "female", "elderly")
+    monthly = {(r["period"], r["region_code"]): r for r in records}
+    for r in population:
+        m = monthly[(r["period"], r["region_code"])]
+        assert all(m[k] == r[k] for k in keys), (
+            f"{r['period']}/{r['region_name']}: population.json 과 월별 값이 다르다")
+
+    assert len(records) == len(periods) * 9
+    return {"periods": periods, "records": records}
 
 
 # ---------------------------------------------------------------- 공원
@@ -350,8 +434,51 @@ def prepare_senior_centers(name_by_code: dict) -> dict:
 
 # ---------------------------------------------------------------- 배수시설
 
+# 표준데이터(2026-07-15) 이후에 나온 지정해제 고시. 고시문 붙임 표의 세천 행을 현행에서 뺀다
+RISK_RELEASE_NOTICE = "gunwi-small-risk-notice/2026-08-31"
+
+
+def _read_release_notice(folder: str) -> dict:
+    """해제 고시문(hwpx) 붙임 표에서 시설명 -> 행 정보.
+
+    hwpx 는 zip 안의 XML 이라 표준 라이브러리로 읽는다. 표 행은
+    연번 | 구분 | 명칭 | 위치 | 시점 | 종점 | 해제사유 | 지정일 의 8칸이다.
+    """
+    meta = read_meta(folder)
+    name = next(n for n in meta["files"] if n.endswith(".hwpx"))
+    with zipfile.ZipFile(RAW / folder / name) as z:
+        xml = z.read("Contents/section0.xml").decode("utf-8")
+
+    def text(s: str) -> str:
+        return "".join(re.findall(r"<hp:t>([^<]*)</hp:t>", s)).strip()
+
+    rows = {}
+    for tr in re.findall(r"<hp:tr>.*?</hp:tr>", xml, flags=re.S):
+        cells = [text(tc) for tc in re.findall(r"<hp:tc.*?</hp:tc>", tr, flags=re.S)]
+        if len(cells) != 8 or not cells[0].isdigit():
+            continue                      # 머리글 행
+        no, kind, fac, loc, start, end, reason, designated = cells
+        assert fac not in rows, f"{folder}: 시설명 중복 {fac}"
+        rows[fac] = {"no": int(no), "type": kind, "location": loc,
+                     "start": start, "end": end, "reason": reason}
+
+    assert [r["no"] for r in rows.values()] == list(range(1, len(rows) + 1)), (
+        f"{folder}: 연번이 1부터 이어지지 않는다")
+    body = text(xml)
+    m = re.search(r"총\s*(\d+)개소 중 (\d+)개소 해제", body)
+    assert m and int(m.group(2)) == len(rows), (
+        f"{folder}: 본문 해제 개소 수와 붙임 표 행 수({len(rows)})가 다르다")
+    notice_no = re.search(r"고시 제\s*(\d{4})\s*[–-]\s*(\d+)\s*호", body)
+    return {"notice": f"군위군 고시 제{notice_no.group(1)}-{notice_no.group(2)}호",
+            "released_on": meta["reference_date"], "rows": rows}
+
+
 def prepare_drainage_risk(name_by_code: dict) -> dict:
-    """소규모공공시설 위험지정 중 현행 지정된 세천만 배수시설로 쓴다."""
+    """소규모공공시설 위험지정 중 현행 지정된 세천만 배수시설로 쓴다.
+
+    표준데이터의 해제일자로 한 번, 그 뒤에 나온 해제 고시(RISK_RELEASE_NOTICE)로
+    한 번 더 거른다.
+    """
     folder = "datagokr-gunwi-small-facility-risk-2026-07-15"
     meta = read_meta(folder)
     rows = _read_csv(folder, meta)
@@ -361,9 +488,22 @@ def prepare_drainage_risk(name_by_code: dict) -> dict:
     streams = [(i, r) for i, r in enumerate(rows, start=1) if r["시설유형"] == "세천"]
     released = [(i, r) for i, r in streams if r["위험시설해제일자"].strip()]
 
+    notice = _read_release_notice(RISK_RELEASE_NOTICE)
+    notice_streams = {k: v for k, v in notice["rows"].items() if v["type"] == "세천"}
+    current_by_name = {r["시설명"]: r for _, r in streams if not r["위험시설해제일자"].strip()}
+    released_by_notice = []
+    for fac, nr in notice_streams.items():
+        assert fac in current_by_name, (
+            f"{RISK_RELEASE_NOTICE}: 해제 세천 {fac} 이 표준데이터 현행 지정에 없다")
+        # 이름만 같은 다른 시설이 아닌지 - 고시 구간 시점·종점 지번 중 하나가 주소 끝과 같아야 한다
+        jibun = current_by_name[fac]["소재지지번주소"].split()[-1]
+        assert jibun in (nr["start"], nr["end"]), (
+            f"{RISK_RELEASE_NOTICE}: {fac} 지번 {jibun} 이 고시 구간({nr['start']}~{nr['end']})과 다르다")
+        released_by_notice.append(fac)
+
     sites = []
     for i, r in streams:
-        if r["위험시설해제일자"].strip():
+        if r["위험시설해제일자"].strip() or r["시설명"] in notice_streams:
             continue
         label = f"{folder}/{i}행 {r['시설명']}"
         lon, lat = float(r["경도"]), float(r["위도"])
@@ -390,12 +530,137 @@ def prepare_drainage_risk(name_by_code: dict) -> dict:
     return {
         "reference_date": meta["reference_date"],
         "provenance": meta["provenance"],
-        "_note": ("현행 위험지정 세천만 포함. 빗물받이·맨홀 전수대장이 아니며 "
-                  "지정사유는 원본에서 전부 공란."),
+        "status_as_of": notice["released_on"],
+        "_note": ("현행 위험지정 세천만 포함(표준데이터 2026-07-15 에 2026-08-31 해제 고시 반영). "
+                  "빗물받이·맨홀 전수대장이 아니며 지정사유는 원본에서 전부 공란."),
         "source_type_counts": dict(type_counts),
         "released_excluded": [r["시설명"] for _, r in released],
+        "released_by_notice": {
+            "notice": notice["notice"],
+            "released_on": notice["released_on"],
+            "streams": released_by_notice,
+            "other_type_count": len(notice["rows"]) - len(notice_streams),
+        },
         "by_region": by_region,
         "sites": sites,
+    }
+
+
+# ---------------------------------------------------------------- 연도별 경로당 (통계연보)
+
+YEARBOOK_XLSX_EDITIONS = ["62-2021", "63-2022", "64-2023"]   # zip 안 xlsx 로 받은 회차
+YEARBOOK_SENIOR_SHEET = "25.노인여가복지시설"
+YEARBOOK_SENIOR_COL = 6          # 표의 '경로당 시설수' 열 (0부터)
+
+
+def _zip_name(info: zipfile.ZipInfo) -> str:
+    # 한글 파일명이 UTF-8 플래그 없이 cp949 로 들어 있는 zip 이 섞여 있다
+    return info.filename if info.flag_bits & 0x800 else info.filename.encode("cp437").decode("cp949")
+
+
+def _read_yearbook_senior(edition: str, code_by_name: dict) -> tuple[int, dict, dict]:
+    """연보 한 권의 12장 표 25 에서 (기준연도, 읍면별 경로당 수, 연도별 군 합계)."""
+    import openpyxl
+
+    folder = f"gunwi-yearbook/{edition}"
+    meta = read_meta(folder)
+    year = int(edition.split("-")[1])
+    zip_file = next(n for n in meta["files"] if n.endswith(".zip"))
+    with zipfile.ZipFile(RAW / folder / zip_file) as z:
+        info = next(i for i in z.infolist()
+                    if _zip_name(i).startswith("12") and "(19~" in _zip_name(i))
+        wb = openpyxl.load_workbook(io.BytesIO(z.read(info)), read_only=True, data_only=True)
+        rows = [r for r in wb[YEARBOOK_SENIOR_SHEET].iter_rows(values_only=True)]
+
+    header = " ".join(str(c) for r in rows[:6] for c in r if c)
+    assert "경로당" in header, f"{folder}: 표 25 머리글에 경로당이 없다"
+    gun_totals, by_region = {}, {}
+    for r in rows[6:]:                                  # 0~5행은 제목·머리글
+        label = r[0]
+        if isinstance(label, int):                      # 최근 5년 군 합계 행
+            gun_totals[label] = int(r[YEARBOOK_SENIOR_COL])
+        elif isinstance(label, str) and "\n" in label:  # 읍면 행: '군 위 읍\nGunwi-eup'
+            name = label.split("\n")[0].replace(" ", "")
+            assert name in code_by_name, f"{folder}: 모르는 읍면 {name}"
+            by_region[code_by_name[name]] = int(r[YEARBOOK_SENIOR_COL])
+
+    assert len(by_region) == 8, f"{folder}: 읍면 {len(by_region)}개"
+    assert max(gun_totals) == year, f"{folder}: 마지막 군 합계 연도 {max(gun_totals)} != {year}"
+    assert sum(by_region.values()) == gun_totals[year], (
+        f"{folder}: 읍면 합 {sum(by_region.values())} != 군 합계 {gun_totals[year]}")
+    return year, by_region, gun_totals
+
+
+YEARBOOK_SENIOR_TRANSCRIBED = "gunwi-yearbook-senior-transcribed-2014-2020"
+OLD_EUPMYEON_NAMES = {"고로면": "삼국유사면"}   # 2021-01 개칭. 경계는 같은 것으로 본다
+
+
+def _read_transcribed_senior(code_by_name: dict) -> list[tuple]:
+    """이미지형 PDF(제55~61회)에서 옮겨 적은 표 -> 회차별 (출처, True, 연도, 읍면값, 군합계)."""
+    folder = YEARBOOK_SENIOR_TRANSCRIBED
+    meta = read_meta(folder)
+    assert meta["provenance"] == "transcribed", f"{folder}: 전사본 표시가 없다"
+    by_edition = {}
+    for r in _read_csv(folder, meta):
+        source = r["원본폴더"]
+        assert (RAW / source / r["원본파일"]).is_file(), f"{folder}: 원본 {source}/{r['원본파일']} 없음"
+        year = int(r["기준연도"])
+        ed = by_edition.setdefault(source, (year, {}, {}))
+        assert ed[0] == year, f"{folder}: {source} 기준연도가 섞여 있다"
+        value = int(r["경로당시설수"])
+        if r["행구분"] == "군합계":
+            ed[2][int(r["연도"])] = value
+        else:
+            assert r["행구분"] == "읍면" and int(r["연도"]) == year
+            name = OLD_EUPMYEON_NAMES.get(r["지역명"], r["지역명"])
+            assert name in code_by_name, f"{folder}: 모르는 읍면 {r['지역명']}"
+            ed[1][code_by_name[name]] = value
+
+    out = []
+    for source, (year, by_region, totals) in sorted(by_edition.items()):
+        assert len(by_region) == 8, f"{folder}/{source}: 읍면 {len(by_region)}개"
+        assert max(totals) == year
+        assert sum(by_region.values()) == totals[year], (
+            f"{folder}/{source}: 읍면 합 {sum(by_region.values())} != 군 합계 {totals[year]}")
+        out.append((source, True, year, by_region, totals))
+    return out
+
+
+def prepare_senior_centers_yearly(name_by_code: dict) -> dict:
+    """군위통계연보 '노인여가복지시설' 표의 경로당 수, 읍면 x 연도.
+
+    한 권에 그해 읍면별 값 + 최근 5년 군 합계가 실린다. 군 합계는 여러 권에
+    겹쳐 나오므로 겹치는 해의 값이 같은지 검사한다. 2014~2020 판(이미지형 PDF)은
+    사람이 옮겨 적은 표(YEARBOOK_SENIOR_TRANSCRIBED)로 읽는다.
+    """
+    code_by_name = {v: k for k, v in name_by_code.items()}
+    records, gun = [], {}
+    editions = _read_transcribed_senior(code_by_name) + [
+        (f"gunwi-yearbook/{e}", False, *_read_yearbook_senior(e, code_by_name))
+        for e in YEARBOOK_XLSX_EDITIONS]
+    for source, transcribed, year, by_region, totals in editions:
+        edition = source
+        for code in name_by_code:
+            records.append({"year": year, "region_code": code,
+                            "region_name": name_by_code[code],
+                            "senior_centers": by_region[code],
+                            "source": source, "transcribed": transcribed})
+        for y, v in totals.items():
+            if y in gun:
+                assert gun[y]["senior_centers"] == v, (
+                    f"{edition}: {y}년 군 합계 {v} 가 앞 회차 {gun[y]['senior_centers']} 와 다르다")
+            gun[y] = {"year": y, "senior_centers": v, "source": source}
+
+    years = sorted({r["year"] for r in records})
+    assert years == list(range(years[0], years[-1] + 1)), f"연도가 비어 있다: {years}"
+
+    return {
+        "_note": ("군위통계연보 12장 노인여가복지시설 표의 경로당 시설수. 표준데이터 "
+                  "(senior_centers.json, 2025-12-19)와 출처가 달라 한 추이로 잇기 전 확인할 것."),
+        "transcribed_years": sorted({r["year"] for r in records if r["transcribed"]}),
+        "years": years,
+        "records": records,
+        "gun_totals": [gun[y] for y in sorted(gun)],
     }
 
 
@@ -571,10 +836,12 @@ def main() -> None:
     DERIVED.mkdir(parents=True, exist_ok=True)
 
     population, name_by_code = prepare_population()
+    monthly = prepare_population_monthly(population, name_by_code)
     parks, park_labels = prepare_parks()
     boundary = prepare_boundary(name_by_code)
     potholes = prepare_potholes(boundary)
     seniors = prepare_senior_centers(name_by_code)
+    seniors_yearly = prepare_senior_centers_yearly(name_by_code)
     drainage = prepare_drainage_risk(name_by_code)
     water = prepare_water_supply(name_by_code)
     sgis = prepare_sgis_stats(boundary, population)
@@ -595,16 +862,19 @@ def main() -> None:
         "periods": MOIS_PERIODS,
         "records": population,
     })
+    write("population_monthly.json", monthly)
     write("parks.json", {"column_labels": park_labels, "parks": parks})
     write("eupmyeon.geojson", boundary)
     write("potholes.json", potholes)
     write("senior_centers.json", seniors)
+    write("senior_centers_yearly.json", seniors_yearly)
     write("drainage_risk.json", drainage)
     write("water_supply.json", water)
     write("sgis_stats.json", sgis)
     write("salpiso.json", salpiso)
 
-    print(f"\n  인구 {len(population)}행 / 공원 {len(parks)}건")
+    print(f"\n  인구 {len(population)}행 / 월별 인구·세대 {len(monthly['records'])}행 "
+          f"({monthly['periods'][0]}~{monthly['periods'][-1]}) / 공원 {len(parks)}건")
     print(f"  포트홀 전국 {potholes['national_row_count']}행 중 군위 "
           f"{len(potholes['points'])}건 "
           f"(완전중복 {potholes['exact_duplicate_count']}행, "
@@ -613,7 +883,9 @@ def main() -> None:
     print(f"  경로당 {len(seniors['centers'])}곳 "
           f"(노후 {old}곳, {SENIOR_OLD_BEFORE_YEAR}년 이전 - 임시 기준) / "
           f"위험지정 세천 {len(drainage['sites'])}곳 "
-          f"(해제 {len(drainage['released_excluded'])}건 제외)")
+          f"(해제 {len(drainage['released_excluded'])}건 + "
+          f"{drainage['released_by_notice']['released_on']} 고시 해제 "
+          f"{len(drainage['released_by_notice']['streams'])}건 제외)")
     print(f"  상수도보급률 읍면 {len(water['by_region'])}개 / "
           f"SGIS 2024 항목 {len(sgis['items'])}개 x 읍면 {len(sgis['by_region'])}개 "
           f"(N/A {len(sgis['na_cells'])}칸)")
