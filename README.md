@@ -24,7 +24,7 @@ npm run dev               # 빌드 후 http://127.0.0.1:8787
 |---|---|
 | `npm run prepare-data` | 원자료 검증·정제 → `data/derived/` |
 | `npm run build` | `data/derived/` → `public/data/` |
-| `npm run export` | `data/derived/` → `outputs/` 제출용 엑셀·CSV (가설 시트 포함) + 시계열 지표 엑셀 |
+| `npm run export` | `data/derived/` → `outputs/` 제출용 엑셀·CSV (가설 시트 포함) + 시계열 지표 엑셀 2종 |
 | `npm run figures` | `data/derived/` → `outputs/figures/` 보고서 삽화 5장 |
 | `npm test` | 검증 로직이 살아 있는지 확인 |
 | `npm run deploy` | 빌드 후 Cloudflare 배포 (main push 시 GitHub Actions 가 자동 실행) |
@@ -58,7 +58,7 @@ data/raw/            원자료 + _meta.json(출처 카드) + capture.html(원본
 data/derived/        prepare.py 출력
 tools/               add_source.py / fetch_pothole.py / prepare.py / build.py / export_excel.py / tests
 data/hypotheses.json 지표–민원 가설 레지스트리 (웹·엑셀·그림의 원본)
-outputs/             export_excel.py 출력 (제출용 엑셀·CSV), export_timeseries.py 출력 (시계열 엑셀, 시계열/*.csv)
+outputs/             export_excel.py 출력 (제출용 엑셀·CSV), export_timeseries.py 출력 (시계열 엑셀, 시계열/*.csv), export_trend.py 출력 (변화추이 엑셀, 변화추이/*.csv)
 outputs/figures/     figures.py 출력 (보고서 삽화 PNG + 근거 CSV)
 public/              배포되는 폴더. "여기 넣은 건 공개"
 docs/methodology.md  산식 근거. 공식 기준과 프로젝트 파생지표의 구분
