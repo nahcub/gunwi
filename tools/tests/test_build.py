@@ -101,7 +101,7 @@ def test_facility_points_join_to_regions():
     fac = build.build_facilities()
     codes = {r["region_code"] for r in build.build_regions()["regions"]["2025-12"]}
     assert len(fac["senior_centers"]["points"]) == 215
-    assert len(fac["drainage_risk"]["points"]) == 27
+    assert len(fac["drainage_risk"]["points"]) == 6
     for group in fac.values():
         for p in group["points"]:
             assert p["region_code"] in codes

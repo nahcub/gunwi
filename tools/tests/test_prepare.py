@@ -230,9 +230,12 @@ def test_drainage_keeps_only_current_streams():
     out = prepare.prepare_drainage_risk(name_by_code)
     assert out["source_type_counts"]["세천"] == 28
     assert out["released_excluded"] == ["내량천"]    # 2018-06-05 해제
-    assert len(out["sites"]) == 27
+    # 2026-08-31 고시 제2026-107호: 26개소 해제 중 세천 21곳 (나머지 5곳은 소교량·농로)
+    assert len(out["released_by_notice"]["streams"]) == 21
+    assert out["released_by_notice"]["other_type_count"] == 5
+    assert len(out["sites"]) == 6                    # 28 - 1 - 21
     by_name = {name_by_code[c]: v["count"] for c, v in out["by_region"].items()}
-    assert by_name["부계면"] == 7
+    assert by_name["군위읍"] == 2 and by_name["부계면"] == 1
 
 
 def test_address_must_resolve_to_one_eupmyeon():

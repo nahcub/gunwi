@@ -10,6 +10,8 @@ from __future__ import annotations
 import csv
 import io
 import json
+import re
+import zipfile
 from collections import Counter
 from pathlib import Path
 
@@ -432,8 +434,51 @@ def prepare_senior_centers(name_by_code: dict) -> dict:
 
 # ---------------------------------------------------------------- 배수시설
 
+# 표준데이터(2026-07-15) 이후에 나온 지정해제 고시. 고시문 붙임 표의 세천 행을 현행에서 뺀다
+RISK_RELEASE_NOTICE = "gunwi-small-risk-notice/2026-08-31"
+
+
+def _read_release_notice(folder: str) -> dict:
+    """해제 고시문(hwpx) 붙임 표에서 시설명 -> 행 정보.
+
+    hwpx 는 zip 안의 XML 이라 표준 라이브러리로 읽는다. 표 행은
+    연번 | 구분 | 명칭 | 위치 | 시점 | 종점 | 해제사유 | 지정일 의 8칸이다.
+    """
+    meta = read_meta(folder)
+    name = next(n for n in meta["files"] if n.endswith(".hwpx"))
+    with zipfile.ZipFile(RAW / folder / name) as z:
+        xml = z.read("Contents/section0.xml").decode("utf-8")
+
+    def text(s: str) -> str:
+        return "".join(re.findall(r"<hp:t>([^<]*)</hp:t>", s)).strip()
+
+    rows = {}
+    for tr in re.findall(r"<hp:tr>.*?</hp:tr>", xml, flags=re.S):
+        cells = [text(tc) for tc in re.findall(r"<hp:tc.*?</hp:tc>", tr, flags=re.S)]
+        if len(cells) != 8 or not cells[0].isdigit():
+            continue                      # 머리글 행
+        no, kind, fac, loc, start, end, reason, designated = cells
+        assert fac not in rows, f"{folder}: 시설명 중복 {fac}"
+        rows[fac] = {"no": int(no), "type": kind, "location": loc,
+                     "start": start, "end": end, "reason": reason}
+
+    assert [r["no"] for r in rows.values()] == list(range(1, len(rows) + 1)), (
+        f"{folder}: 연번이 1부터 이어지지 않는다")
+    body = text(xml)
+    m = re.search(r"총\s*(\d+)개소 중 (\d+)개소 해제", body)
+    assert m and int(m.group(2)) == len(rows), (
+        f"{folder}: 본문 해제 개소 수와 붙임 표 행 수({len(rows)})가 다르다")
+    notice_no = re.search(r"고시 제\s*(\d{4})\s*[–-]\s*(\d+)\s*호", body)
+    return {"notice": f"군위군 고시 제{notice_no.group(1)}-{notice_no.group(2)}호",
+            "released_on": meta["reference_date"], "rows": rows}
+
+
 def prepare_drainage_risk(name_by_code: dict) -> dict:
-    """소규모공공시설 위험지정 중 현행 지정된 세천만 배수시설로 쓴다."""
+    """소규모공공시설 위험지정 중 현행 지정된 세천만 배수시설로 쓴다.
+
+    표준데이터의 해제일자로 한 번, 그 뒤에 나온 해제 고시(RISK_RELEASE_NOTICE)로
+    한 번 더 거른다.
+    """
     folder = "datagokr-gunwi-small-facility-risk-2026-07-15"
     meta = read_meta(folder)
     rows = _read_csv(folder, meta)
@@ -443,9 +488,22 @@ def prepare_drainage_risk(name_by_code: dict) -> dict:
     streams = [(i, r) for i, r in enumerate(rows, start=1) if r["시설유형"] == "세천"]
     released = [(i, r) for i, r in streams if r["위험시설해제일자"].strip()]
 
+    notice = _read_release_notice(RISK_RELEASE_NOTICE)
+    notice_streams = {k: v for k, v in notice["rows"].items() if v["type"] == "세천"}
+    current_by_name = {r["시설명"]: r for _, r in streams if not r["위험시설해제일자"].strip()}
+    released_by_notice = []
+    for fac, nr in notice_streams.items():
+        assert fac in current_by_name, (
+            f"{RISK_RELEASE_NOTICE}: 해제 세천 {fac} 이 표준데이터 현행 지정에 없다")
+        # 이름만 같은 다른 시설이 아닌지 - 고시 구간 시점·종점 지번 중 하나가 주소 끝과 같아야 한다
+        jibun = current_by_name[fac]["소재지지번주소"].split()[-1]
+        assert jibun in (nr["start"], nr["end"]), (
+            f"{RISK_RELEASE_NOTICE}: {fac} 지번 {jibun} 이 고시 구간({nr['start']}~{nr['end']})과 다르다")
+        released_by_notice.append(fac)
+
     sites = []
     for i, r in streams:
-        if r["위험시설해제일자"].strip():
+        if r["위험시설해제일자"].strip() or r["시설명"] in notice_streams:
             continue
         label = f"{folder}/{i}행 {r['시설명']}"
         lon, lat = float(r["경도"]), float(r["위도"])
@@ -472,10 +530,17 @@ def prepare_drainage_risk(name_by_code: dict) -> dict:
     return {
         "reference_date": meta["reference_date"],
         "provenance": meta["provenance"],
-        "_note": ("현행 위험지정 세천만 포함. 빗물받이·맨홀 전수대장이 아니며 "
-                  "지정사유는 원본에서 전부 공란."),
+        "status_as_of": notice["released_on"],
+        "_note": ("현행 위험지정 세천만 포함(표준데이터 2026-07-15 에 2026-08-31 해제 고시 반영). "
+                  "빗물받이·맨홀 전수대장이 아니며 지정사유는 원본에서 전부 공란."),
         "source_type_counts": dict(type_counts),
         "released_excluded": [r["시설명"] for _, r in released],
+        "released_by_notice": {
+            "notice": notice["notice"],
+            "released_on": notice["released_on"],
+            "streams": released_by_notice,
+            "other_type_count": len(notice["rows"]) - len(notice_streams),
+        },
         "by_region": by_region,
         "sites": sites,
     }
@@ -698,7 +763,9 @@ def main() -> None:
     print(f"  경로당 {len(seniors['centers'])}곳 "
           f"(노후 {old}곳, {SENIOR_OLD_BEFORE_YEAR}년 이전 - 임시 기준) / "
           f"위험지정 세천 {len(drainage['sites'])}곳 "
-          f"(해제 {len(drainage['released_excluded'])}건 제외)")
+          f"(해제 {len(drainage['released_excluded'])}건 + "
+          f"{drainage['released_by_notice']['released_on']} 고시 해제 "
+          f"{len(drainage['released_by_notice']['streams'])}건 제외)")
     print(f"  상수도보급률 읍면 {len(water['by_region'])}개 / "
           f"SGIS 2024 항목 {len(sgis['items'])}개 x 읍면 {len(sgis['by_region'])}개 "
           f"(N/A {len(sgis['na_cells'])}칸)")
